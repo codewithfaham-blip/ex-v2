@@ -12,26 +12,25 @@ export default function TelegramWalletContainer() {
     setMounted(true);
   }, []);
 
-  if (!mounted) return null;
-
-  const saveWalletAddress = async (walletAddr: string) => {
-    try {
-      await fetch("/api/user/update-wallet", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ walletAddress: walletAddr }),
-      });
-    } catch (error) {
-      console.error("Failed to sync wallet with database", error);
-    }
-  };
-
   // Sync wallet with DB when it changes
   useEffect(() => {
-    if (address) {
+    if (address && mounted) {
+      const saveWalletAddress = async (walletAddr: string) => {
+        try {
+          await fetch("/api/user/update-wallet", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ walletAddress: walletAddr }),
+          });
+        } catch (error) {
+          console.error("Failed to sync wallet with database", error);
+        }
+      };
       saveWalletAddress(address);
     }
-  }, [address]);
+  }, [address, mounted]);
+
+  if (!mounted) return null;
 
   return (
     <div className="bg-zinc-900/40 border border-zinc-800/50 p-6 md:p-8 rounded-[2.5rem] relative overflow-hidden group transition-all hover:border-blue-600/30">
