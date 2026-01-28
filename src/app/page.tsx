@@ -74,6 +74,32 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Features: New Section for Anchor Link */}
+      <section id="features" className="px-4 py-20 bg-zinc-900/20">
+        <div className="max-w-7xl mx-auto">
+          <h3 className="text-2xl md:text-5xl font-black text-center mb-16 uppercase tracking-tighter italic">
+            Platform <span className="text-blue-600">Core</span>
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+            <div className="p-8 rounded-[2rem] border border-zinc-800 bg-zinc-900/30 hover:border-blue-600/50 transition-colors group">
+              <ShieldCheck className="text-blue-600 mb-6 group-hover:scale-110 transition-transform" size={40} />
+              <h4 className="text-xl font-bold mb-4">Elite Security</h4>
+              <p className="text-zinc-400 text-sm leading-relaxed">Multi-layer encryption and cold storage for all digital assets ensuring maximum capital protection.</p>
+            </div>
+            <div className="p-8 rounded-[2rem] border border-zinc-800 bg-zinc-900/30 hover:border-blue-600/50 transition-colors group">
+              <Zap className="text-blue-600 mb-6 group-hover:scale-110 transition-transform" size={40} />
+              <h4 className="text-xl font-bold mb-4">Instant Access</h4>
+              <p className="text-zinc-400 text-sm leading-relaxed">Global payouts processed in real-time. No delays, no manual approvals for standard withdrawal requests.</p>
+            </div>
+            <div className="p-8 rounded-[2rem] border border-zinc-800 bg-zinc-900/30 hover:border-blue-600/50 transition-colors group">
+              <BarChart3 className="text-blue-600 mb-6 group-hover:scale-110 transition-transform" size={40} />
+              <h4 className="text-xl font-bold mb-4">Smart Engine</h4>
+              <p className="text-zinc-400 text-sm leading-relaxed">Proprietary AI-driven trading engine that optimizes yields across multiple liquidity pools 24/7.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Plans Section */}
       <section id="plans" className="px-4 py-16 max-w-7xl mx-auto">
         <h3 className="text-2xl md:text-5xl font-black text-center mb-12 uppercase tracking-tighter italic">Investment <span className="text-blue-600">Plans</span></h3>

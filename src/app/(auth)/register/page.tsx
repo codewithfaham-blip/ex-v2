@@ -163,10 +163,13 @@ export default function RegisterPage() {
           </form>
         </div>
 
-        <div className="text-center">
+        <div className="text-center space-y-4">
           <p className="text-zinc-500 text-xs">
             Already a member? <Link href="/login" className="text-blue-500 font-bold hover:underline italic">Login Terminal</Link>
           </p>
+          <Link href="/" className="inline-block text-zinc-600 hover:text-zinc-400 text-[10px] font-black uppercase tracking-widest transition italic">
+            ← Back to Terminal
+          </Link>
         </div>
       </div>
     </div>
