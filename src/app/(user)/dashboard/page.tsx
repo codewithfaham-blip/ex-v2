@@ -3,6 +3,7 @@ import { Wallet, TrendingUp, ArrowDownCircle, ArrowUpCircle, Copy, Activity } fr
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
+import TelegramWalletContainer from "@/components/TelegramWalletContainer";
 
 export default async function UserDashboard() {
   const session = await getServerSession(authOptions);
@@ -29,8 +30,8 @@ export default async function UserDashboard() {
     <div className="p-4 md:p-8 lg:p-10 pt-24 lg:pt-10 max-w-[1400px] mx-auto w-full">
       
       {/* 1. Header Section */}
-      <div className="mb-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 bg-blue-600/5 border border-blue-600/10 p-8 rounded-[2.5rem]">
-        <div>
+      <div className="mb-8 flex flex-col lg:flex-row justify-between items-stretch lg:items-center gap-6">
+        <div className="bg-blue-600/5 border border-blue-600/10 p-8 rounded-[2.5rem] flex-grow">
           <h1 className="text-3xl font-black uppercase tracking-tighter italic text-white leading-none">
             System <span className="text-blue-500">Access:</span> {user.email?.split('@')[0]}
           </h1>
@@ -39,10 +40,11 @@ export default async function UserDashboard() {
             Node Status: Operational ✓
           </p>
         </div>
-        <button className="bg-zinc-900 border border-zinc-800 px-6 py-4 rounded-2xl flex items-center gap-3 hover:bg-zinc-800 transition group w-full md:w-auto justify-center">
-            <span className="text-[10px] font-black uppercase tracking-widest text-zinc-400 group-hover:text-blue-500">Copy Referral Link</span>
-            <Copy size={16} className="text-blue-500" />
-        </button>
+        
+        {/* Telegram Wallet Container integrated into header area or as a main component */}
+        <div className="lg:w-[400px]">
+           <TelegramWalletContainer />
+        </div>
       </div>
 
       {/* 2. Financial Grid */}

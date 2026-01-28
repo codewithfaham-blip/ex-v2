@@ -21,6 +21,7 @@ export const metadata: Metadata = {
 };
 
 import AuthProvider from "@/components/SessionProvider";
+import TonProvider from "@/components/TonProvider";
 import Navbar from "@/components/Navbar";
 
 export default function RootLayout({
@@ -29,13 +30,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-zinc-950`}
       >
         <AuthProvider>
-          <Navbar />
-          {children}
+          <TonProvider>
+            <Navbar />
+            {children}
+          </TonProvider>
         </AuthProvider>
       </body>
     </html>

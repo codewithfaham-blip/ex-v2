@@ -1,6 +1,66 @@
-import { ShieldAlert, Wallet, Save, Lock } from "lucide-react";
+"use client";
+import { ShieldAlert, Wallet, Save, Loader2, CheckCircle2 } from "lucide-react";
+import { useState, useEffect } from "react";
 
 export default function AdminSettings() {
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [settings, setSettings] = useState({
+    adminWalletAddress: "",
+    tonWalletAddress: "",
+    maintenanceMode: false,
+  });
+
+  useEffect(() => {
+    fetchSettings();
+  }, []);
+
+  const fetchSettings = async () => {
+    try {
+      const res = await fetch("/api/admin/settings");
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error);
+      setSettings({
+        adminWalletAddress: data.adminWalletAddress || "",
+        tonWalletAddress: data.tonWalletAddress || "",
+        maintenanceMode: data.maintenanceMode || false,
+      });
+    } catch (err) {
+      console.error("Failed to load settings", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSave = async () => {
+    setSaving(true);
+    setSuccess(false);
+    try {
+      const res = await fetch("/api/admin/settings", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(settings),
+      });
+      if (res.ok) {
+        setSuccess(true);
+        setTimeout(() => setSuccess(false), 3000);
+      }
+    } catch (err) {
+      console.error("Failed to save settings", err);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-[60vh] flex items-center justify-center">
+        <Loader2 className="animate-spin text-blue-500" size={40} />
+      </div>
+    );
+  }
+
   return (
     <div className="p-4 md:p-10 pt-24 lg:pt-10 max-w-[1000px] mx-auto text-white">
       <div className="mb-10">
@@ -9,6 +69,7 @@ export default function AdminSettings() {
       </div>
 
       <div className="space-y-8">
+        {/* BEP20 Wallet */}
         <div className="bg-zinc-900/40 border border-zinc-800/50 p-8 rounded-[3rem]">
           <div className="flex items-center gap-4 mb-8">
             <Wallet className="text-blue-600" size={24} />
@@ -16,30 +77,59 @@ export default function AdminSettings() {
           </div>
           <input 
             type="text" 
-            defaultValue="0x742d35Cc6634C0532925a3b844Bc454e4438f44e"
+            value={settings.adminWalletAddress}
+            onChange={(e) => setSettings({...settings, adminWalletAddress: e.target.value})}
             className="w-full bg-zinc-950 border border-zinc-800 rounded-2xl py-5 px-6 text-sm font-mono text-zinc-400 focus:outline-none focus:border-blue-600 transition-all shadow-inner"
+            placeholder="0x..."
           />
-          <p className="text-[9px] text-zinc-600 mt-4 uppercase font-bold italic tracking-tighter text-blue-500/80">This address will be shown to all investors during the deposit process.</p>
+          <p className="text-[9px] text-zinc-600 mt-4 uppercase font-bold italic tracking-tighter text-blue-500/80">Traditional BEP20 address for standard USDT/BNB deposits.</p>
         </div>
 
+        {/* TON Wallet */}
+        <div className="bg-zinc-900/40 border border-zinc-800/50 p-8 rounded-[3rem] border-l-4 border-l-blue-500">
+          <div className="flex items-center gap-4 mb-8">
+            <div className="bg-blue-600/20 p-2 rounded-lg">
+               <Wallet className="text-blue-400" size={24} />
+            </div>
+            <h2 className="text-sm font-black uppercase tracking-widest italic text-blue-400">Telegram/TON Gateway Wallet</h2>
+          </div>
+          <input 
+            type="text" 
+            value={settings.tonWalletAddress}
+            onChange={(e) => setSettings({...settings, tonWalletAddress: e.target.value})}
+            className="w-full bg-zinc-950 border border-blue-900/30 rounded-2xl py-5 px-6 text-sm font-mono text-blue-100 focus:outline-none focus:border-blue-600 transition-all shadow-inner"
+            placeholder="UQ..."
+          />
+          <p className="text-[9px] text-zinc-400 mt-4 uppercase font-bold italic tracking-tighter">Enter your TON wallet address for Telegram Mini App integrations.</p>
+        </div>
+
+        {/* Maintenance Mode */}
         <div className="bg-red-600/5 border border-red-600/10 p-8 rounded-[3rem]">
           <div className="flex items-center gap-4 mb-8">
             <ShieldAlert className="text-red-500" size={24} />
             <h2 className="text-sm font-black uppercase tracking-widest italic text-red-500">System lockdown</h2>
           </div>
-          <div className="flex items-center justify-between bg-zinc-950 p-6 rounded-2xl border border-zinc-900 group hover:border-red-500/50 transition-all">
+          <div 
+            onClick={() => setSettings({...settings, maintenanceMode: !settings.maintenanceMode})}
+            className="flex items-center justify-between bg-zinc-950 p-6 rounded-2xl border border-zinc-900 group hover:border-red-500/50 transition-all cursor-pointer"
+          >
              <div>
                 <p className="text-xs font-black uppercase text-white">Maintenance Mode</p>
                 <p className="text-[9px] text-zinc-600 uppercase font-bold mt-1 tracking-widest">Disable all user transactions instantly</p>
              </div>
-             <div className="w-12 h-6 bg-zinc-800 rounded-full relative cursor-pointer border border-zinc-700">
-                <div className="absolute left-1 top-1 w-4 h-4 bg-zinc-600 rounded-full transition-all" />
+             <div className={`w-12 h-6 rounded-full relative transition-all border ${settings.maintenanceMode ? 'bg-red-600 border-red-500' : 'bg-zinc-800 border-zinc-700'}`}>
+                <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-all ${settings.maintenanceMode ? 'left-7' : 'left-1'}`} />
              </div>
           </div>
         </div>
 
-        <button className="w-full bg-blue-600 py-5 rounded-2xl font-black uppercase tracking-[0.3em] text-[11px] hover:bg-blue-700 transition-all shadow-xl shadow-blue-600/20 flex items-center justify-center gap-3 active:scale-[0.98]">
-          <Save size={18} /> Deploy Changes
+        <button 
+          onClick={handleSave}
+          disabled={saving}
+          className={`w-full py-5 rounded-2xl font-black uppercase tracking-[0.3em] text-[11px] transition-all shadow-xl flex items-center justify-center gap-3 active:scale-[0.98] ${success ? 'bg-emerald-600 shadow-emerald-600/20' : 'bg-blue-600 hover:bg-blue-700 shadow-blue-600/20'} disabled:opacity-50`}
+        >
+          {saving ? <Loader2 className="animate-spin" size={18} /> : success ? <CheckCircle2 size={18} /> : <Save size={18} />}
+          {saving ? "Deploying..." : success ? "System Updated" : "Deploy Changes"}
         </button>
       </div>
     </div>
