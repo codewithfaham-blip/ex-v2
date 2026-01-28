@@ -96,6 +96,7 @@ export default function RegisterPage() {
                   value={formData.name}
                   onChange={(e) => setFormData({...formData, name: e.target.value})}
                   placeholder="Enter your full name"
+                  autoComplete="name"
                   className="w-full bg-zinc-950 border border-zinc-800 rounded-2xl py-4 pl-12 pr-4 text-sm text-white focus:outline-none focus:border-blue-600 transition-all placeholder:text-zinc-700"
                 />
               </div>
@@ -111,6 +112,7 @@ export default function RegisterPage() {
                   value={formData.email}
                   onChange={(e) => setFormData({...formData, email: e.target.value})}
                   placeholder="your.email@example.com"
+                  autoComplete="email"
                   className="w-full bg-zinc-950 border border-zinc-800 rounded-2xl py-4 pl-12 pr-4 text-sm text-white focus:outline-none focus:border-blue-600 transition-all placeholder:text-zinc-700"
                 />
               </div>
@@ -126,6 +128,7 @@ export default function RegisterPage() {
                   value={formData.password}
                   onChange={(e) => setFormData({...formData, password: e.target.value})}
                   placeholder="Create a strong password"
+                  autoComplete="new-password"
                   className="w-full bg-zinc-950 border border-zinc-800 rounded-2xl py-4 pl-12 pr-12 text-sm text-white focus:outline-none focus:border-blue-600 transition-all placeholder:text-zinc-700"
                 />
                 <button 
@@ -148,6 +151,7 @@ export default function RegisterPage() {
                   value={formData.confirmPassword}
                   onChange={(e) => setFormData({...formData, confirmPassword: e.target.value})}
                   placeholder="Confirm your password"
+                  autoComplete="new-password"
                   className="w-full bg-zinc-950 border border-zinc-800 rounded-2xl py-4 pl-12 pr-4 text-sm text-white focus:outline-none focus:border-blue-600 transition-all placeholder:text-zinc-700"
                 />
               </div>
