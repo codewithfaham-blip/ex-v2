@@ -1,0 +1,54 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum Status {
+  PENDING
+  COMPLETED
+  REJECTED
+  ACTIVE
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  name          String?
+  password      String
+  role          Role      @default(USER)
+  balance       Float     @default(0.0)
+  deposits      Deposit[]
+  withdrawals   Withdrawal[]
+  createdAt     DateTime  @default(now())
+}
+
+model Deposit {
+  id              String   @id @default(cuid())
+  amount          Float
+  planName        String   // e.g., "Silver Plan"
+  transactionHash String?  // Blockchain TX Hash
+  proofImage      String?  // Optional screenshot link
+  status          Status   @default(PENDING)
+  userId          String
+  user            User     @relation(fields: [userId], references: [id])
+  createdAt       DateTime @default(now())
+}
+
+model Withdrawal {
+  id          String   @id @default(cuid())
+  amount      Float
+  address     String   // Crypto wallet address
+  status      Status   @default(PENDING)
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  createdAt   DateTime @default(now())
+}
