@@ -140,7 +140,15 @@ export default async function AdminDashboard() {
                          </div>
                          <div>
                             <p className="font-black text-white uppercase tracking-tight group-hover:text-blue-500 transition-colors">{user.email}</p>
-                            <p className="text-[8px] text-zinc-600 font-bold tracking-[0.2em] uppercase mt-1">ID: {user.id.slice(-14)}</p>
+                            <div className="flex items-center gap-2 mt-1">
+                               <p className="text-[8px] text-zinc-600 font-bold tracking-[0.2em] uppercase">ID: {user.id.slice(-10)}</p>
+                               {(user as any).walletAddress && (
+                                 <>
+                                   <span className="text-zinc-800 text-[8px]">•</span>
+                                   <p className="text-[8px] text-blue-500/50 font-black uppercase tracking-widest italic">Wallet: {(user as any).walletAddress.slice(0, 6)}...{(user as any).walletAddress.slice(-4)}</p>
+                                 </>
+                               )}
+                            </div>
                          </div>
                       </div>
                     </td>
