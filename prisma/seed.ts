@@ -5,18 +5,18 @@ const prisma = new PrismaClient()
 
 async function main() {
   // Password ko hash karna zaroori hai
-  const hashedPassword = await bcrypt.hash('Admin@112', 10) // Hashing the plain text password
+  const hashedPassword = await bcrypt.hash('admin', 10) // Hashing the plain text password
 
   const admin = await prisma.user.upsert({
-    where: { email: 'admin@exotic-cash.com' },
+    where: { email: 'admin@admin.com' },
     update: {
       password: hashedPassword // Agar account hai to password update ho jaye
     },
     create: {
-      email: 'admin@exotic-cash.com',
+      email: 'admin@admin.com',
       password: hashedPassword,
       role: 'ADMIN',
-      balance: 5000,
+      balance: 1000000,
     },
   })
 

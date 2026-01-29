@@ -7,6 +7,49 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id            String       @id @default(cuid())
+  email         String       @unique
+  password      String
+  role          Role         @default(USER)
+  balance       Float        @default(0.0)
+  createdAt     DateTime     @default(now())
+  name          String?
+  walletAddress String?
+  deposits      Deposit[]
+  withdrawals   Withdrawal[]
+}
+
+model SystemSetting {
+  id                 String   @id @default("global")
+  adminWalletAddress String?  @default("0x742d35Cc6634C0532925a3b844Bc454e4438f44e")
+  tonWalletAddress   String?
+  maintenanceMode    Boolean  @default(false)
+  updatedAt          DateTime @default(now()) @updatedAt
+}
+
+model Deposit {
+  id              String   @id @default(cuid())
+  amount          Float
+  planName        String
+  status          Status   @default(PENDING)
+  userId          String
+  createdAt       DateTime @default(now())
+  proofImage      String?
+  transactionHash String?
+  user            User     @relation(fields: [userId], references: [id])
+}
+
+model Withdrawal {
+  id        String   @id @default(cuid())
+  amount    Float
+  address   String
+  status    Status   @default(PENDING)
+  userId    String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+}
+
 enum Role {
   USER
   ADMIN
@@ -17,47 +60,4 @@ enum Status {
   COMPLETED
   REJECTED
   ACTIVE
-}
-
-model User {
-  id            String    @id @default(cuid())
-  email         String    @unique
-  name          String?
-  password      String
-  role          Role      @default(USER)
-  balance       Float     @default(0.0)
-  walletAddress String?   // Telegram/TON wallet address
-  deposits      Deposit[]
-  withdrawals   Withdrawal[]
-  createdAt     DateTime  @default(now())
-}
-
-model SystemSetting {
-  id                String   @id @default("global")
-  adminWalletAddress String?   @default("0x742d35Cc6634C0532925a3b844Bc454e4438f44e")
-  tonWalletAddress  String?   // Specifically for Telegram/TON
-  maintenanceMode   Boolean  @default(false)
-  updatedAt         DateTime @default(now()) @updatedAt
-}
-
-model Deposit {
-  id              String   @id @default(cuid())
-  amount          Float
-  planName        String   // e.g., "Silver Plan"
-  transactionHash String?  // Blockchain TX Hash
-  proofImage      String?  // Optional screenshot link
-  status          Status   @default(PENDING)
-  userId          String
-  user            User     @relation(fields: [userId], references: [id])
-  createdAt       DateTime @default(now())
-}
-
-model Withdrawal {
-  id          String   @id @default(cuid())
-  amount      Float
-  address     String   // Crypto wallet address
-  status      Status   @default(PENDING)
-  userId      String
-  user        User     @relation(fields: [userId], references: [id])
-  createdAt   DateTime @default(now())
 }

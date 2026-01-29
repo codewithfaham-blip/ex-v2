@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react";
 import { 
   LayoutDashboard, Users, ArrowDownCircle, ArrowUpCircle, 
-  Settings, LogOut, Menu, X, CreditCard
+  Settings, LogOut, Menu, X, CreditCard, Database
 } from "lucide-react";
 import Logo from "./Logo";
 
@@ -20,6 +20,7 @@ export default function AdminSidebar() {
     { icon: <ArrowUpCircle size={18} />, label: "Withdrawals", href: "/admin/dashboard/withdrawals" },
     { icon: <CreditCard size={18} />, label: "Plans", href: "/admin/dashboard/plans" },
     { icon: <Settings size={18} />, label: "Settings", href: "/admin/dashboard/settings" },
+    { icon: <Database size={18} />, label: "Railway DB", href: "/admin/dashboard/railway" },
   ];
 
   return (
