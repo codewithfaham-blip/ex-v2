@@ -1,5 +1,5 @@
 "use client";
-import { Wallet, Copy, Save, Loader2, CheckCircle2, ShieldCheck, TrendingUp, ArrowDownLeft, ArrowUpRight, coins } from "lucide-react";
+import { Wallet, Copy, Save, Loader2, CheckCircle2, ShieldCheck, TrendingUp, ArrowDownLeft, ArrowUpRight } from "lucide-react";
 import { useState, useEffect } from "react";
 
 export default function AdminWalletTerminal() {
