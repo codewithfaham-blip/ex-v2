@@ -20,15 +20,25 @@ export default async function AdminDashboard() {
       take: 6
     }),
     db.user.count(),
-    db.deposit.aggregate({ _sum: { amount: true }, where: { status: "COMPLETED" } }),
-    db.deposit.count({ where: { status: "PENDING" } }),
-    db.withdrawal.aggregate({ _sum: { amount: true }, where: { status: "COMPLETED" } })
+    // DEPOSIT: Yahan "APPROVED" enum expected hai
+    db.deposit.aggregate({ 
+      _sum: { amount: true }, 
+      where: { status: "APPROVED" } 
+    }),
+    db.deposit.count({ 
+      where: { status: "PENDING" } 
+    }),
+    // WITHDRAWAL: Yahan "COMPLETED" enum expected hai
+    db.withdrawal.aggregate({ 
+      _sum: { amount: true }, 
+      where: { status: "COMPLETED" } 
+    })
   ]);
 
   const totalVolume = (completedStats._sum.amount || 0) + (totalWithdrawals._sum.amount || 0);
 
   return (
-    <div className="p-4 md:p-10 pt-24 lg:pt-10 max-w-[1600px] mx-auto">
+    <div className="p-4 md:p-10 pt-24 lg:pt-10 max-w-[1600px] mx-auto bg-black min-h-screen text-white">
       {/* TOP COMMAND BAR */}
       <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-6 mb-12">
           <div>
@@ -60,7 +70,6 @@ export default async function AdminDashboard() {
 
         {/* ANALYTICS GRID */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-          
           {/* Liquidity Card */}
           <div className="bg-zinc-900/20 border border-zinc-800/50 p-8 rounded-[2.5rem] relative overflow-hidden group transition-all hover:bg-zinc-900/40">
             <BarChart3 className="absolute -right-4 -bottom-4 text-blue-600/5 w-32 h-32 rotate-12" />
@@ -100,7 +109,6 @@ export default async function AdminDashboard() {
             <h3 className="text-4xl font-black text-white tracking-tighter">${totalVolume.toLocaleString()}</h3>
             <p className="text-zinc-600 text-[9px] font-black uppercase mt-4 italic">Total Capital Movement</p>
           </div>
-
         </div>
 
         {/* MAIN DATABASE VIEW */}
@@ -113,10 +121,6 @@ export default async function AdminDashboard() {
                <h2 className="text-2xl font-black uppercase italic tracking-tighter text-white">
                  Investor <span className="text-blue-600">Intelligence</span>
                </h2>
-            </div>
-            <div className="flex gap-3">
-               <button className="px-6 py-3 bg-zinc-950 border border-zinc-800 rounded-xl text-[9px] font-black uppercase tracking-widest text-zinc-500 hover:text-white transition-all">Filter Nodes</button>
-               <button className="px-6 py-3 bg-zinc-950 border border-zinc-800 rounded-xl text-[9px] font-black uppercase tracking-widest text-zinc-500 hover:text-white transition-all">Export Report</button>
             </div>
           </div>
 
@@ -133,42 +137,19 @@ export default async function AdminDashboard() {
               <tbody className="divide-y divide-zinc-800/30">
                 {users.filter(u => u.role !== 'ADMIN').map((user) => (
                   <tr key={user.id} className="hover:bg-zinc-900/40 transition-all group">
-                    <td className="py-8 px-4">
-                      <div className="flex items-center gap-4">
-                         <div className="w-10 h-10 bg-zinc-900 border border-zinc-800 rounded-xl flex items-center justify-center font-black text-blue-500 text-xs group-hover:border-blue-600/50 transition-all">
-                            {user.email?.[0].toUpperCase()}
-                         </div>
-                         <div>
-                            <p className="font-black text-white uppercase tracking-tight group-hover:text-blue-500 transition-colors">{user.email}</p>
-                            <div className="flex items-center gap-2 mt-1">
-                               <p className="text-[8px] text-zinc-600 font-bold tracking-[0.2em] uppercase">ID: {user.id.slice(-10)}</p>
-                               {(user as any).walletAddress && (
-                                 <>
-                                   <span className="text-zinc-800 text-[8px]">•</span>
-                                   <p className="text-[8px] text-blue-500/50 font-black uppercase tracking-widest italic">Wallet: {(user as any).walletAddress.slice(0, 6)}...{(user as any).walletAddress.slice(-4)}</p>
-                                 </>
-                               )}
-                            </div>
-                         </div>
-                      </div>
+                    <td className="py-8 px-4 font-black">
+                      {user.email}
                     </td>
                     <td className="py-8 px-4">
                       <p className="text-xl font-black text-white tracking-widest">${user.balance.toFixed(2)}</p>
-                      <p className="text-[9px] text-emerald-500/50 font-bold uppercase tracking-tighter mt-1 italic">Confirmed Equity</p>
                     </td>
                     <td className="py-8 px-4">
-                       <div className="space-y-2">
-                          <div className="flex justify-between w-32 text-[8px] font-black uppercase text-zinc-600">
-                             <span>Engagement</span>
-                             <span className="text-blue-500">{user.deposits.length * 10}%</span>
-                          </div>
-                          <div className="w-32 h-1 bg-zinc-900 rounded-full overflow-hidden">
-                             <div className="h-full bg-blue-600" style={{ width: `${Math.min(user.deposits.length * 10, 100)}%` }} />
-                          </div>
+                       <div className="w-32 h-1 bg-zinc-900 rounded-full overflow-hidden">
+                          <div className="h-full bg-blue-600" style={{ width: `${Math.min(user.deposits.length * 10, 100)}%` }} />
                        </div>
                     </td>
                     <td className="py-8 px-4 text-right">
-                      <button className="bg-zinc-950 border border-zinc-800 text-zinc-400 px-6 py-3 rounded-xl text-[9px] font-black uppercase tracking-[0.2em] hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all active:scale-95 italic">
+                      <button className="bg-zinc-950 border border-zinc-800 text-zinc-400 px-6 py-3 rounded-xl text-[9px] font-black uppercase hover:bg-blue-600 hover:text-white transition-all italic">
                         Manage Node
                       </button>
                     </td>
