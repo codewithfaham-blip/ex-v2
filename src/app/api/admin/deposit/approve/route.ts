@@ -35,7 +35,7 @@ export async function POST(req: Request) {
       }),
       db.deposit.update({
         where: { id: depositId },
-        data: { status: "APPROVED" }
+        data: { status: "ACTIVE" }
       })
     ]);
 

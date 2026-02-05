@@ -16,7 +16,12 @@ export async function GET() {
       // DEPOSIT FIX: Yahan "APPROVED" use kiya hai
       db.deposit.aggregate({
         _sum: { amount: true },
-        where: { status: "APPROVED" }
+        where: { 
+          OR: [
+            { status: "APPROVED" },
+            { status: "ACTIVE" }
+          ]
+        }
       }),
       // WITHDRAWAL: Iska status "COMPLETED" hi rehne diya (as per your error logs)
       db.withdrawal.aggregate({
