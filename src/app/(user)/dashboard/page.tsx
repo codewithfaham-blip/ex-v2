@@ -51,35 +51,44 @@ export default async function UserDashboard() {
       </div>
 
       {/* 2. Financial Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+      <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6 mb-10">
         
         {/* Balance Card */}
-        <div className="bg-zinc-900/40 border border-zinc-800/50 p-6 rounded-[2.5rem] relative overflow-hidden group shadow-2xl">
+        <div className="bg-zinc-900/40 border border-zinc-800/50 p-4 md:p-6 rounded-[1.5rem] md:rounded-[2.5rem] relative overflow-hidden group shadow-2xl col-span-2 md:col-span-1">
           <div className="absolute -top-24 -right-24 w-64 h-64 bg-blue-600/10 rounded-full blur-[80px]" />
-          <p className="text-zinc-500 text-[9px] font-black uppercase tracking-widest mb-3 italic">Liquidity Balance</p>
-          <h3 className="text-4xl font-black text-white tracking-tighter">${user.balance.toFixed(2)}</h3>
-          <div className="mt-6 flex items-center gap-2">
-             <Activity size={12} className="text-emerald-500" />
-             <span className="text-emerald-500 text-[8px] font-black uppercase tracking-widest">Live Portfolio Flowing</span>
+          <p className="text-zinc-500 text-[8px] md:text-[9px] font-black uppercase tracking-widest mb-2 md:mb-3 italic">Liquidity Balance</p>
+          <h3 className="text-2xl md:text-4xl font-black text-white tracking-tighter">${user.balance.toFixed(2)}</h3>
+          <div className="mt-4 md:mt-6 flex items-center gap-2">
+             <Activity size={10} className="text-emerald-500" />
+             <span className="text-emerald-500 text-[7px] md:text-[8px] font-black uppercase tracking-widest">Live Portfolio</span>
           </div>
         </div>
 
         {/* Deposits Card */}
-        <div className="bg-zinc-900/40 border border-zinc-800/50 p-6 rounded-[2.5rem] flex flex-col justify-between group hover:border-blue-600/30 transition-all min-h-[160px]">
+        <div className="bg-zinc-900/40 border border-zinc-800/50 p-4 md:p-6 rounded-[1.5rem] md:rounded-[2.5rem] flex flex-col justify-between group hover:border-blue-600/30 transition-all min-h-[120px] md:min-h-[160px]">
           <div className="flex justify-between items-start">
-            <p className="text-zinc-500 text-[9px] font-black uppercase tracking-widest italic">Injected Assets</p>
-            <ArrowDownCircle className="text-blue-500 group-hover:rotate-12 transition-transform" size={20} />
+            <p className="text-zinc-500 text-[8px] md:text-[9px] font-black uppercase tracking-widest italic">Injected</p>
+            <ArrowDownCircle className="text-blue-500 group-hover:rotate-12 transition-transform" size={16} />
           </div>
-          <h3 className="text-2xl font-black text-white">${totalDeposits.toFixed(2)}</h3>
+          <h3 className="text-lg md:text-2xl font-black text-white">${totalDeposits.toFixed(2)}</h3>
         </div>
 
         {/* Withdrawals Card */}
-        <div className="bg-zinc-900/40 border border-zinc-800/50 p-6 rounded-[2.5rem] flex flex-col justify-between group hover:border-emerald-600/30 transition-all min-h-[160px]">
+        <div className="bg-zinc-900/40 border border-zinc-800/50 p-4 md:p-6 rounded-[1.5rem] md:rounded-[2.5rem] flex flex-col justify-between group hover:border-emerald-600/30 transition-all min-h-[120px] md:min-h-[160px]">
           <div className="flex justify-between items-start">
-            <p className="text-zinc-500 text-[9px] font-black uppercase tracking-widest italic">Total Extractions</p>
-            <ArrowUpCircle className="text-emerald-500 group-hover:-rotate-12 transition-transform" size={20} />
+            <p className="text-zinc-500 text-[8px] md:text-[9px] font-black uppercase tracking-widest italic">Extractions</p>
+            <ArrowUpCircle className="text-emerald-500 group-hover:-rotate-12 transition-transform" size={16} />
           </div>
-          <h3 className="text-2xl font-black text-emerald-500">${totalWithdrawals.toFixed(2)}</h3>
+          <h3 className="text-lg md:text-2xl font-black text-emerald-500">${totalWithdrawals.toFixed(2)}</h3>
+        </div>
+
+        {/* Live Nodes Card (Mobile Only replacement or 4th card) */}
+        <div className="bg-zinc-900/40 border border-zinc-800/50 p-4 md:p-6 rounded-[1.5rem] md:rounded-[2.5rem] flex flex-col justify-between group hover:border-purple-600/30 transition-all min-h-[120px] md:min-h-[160px] md:hidden">
+          <div className="flex justify-between items-start">
+            <p className="text-zinc-500 text-[8px] font-black uppercase tracking-widest italic">Live Nodes</p>
+            <Activity className="text-purple-500" size={16} />
+          </div>
+          <h3 className="text-lg font-black text-white">{user.deposits.filter(d => d.status === 'ACTIVE').length} Active</h3>
         </div>
       </div>
 

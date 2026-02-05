@@ -70,20 +70,20 @@ export default async function AdminDashboard() {
       </div>
 
       {/* 2. CORE ANALYTICS (Compact Cards) */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
         {[
           { label: "Total Liquidity", val: `$${(completedStats._sum.amount || 0).toLocaleString()}`, icon: <BarChart3 className="text-blue-500" />, trend: "+12.5%", color: "blue" },
           { label: "Pending Synths", val: pendingDeposits, icon: <Clock className={pendingDeposits > 0 ? "text-amber-500" : "text-zinc-500"} />, trend: "Awaiting", color: pendingDeposits > 0 ? "amber" : "zinc" },
           { label: "Active Nodes", val: totalUsers, icon: <Users className="text-purple-500" />, trend: "Live", color: "purple" },
           { label: "Platform Volume", val: `$${totalVolume.toLocaleString()}`, icon: <Wallet className="text-emerald-500" />, trend: "Global", color: "emerald" },
         ].map((card, i) => (
-          <div key={i} className={`bg-zinc-900/30 border border-zinc-800/50 p-6 rounded-[2rem] relative overflow-hidden group`}>
-             <div className="flex justify-between items-start mb-4">
-                <div className="bg-zinc-950 p-2.5 rounded-xl border border-zinc-800">{card.icon}</div>
-                <span className={`text-[8px] font-black uppercase px-2 py-0.5 rounded-full bg-${card.color}-500/10 text-${card.color}-500 border border-${card.color}-500/20`}>{card.trend}</span>
+          <div key={i} className={`bg-zinc-900/30 border border-zinc-800/50 p-4 md:p-6 rounded-[1.5rem] md:rounded-[2rem] relative overflow-hidden group`}>
+             <div className="flex justify-between items-start mb-2 md:mb-4">
+                <div className="bg-zinc-950 p-2 md:p-2.5 rounded-lg md:rounded-xl border border-zinc-800 scale-75 md:scale-100 origin-top-left">{card.icon}</div>
+                <span className={`text-[6px] md:text-[8px] font-black uppercase px-2 py-0.5 rounded-full bg-${card.color}-500/10 text-${card.color}-500 border border-${card.color}-500/20`}>{card.trend}</span>
              </div>
-             <p className="text-zinc-500 text-[8px] font-black uppercase tracking-widest mb-1">{card.label}</p>
-             <h3 className="text-2xl font-black text-white tracking-tighter italic">{card.val}</h3>
+             <p className="text-zinc-500 text-[7px] md:text-[8px] font-black uppercase tracking-widest mb-0.5 md:mb-1">{card.label}</p>
+             <h3 className="text-base md:text-2xl font-black text-white tracking-tighter italic">{card.val}</h3>
           </div>
         ))}
       </div>
