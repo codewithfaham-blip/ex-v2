@@ -1,9 +1,9 @@
 import { db } from "@/lib/db";
 
 export async function distributeDailyProfits() {
-  // 1. Sab approved deposits dhundo (Kyunki status APPROVED hai, ACTIVE nahi)
+  // 1. Sab active deposits dhundo taake unka profit calculate ho sake
   const activeDeposits = await db.deposit.findMany({
-    where: { status: "APPROVED" }, // <-- Yahan APPROVED kar diya
+    where: { status: "ACTIVE" },
   });
 
   for (const deposit of activeDeposits) {
