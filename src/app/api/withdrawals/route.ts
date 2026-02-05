@@ -24,23 +24,25 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Insufficient balance" }, { status: 400 });
     }
 
-    // Use a transaction to ensure atomic update
-    const result = await db.$transaction([
-      db.user.update({
-        where: { id: user.id },
-        data: { balance: { decrement: parseFloat(amount) } },
-      }),
-      db.withdrawal.create({
-        data: {
-          amount: parseFloat(amount),
-          address,
-          status: "PENDING",
-          userId: user.id,
-        },
-      }),
-    ]);
-
-    return NextResponse.json(result[1]);
+    try {
+      const [_, withdrawal] = await db.$transaction([
+        db.user.update({
+          where: { id: user.id, balance: { gte: parseFloat(amount) } },
+          data: { balance: { decrement: parseFloat(amount) } },
+        }),
+        db.withdrawal.create({
+          data: {
+            amount: parseFloat(amount),
+            address,
+            status: "PENDING",
+            userId: user.id,
+          },
+        }),
+      ]);
+      return NextResponse.json(withdrawal);
+    } catch (error) {
+       return NextResponse.json({ error: "Extraction failed. Possible balance mismatch." }, { status: 400 });
+    }
   } catch (error) {
     console.error("Withdrawal API error:", error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
