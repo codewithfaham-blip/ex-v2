@@ -61,10 +61,28 @@ export default function Navbar() {
           )}
         </div>
 
-        {/* Mobile Toggle */}
-        <button className="md:hidden text-white p-1" onClick={() => setIsOpen(!isOpen)}>
-          {isOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
+        {/* Mobile Toggle & Quick Actions */}
+        <div className="flex md:hidden items-center gap-3">
+          {status === "unauthenticated" && (
+            <Link 
+              href="/login" 
+              className="px-3 py-1.5 bg-blue-600/10 text-blue-500 rounded-lg border border-blue-600/20 text-[10px] font-black uppercase tracking-tighter active:scale-95 transition-all"
+            >
+              Login
+            </Link>
+          )}
+          {status === "authenticated" && (
+            <Link 
+              href={dashboardHref} 
+              className="px-3 py-1.5 bg-blue-600 text-white rounded-lg text-[10px] font-black uppercase tracking-tighter active:scale-95 transition-all shadow-lg shadow-blue-600/20"
+            >
+              Portal
+            </Link>
+          )}
+          <button className="text-white p-2 bg-zinc-900 border border-zinc-800 rounded-lg active:scale-90 transition-all" onClick={() => setIsOpen(!isOpen)}>
+            {isOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Menu */}
