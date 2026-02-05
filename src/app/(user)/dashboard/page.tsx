@@ -29,8 +29,8 @@ export default async function UserDashboard() {
     // Padding-top (pt-24) mobile ke liye hai, lg:pt-10 desktop ke liye
     <div className="p-4 md:p-8 lg:p-10 pt-24 lg:pt-10 max-w-[1400px] mx-auto w-full">
       
-      {/* 1. Header Section */}
-      <div className="mb-8 flex flex-col lg:flex-row justify-between items-stretch lg:items-center gap-6">
+      {/* 1. Header Section - Hidden on LG as we have DashboardHeader */}
+      <div className="mb-8 lg:hidden flex flex-col justify-between items-stretch gap-6">
         <div>
           <div className="flex items-center gap-3 mb-2">
             <div className="bg-blue-600 h-8 w-1.5 rounded-full shadow-[0_0_15px_rgba(37,99,235,0.5)]" />
@@ -45,7 +45,7 @@ export default async function UserDashboard() {
         </div>
         
         {/* Telegram Wallet Container integrated into header area */}
-        <div className="lg:w-[400px]">
+        <div className="w-full">
            <TelegramWalletContainer />
         </div>
       </div>

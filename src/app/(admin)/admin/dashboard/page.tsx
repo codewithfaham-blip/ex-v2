@@ -43,8 +43,8 @@ export default async function AdminDashboard() {
   return (
     <div className="p-4 md:p-8 pt-24 lg:pt-10 max-w-[1600px] mx-auto bg-black min-h-screen text-white space-y-8">
       
-      {/* 1. TOP COMMAND BAR */}
-      <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-6">
+      {/* 1. TOP COMMAND BAR - Hidden on Desktop */}
+      <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-6 lg:hidden">
         <div>
           <div className="flex items-center gap-3 mb-2">
             <div className="bg-blue-600 h-8 w-1.5 rounded-full shadow-[0_0_15px_rgba(37,99,235,0.5)]" />

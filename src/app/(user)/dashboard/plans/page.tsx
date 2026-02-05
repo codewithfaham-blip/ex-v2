@@ -73,8 +73,8 @@ export default function PlansPage() {
 
   return (
     <div className="p-4 md:p-8 pt-24 lg:pt-10 max-w-7xl mx-auto min-h-screen space-y-12">
-      {/* Page Header */}
-      <div className="mb-10 text-white">
+      {/* Page Header - Hidden on Desktop */}
+      <div className="mb-10 text-white lg:hidden">
         <div className="flex items-center gap-3 mb-2">
           <div className="bg-blue-600 h-8 w-1.5 rounded-full shadow-[0_0_15px_rgba(37,99,235,0.5)]" />
           <h1 className="text-3xl font-black uppercase tracking-tighter italic text-white leading-none">
