@@ -102,9 +102,20 @@ export default async function UserDashboard() {
                 {user.deposits.slice(0, 5).map((dep) => (
                   <div key={dep.id} className="flex items-center justify-between p-6 bg-zinc-950/50 border border-zinc-900 rounded-[1.5rem] hover:border-zinc-700 transition-all group">
                     <div className="flex items-center gap-5">
-                       <div className="bg-blue-600/10 p-3 rounded-xl text-blue-500 group-hover:bg-blue-600 group-hover:text-white transition-all">
-                        <Wallet size={20} />
-                       </div>
+                       {dep.gateway === 'JazzCash' && (
+                         <div className="w-8 h-8 bg-[#DE2128] rounded-lg flex items-center justify-center font-black text-white text-[7px] shrink-0">JAZZ</div>
+                       )}
+                       {dep.gateway === 'EasyPaisa' && (
+                         <div className="w-8 h-8 bg-[#00A950] rounded-lg flex items-center justify-center font-black text-white text-[7px] shrink-0">EP</div>
+                       )}
+                       {dep.gateway?.includes('USDT') && (
+                         <div className="w-8 h-8 bg-[#26A17B] rounded-lg flex items-center justify-center font-black text-white text-xs shrink-0">₮</div>
+                       )}
+                       {!['JazzCash', 'EasyPaisa'].includes(dep.gateway || '') && !dep.gateway?.includes('USDT') && (
+                         <div className="bg-blue-600/10 p-3 rounded-xl text-blue-500 group-hover:bg-blue-600 group-hover:text-white transition-all shrink-0">
+                          <Wallet size={20} />
+                         </div>
+                       )}
                        <div>
                           <p className="text-[11px] font-black uppercase tracking-tight text-white">{dep.gateway || 'Manual Deposit'}</p>
                           <p className="text-[9px] text-zinc-600 font-bold uppercase tracking-widest mt-1 italic">TID: {dep.transactionId}</p>

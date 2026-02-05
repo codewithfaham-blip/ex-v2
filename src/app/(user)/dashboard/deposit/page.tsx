@@ -16,9 +16,41 @@ export default function DepositPage() {
   }, []);
 
   const methods = settings ? [
-    { id: 'jazzcash', name: 'JazzCash', holder: settings.jazzCashName, account: settings.jazzCashNumber, type: 'local' },
-    { id: 'easypaisa', name: 'EasyPaisa', holder: settings.easyPaisaName, account: settings.easyPaisaNumber, type: 'local' },
-    { id: 'usdt', name: 'USDT (TRC20)', address: settings.adminWalletAddress, type: 'crypto' }
+    { 
+      id: 'jazzcash', 
+      name: 'JazzCash', 
+      holder: settings.jazzCashName, 
+      account: settings.jazzCashNumber, 
+      type: 'local',
+      logo: (
+        <div className="w-10 h-10 bg-[#DE2128] rounded-full flex items-center justify-center font-black text-white text-[10px] shadow-lg shadow-red-600/20">
+          JAZZ
+        </div>
+      )
+    },
+    { 
+      id: 'easypaisa', 
+      name: 'EasyPaisa', 
+      holder: settings.easyPaisaName, 
+      account: settings.easyPaisaNumber, 
+      type: 'local',
+      logo: (
+        <div className="w-10 h-10 bg-[#00A950] rounded-full flex items-center justify-center font-black text-white text-[10px] shadow-lg shadow-emerald-600/20">
+          EP
+        </div>
+      )
+    },
+    { 
+      id: 'usdt', 
+      name: 'USDT (TRC20)', 
+      address: settings.adminWalletAddress, 
+      type: 'crypto',
+      logo: (
+        <div className="w-10 h-10 bg-[#26A17B] rounded-full flex items-center justify-center font-black text-white text-xs shadow-lg shadow-teal-600/20">
+          ₮
+        </div>
+      )
+    }
   ] : [];
 
   const handleCopy = (text: string) => {
@@ -67,10 +99,13 @@ export default function DepositPage() {
             <div 
               key={m.id} 
               onClick={() => setSelectedMethod(m)}
-              className={`p-4 rounded-2xl border cursor-pointer transition-all ${selectedMethod?.id === m.id ? 'border-blue-600 bg-blue-600/10' : 'border-zinc-800 bg-zinc-900/50'}`}
+              className={`p-6 rounded-[2rem] border cursor-pointer transition-all flex flex-col items-center text-center gap-4 ${selectedMethod?.id === m.id ? 'border-blue-600 bg-blue-600/10 scale-105 shadow-xl shadow-blue-600/10' : 'border-zinc-800 bg-zinc-900/50 hover:border-zinc-700'}`}
             >
-              <p className="font-bold uppercase text-[10px] tracking-widest text-zinc-500">{m.type}</p>
-              <h3 className="text-lg font-black italic">{m.name}</h3>
+              {m.logo}
+              <div>
+                <p className="font-bold uppercase text-[8px] tracking-[0.3em] text-zinc-500 mb-1">{m.type}</p>
+                <h3 className="text-sm font-black italic tracking-tighter">{m.name}</h3>
+              </div>
             </div>
           ))
         )}

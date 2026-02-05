@@ -79,9 +79,14 @@ export default function AdminSettings() {
       <div className="space-y-8">
         {/* BEP20 Wallet */}
         <div className="bg-zinc-900/40 border border-zinc-800/50 p-8 rounded-[3rem]">
-          <div className="flex items-center gap-4 mb-8">
-            <Wallet className="text-blue-600" size={24} />
-            <h2 className="text-sm font-black uppercase tracking-widest italic">Master Deposit Wallet (BEP20)</h2>
+          <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center gap-4">
+              <div className="w-10 h-10 bg-[#26A17B] rounded-full flex items-center justify-center font-black text-white text-xs shadow-lg shadow-teal-600/20">
+                ₮
+              </div>
+              <h2 className="text-sm font-black uppercase tracking-widest italic">Master USDT Wallet (BEP20)</h2>
+            </div>
+            <Wallet className="text-zinc-700" size={20} />
           </div>
           <input 
             type="text" 
@@ -115,9 +120,12 @@ export default function AdminSettings() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* JazzCash */}
           <div className="bg-zinc-900/40 border border-zinc-800/50 p-8 rounded-[3rem]">
-            <h2 className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-500 mb-6 flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-amber-500" /> JazzCash Configuration
-            </h2>
+            <div className="flex items-center gap-4 mb-6">
+              <div className="w-10 h-10 bg-[#DE2128] rounded-full flex items-center justify-center font-black text-white text-[10px] shadow-lg shadow-red-600/20">
+                JAZZ
+              </div>
+              <h2 className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-300 italic">JazzCash Configuration</h2>
+            </div>
             <div className="space-y-4">
               <input 
                 type="text" 
@@ -138,9 +146,12 @@ export default function AdminSettings() {
 
           {/* EasyPaisa */}
           <div className="bg-zinc-900/40 border border-zinc-800/50 p-8 rounded-[3rem]">
-            <h2 className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-500 mb-6 flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-emerald-500" /> EasyPaisa Configuration
-            </h2>
+            <div className="flex items-center gap-4 mb-6">
+              <div className="w-10 h-10 bg-[#00A950] rounded-full flex items-center justify-center font-black text-white text-[10px] shadow-lg shadow-emerald-600/20">
+                EP
+              </div>
+              <h2 className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-300 italic">EasyPaisa Configuration</h2>
+            </div>
             <div className="space-y-4">
               <input 
                 type="text" 
