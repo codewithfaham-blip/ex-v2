@@ -12,10 +12,8 @@ export default function MobileBottomNav() {
   const navItems = [
     { icon: <LayoutDashboard size={20} />, label: "Home", href: "/dashboard" },
     { icon: <Landmark size={20} />, label: "Plans", href: "/dashboard/plans" },
-    { icon: <ArrowDownRight size={20} />, label: "In", href: "/dashboard/deposit" },
-    { icon: <ArrowUpLeft size={20} />, label: "Out", href: "/dashboard/withdraw" },
     { icon: <Users2 size={20} />, label: "Team", href: "/dashboard/affiliates" },
-    { icon: <Settings size={20} />, label: "Account", href: "/dashboard/settings" },
+    { icon: <Settings size={20} />, label: "Settings", href: "/dashboard/settings" },
   ];
 
   return (

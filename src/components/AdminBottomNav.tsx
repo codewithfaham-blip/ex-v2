@@ -12,8 +12,7 @@ export default function AdminBottomNav() {
     { icon: <BarChart3 size={20} />, label: "Stats", href: "/admin/dashboard" },
     { icon: <Users size={20} />, label: "Users", href: "/admin/dashboard/investors" },
     { icon: <ArrowDownCircle size={20} />, label: "In", href: "/admin/dashboard/deposits" },
-    { icon: <ArrowUpCircle size={20} />, label: "Out", href: "/admin/dashboard/withdrawals" },
-    { icon: <Settings size={20} />, label: "Node", href: "/admin/dashboard/settings" },
+    { icon: <Settings size={20} />, label: "Settings", href: "/admin/dashboard/settings" },
   ];
 
   return (
