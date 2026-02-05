@@ -32,16 +32,17 @@ export default function UserSidebar() {
               <span className="text-[8px] font-bold tracking-[0.4em] text-white uppercase ml-0.5">Cash</span>
            </div>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
            <div className="flex items-center gap-2 border-r border-zinc-800 pr-4">
               <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_10px_#10b981]" />
               <span className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Active</span>
            </div>
            <button 
-            onClick={() => signOut({ callbackUrl: "/login" })}
-            className="p-2 bg-red-500/10 text-red-500 rounded-xl border border-red-500/20 active:scale-90 transition-all shadow-[0_0_15px_rgba(239,68,68,0.1)]"
+             onClick={() => setIsOpen(!isOpen)}
+             className="flex items-center gap-2 px-3 py-1.5 bg-blue-600/10 text-blue-500 rounded-lg border border-blue-600/20 active:scale-90 transition-all shadow-[0_0_15px_rgba(59,130,246,0.1)]"
            >
-              <LogOut size={18} />
+              {isOpen ? <X size={16} /> : <Menu size={16} />}
+              <span className="text-[10px] font-black uppercase tracking-tighter">Menu</span>
            </button>
         </div>
       </div>

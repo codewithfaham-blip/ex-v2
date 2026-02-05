@@ -1,3 +1,5 @@
+"use client";
+
 import { usePathname } from "next/navigation";
 import { Activity, ShieldCheck, Cpu, Bell, Search } from "lucide-react";
 import CyberTicker from "./CyberTicker";
