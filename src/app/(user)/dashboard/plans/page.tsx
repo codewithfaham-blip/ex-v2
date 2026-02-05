@@ -1,4 +1,5 @@
 "use client";
+
 import { Zap, ShieldCheck, Trophy, Crown, ArrowRight, X, Loader2, CheckCircle2 } from "lucide-react";
 import { useState } from "react";
 
