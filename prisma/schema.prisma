@@ -24,6 +24,10 @@ model SystemSetting {
   id                 String   @id @default("global")
   adminWalletAddress String?  @default("0x742d35Cc6634C0532925a3b844Bc454e4438f44e")
   tonWalletAddress   String?
+  jazzCashNumber     String?  @default("03001234567")
+  jazzCashName       String?  @default("Faham Khan")
+  easyPaisaNumber    String?  @default("03459876543")
+  easyPaisaName      String?  @default("Faham Khan")
   maintenanceMode    Boolean  @default(false)
   updatedAt          DateTime @default(now()) @updatedAt
 }

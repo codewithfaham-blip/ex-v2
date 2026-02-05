@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Copy, CheckCircle2, Wallet, Zap } from "lucide-react";
 
 export default function DepositPage() {
@@ -7,12 +7,19 @@ export default function DepositPage() {
   const [tid, setTid] = useState("");
   const [amount, setAmount] = useState("");
   const [loading, setLoading] = useState(false);
+  const [settings, setSettings] = useState<any>(null);
 
-  const methods = [
-    { id: 'jazzcash', name: 'JazzCash', holder: 'Faham Khan', account: '03001234567', type: 'local' },
-    { id: 'easypaisa', name: 'EasyPaisa', holder: 'Faham Khan', account: '03459876543', type: 'local' },
-    { id: 'usdt', name: 'USDT (TRC20)', address: 'T9z8u...xyz789', type: 'crypto' }
-  ];
+  useEffect(() => {
+    fetch("/api/settings")
+      .then(res => res.json())
+      .then(data => setSettings(data));
+  }, []);
+
+  const methods = settings ? [
+    { id: 'jazzcash', name: 'JazzCash', holder: settings.jazzCashName, account: settings.jazzCashNumber, type: 'local' },
+    { id: 'easypaisa', name: 'EasyPaisa', holder: settings.easyPaisaName, account: settings.easyPaisaNumber, type: 'local' },
+    { id: 'usdt', name: 'USDT (TRC20)', address: settings.adminWalletAddress, type: 'crypto' }
+  ] : [];
 
   const handleCopy = (text: string) => {
     navigator.clipboard.writeText(text);
@@ -51,16 +58,22 @@ export default function DepositPage() {
 
       {/* 1. Select Method */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {methods.map((m) => (
-          <div 
-            key={m.id} 
-            onClick={() => setSelectedMethod(m)}
-            className={`p-4 rounded-2xl border cursor-pointer transition-all ${selectedMethod?.id === m.id ? 'border-blue-600 bg-blue-600/10' : 'border-zinc-800 bg-zinc-900/50'}`}
-          >
-            <p className="font-bold uppercase text-[10px] tracking-widest text-zinc-500">{m.type}</p>
-            <h3 className="text-lg font-black italic">{m.name}</h3>
-          </div>
-        ))}
+        {!settings ? (
+          [1, 2, 3].map(i => (
+            <div key={i} className="h-24 bg-zinc-900/50 border border-zinc-800 rounded-2xl animate-pulse" />
+          ))
+        ) : (
+          methods.map((m) => (
+            <div 
+              key={m.id} 
+              onClick={() => setSelectedMethod(m)}
+              className={`p-4 rounded-2xl border cursor-pointer transition-all ${selectedMethod?.id === m.id ? 'border-blue-600 bg-blue-600/10' : 'border-zinc-800 bg-zinc-900/50'}`}
+            >
+              <p className="font-bold uppercase text-[10px] tracking-widest text-zinc-500">{m.type}</p>
+              <h3 className="text-lg font-black italic">{m.name}</h3>
+            </div>
+          ))
+        )}
       </div>
 
       {/* 2. Payment Details */}

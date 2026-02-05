@@ -9,6 +9,10 @@ export default function AdminSettings() {
   const [settings, setSettings] = useState({
     adminWalletAddress: "",
     tonWalletAddress: "",
+    jazzCashNumber: "",
+    jazzCashName: "",
+    easyPaisaNumber: "",
+    easyPaisaName: "",
     maintenanceMode: false,
   });
 
@@ -24,6 +28,10 @@ export default function AdminSettings() {
       setSettings({
         adminWalletAddress: data.adminWalletAddress || "",
         tonWalletAddress: data.tonWalletAddress || "",
+        jazzCashNumber: data.jazzCashNumber || "",
+        jazzCashName: data.jazzCashName || "",
+        easyPaisaNumber: data.easyPaisaNumber || "",
+        easyPaisaName: data.easyPaisaName || "",
         maintenanceMode: data.maintenanceMode || false,
       });
     } catch (err) {
@@ -101,6 +109,55 @@ export default function AdminSettings() {
             placeholder="UQ..."
           />
           <p className="text-[9px] text-zinc-400 mt-4 uppercase font-bold italic tracking-tighter">Enter your TON wallet address for Telegram Mini App integrations.</p>
+        </div>
+
+        {/* Local Gateway Section */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* JazzCash */}
+          <div className="bg-zinc-900/40 border border-zinc-800/50 p-8 rounded-[3rem]">
+            <h2 className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-500 mb-6 flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-amber-500" /> JazzCash Configuration
+            </h2>
+            <div className="space-y-4">
+              <input 
+                type="text" 
+                placeholder="Account Number"
+                value={settings.jazzCashNumber}
+                onChange={(e) => setSettings({...settings, jazzCashNumber: e.target.value})}
+                className="w-full bg-zinc-950 border border-zinc-800 rounded-2xl py-4 px-5 text-xs text-white outline-none focus:border-amber-500 transition-all"
+              />
+              <input 
+                type="text" 
+                placeholder="Account Holder Name"
+                value={settings.jazzCashName}
+                onChange={(e) => setSettings({...settings, jazzCashName: e.target.value})}
+                className="w-full bg-zinc-950 border border-zinc-800 rounded-2xl py-4 px-5 text-xs text-white outline-none focus:border-amber-500 transition-all"
+              />
+            </div>
+          </div>
+
+          {/* EasyPaisa */}
+          <div className="bg-zinc-900/40 border border-zinc-800/50 p-8 rounded-[3rem]">
+            <h2 className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-500 mb-6 flex items-center gap-2">
+              <div className="w-2 h-2 rounded-full bg-emerald-500" /> EasyPaisa Configuration
+            </h2>
+            <div className="space-y-4">
+              <input 
+                type="text" 
+                placeholder="Account Number"
+                value={settings.easyPaisaNumber}
+                onChange={(e) => setSettings({...settings, easyPaisaNumber: e.target.value})}
+                className="w-full bg-zinc-950 border border-zinc-800 rounded-2xl py-4 px-5 text-xs text-white outline-none focus:border-emerald-500 transition-all"
+              />
+              <input 
+                type="text" 
+                placeholder="Account Holder Name"
+                value={settings.easyPaisaName}
+                onChange={(e) => setSettings({...settings, easyPaisaName: e.target.value})}
+                className="w-full bg-zinc-950 border border-zinc-800 rounded-2xl py-4 px-5 text-xs text-white outline-none focus:border-emerald-500 transition-all"
+              />
+            </div>
+          </div>
         </div>
 
         {/* Maintenance Mode */}
