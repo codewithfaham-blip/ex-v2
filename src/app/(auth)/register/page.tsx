@@ -3,7 +3,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { UserPlus, Mail, Lock, User, Eye, EyeOff, Loader2, ShieldCheck } from "lucide-react";
-import Logo from "@/components/Logo";
+import BrandLogo from "@/components/BrandLogo";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -68,14 +68,8 @@ export default function RegisterPage() {
       <div className="w-full max-w-[400px] space-y-6 py-8">
         {/* Logo & Info */}
         <div className="text-center space-y-4">
-          <Link href="/" className="inline-flex flex-col items-center group">
-            <div className="bg-blue-600/10 p-4 rounded-[2rem] border border-blue-600/20 mb-3 group-hover:scale-110 transition-transform">
-               <Logo className="w-12 h-12" />
-            </div>
-            <div className="flex flex-col leading-none">
-              <span className="text-3xl font-black text-blue-600 tracking-tighter italic uppercase">Exotic</span>
-              <span className="text-xs font-bold text-white uppercase tracking-[0.6em] ml-1">Cash</span>
-            </div>
+          <Link href="/" className="inline-block group">
+            <BrandLogo size="lg" className="flex-col !gap-5" />
           </Link>
           <p className="text-zinc-500 text-[10px] font-black uppercase tracking-[0.2em]">Deploying New Node Connectivity</p>
         </div>

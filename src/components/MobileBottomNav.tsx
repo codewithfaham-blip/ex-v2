@@ -17,7 +17,7 @@ export default function MobileBottomNav() {
   ];
 
   return (
-    <div className="lg:hidden fixed bottom-0 left-0 w-full bg-zinc-950/90 backdrop-blur-xl border-t border-zinc-900 px-2 py-3 z-[100] flex justify-around items-center">
+    <div className="lg:hidden fixed bottom-0 left-0 w-full bg-zinc-950/90 backdrop-blur-xl border-t border-zinc-900 px-2 py-3 z-40 flex justify-around items-center">
       {navItems.map((item) => {
         const isActive = pathname === item.href;
         return (

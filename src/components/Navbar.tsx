@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Menu, X, LayoutDashboard, LogOut, Loader2 } from "lucide-react";
 import { useSession, signOut } from "next-auth/react";
 import { usePathname } from "next/navigation";
-import Logo from "./Logo";
+import BrandLogo from "./BrandLogo";
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -22,12 +22,8 @@ export default function Navbar() {
   return (
     <nav className="sticky top-0 z-50 w-full bg-zinc-950/90 backdrop-blur-md border-b border-zinc-900">
       <div className="flex items-center justify-between px-4 py-4 md:px-8 max-w-7xl mx-auto">
-        <Link href="/" className="flex items-center gap-3 group">
-          <Logo className="w-9 h-9 md:w-11 md:h-11 group-hover:scale-110 transition-transform" />
-          <div className="flex flex-col leading-none">
-            <span className="text-xl md:text-2xl font-black tracking-tighter text-blue-600 italic uppercase">Exotic</span>
-            <span className="text-[10px] md:text-[11px] font-bold text-white uppercase tracking-[0.4em] ml-0.5">Cash</span>
-          </div>
+        <Link href="/" className="group">
+          <BrandLogo size="md" />
         </Link>
 
         {/* Desktop Links */}

@@ -5,9 +5,9 @@ import { signOut } from "next-auth/react";
 import { usePathname } from "next/navigation";
 import { 
   LayoutDashboard, Wallet, ArrowDownRight, ArrowUpLeft, 
-  Users2, Settings, LogOut, Menu, X, Landmark
+  Users2, Settings, LogOut, Menu, X, Landmark, ArrowLeft
 } from "lucide-react";
-import Logo from "./Logo";
+import BrandLogo from "./BrandLogo";
 
 export default function UserSidebar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,13 +25,9 @@ export default function UserSidebar() {
   return (
     <>
       <div className="lg:hidden fixed top-0 left-0 w-full bg-zinc-950/90 backdrop-blur-md border-b border-zinc-900 px-6 py-4 z-[50] flex justify-between items-center">
-        <div className="flex items-center gap-2">
-           <Logo className="w-8 h-8" />
-           <div className="flex flex-col leading-none">
-              <span className="text-lg font-black tracking-tighter italic text-blue-600 uppercase">Exotic</span>
-              <span className="text-[8px] font-bold tracking-[0.4em] text-white uppercase ml-0.5">Cash</span>
-           </div>
-        </div>
+        <Link href="/dashboard">
+          <BrandLogo size="sm" type="user" />
+        </Link>
         <div className="flex items-center gap-3">
            <div className="flex items-center gap-2 border-r border-zinc-800 pr-4">
               <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_10px_#10b981]" />
@@ -60,13 +56,19 @@ export default function UserSidebar() {
         fixed top-0 left-0 h-full z-[60] w-64 bg-zinc-950 border-r border-zinc-900 transition-transform duration-300 ease-in-out
         ${isOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0
       `}>
+        {/* Mobile-only close button */}
+        <div className="lg:hidden absolute top-4 -right-12">
+           <button 
+            onClick={() => setIsOpen(false)}
+            className="p-2.5 bg-zinc-950 border border-zinc-900 text-white rounded-xl shadow-2xl active:scale-95 transition-all"
+           >
+              <ArrowLeft size={20} className="text-blue-500" />
+           </button>
+        </div>
+
         <div className="p-8">
-          <Link href="/dashboard" className="flex items-center gap-3 group">
-            <Logo className="w-10 h-10 group-hover:rotate-12 transition-transform" />
-            <div className="flex flex-col leading-none">
-              <span className="text-xl font-black text-blue-600 tracking-tighter italic uppercase">Exotic</span>
-              <span className="text-[10px] font-bold text-white uppercase tracking-[0.4em] ml-0.5">Cash</span>
-            </div>
+          <Link href="/dashboard" className="group" onClick={() => setIsOpen(false)}>
+            <BrandLogo size="md" type="user" />
           </Link>
         </div>
 

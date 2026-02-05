@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { signIn, getSession } from "next-auth/react";
 import { LogIn, Mail, Lock, Eye, EyeOff, Loader2, ShieldCheck, AlertCircle } from "lucide-react";
-import Logo from "@/components/Logo";
+import BrandLogo from "@/components/BrandLogo";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -55,16 +55,9 @@ export default function LoginPage() {
       <div className="w-full max-w-[380px] space-y-6">
         
         {/* Logo & Info */}
-        {/* Logo & Info */}
         <div className="text-center space-y-4">
-          <Link href="/" className="inline-flex flex-col items-center group">
-            <div className="bg-blue-600/10 p-4 rounded-[2rem] border border-blue-600/20 mb-3 group-hover:scale-110 transition-transform">
-               <Logo className="w-12 h-12" />
-            </div>
-            <div className="flex flex-col leading-none">
-              <span className="text-3xl font-black text-blue-600 tracking-tighter italic uppercase">Exotic</span>
-              <span className="text-xs font-bold text-white uppercase tracking-[0.6em] ml-1">Cash</span>
-            </div>
+          <Link href="/" className="inline-block group">
+            <BrandLogo size="lg" className="flex-col !gap-5" />
           </Link>
           <p className="text-zinc-500 text-[10px] font-black uppercase tracking-[0.3em]">Accessing Secure Intelligence Node</p>
         </div>
