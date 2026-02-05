@@ -104,13 +104,16 @@ export default async function UserDashboard() {
             <button className="text-[10px] font-black text-zinc-600 uppercase tracking-widest hover:text-white transition italic">View All History</button>
           </div>
           
-          <div className="bg-zinc-900/20 border border-zinc-800/50 rounded-[2.5rem] p-6">
+          <div className="bg-zinc-900/20 border border-zinc-800/50 rounded-[2.5rem] p-6 relative overflow-hidden">
+            <div className="absolute top-0 right-0 p-8 opacity-[0.02] pointer-events-none">
+               <Activity size={200} className="text-blue-500" />
+            </div>
             {user.deposits.length === 0 ? (
               <div className="text-center py-24 bg-zinc-950/50 rounded-[2rem] border-2 border-dashed border-zinc-900 flex flex-col items-center">
                 <p className="text-zinc-700 text-[10px] font-black uppercase tracking-[0.4em]">Empty Terminal Trace</p>
               </div>
             ) : (
-              <div className="space-y-4">
+              <div className="space-y-4 relative z-10">
                 {user.deposits.slice(0, 5).map((dep) => (
                   <div key={dep.id} className="flex items-center justify-between p-4 bg-zinc-950/50 border border-zinc-900 rounded-[1.2rem] hover:border-zinc-700 transition-all group">
                     <div className="flex items-center gap-4">
@@ -143,7 +146,7 @@ export default async function UserDashboard() {
                       <p className="text-base font-black text-white">+${dep.amount.toFixed(2)}</p>
                       <div className="flex flex-col items-end">
                         <p className={`text-[7px] font-black uppercase tracking-tighter ${
-                          dep.status === 'APPROVED' ? 'text-emerald-500' : 
+                          dep.status === 'APPROVED' || dep.status === 'ACTIVE' ? 'text-emerald-500' : 
                           dep.status === 'REJECTED' ? 'text-red-500' : 'text-yellow-500'
                         }`}>{dep.status}</p>
                         <p className="text-[7px] text-zinc-600 font-black uppercase tracking-tighter">{new Date(dep.createdAt).toDateString()}</p>
@@ -157,15 +160,31 @@ export default async function UserDashboard() {
         </div>
 
         {/* Affiliate Terminal Card */}
-        <div className="bg-blue-600 p-8 rounded-[2.5rem] flex flex-col justify-between shadow-2xl shadow-blue-600/30 relative overflow-hidden min-h-[320px]">
-           <TrendingUp className="absolute -right-10 -top-10 text-white/10 w-48 h-48 -rotate-12" />
+        <div className="bg-zinc-900/40 border border-zinc-800/50 p-8 rounded-[2.5rem] flex flex-col justify-between shadow-2xl relative overflow-hidden group">
+           <div className="absolute inset-0 bg-blue-600/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
            <div className="relative z-10">
-              <h3 className="text-2xl font-black uppercase italic tracking-tighter mb-4 text-white leading-tight">Passive Income Terminal</h3>
-              <p className="text-blue-100 text-[10px] leading-relaxed font-bold uppercase tracking-wide opacity-80">
+              <div className="flex items-center gap-3 mb-6">
+                 <div className="p-3 bg-blue-600/10 rounded-2xl border border-blue-600/20 text-blue-500">
+                    <TrendingUp size={24} />
+                 </div>
+                 <h3 className="text-xl font-black uppercase italic tracking-tighter text-white leading-tight">Passive Income<br/>Terminal</h3>
+              </div>
+              <p className="text-zinc-500 text-[10px] leading-relaxed font-bold uppercase tracking-widest opacity-80 mb-6">
                 Scale your earnings by 10% on every asset deposit verified through your network link.
               </p>
+
+              {/* Mini Stats Card inside */}
+              <div className="bg-black/40 border border-zinc-800 rounded-2xl p-4 mb-6">
+                 <div className="flex justify-between items-center mb-2">
+                    <span className="text-[8px] font-black text-zinc-600 uppercase italic">Yield Rate</span>
+                    <span className="text-[10px] font-black text-emerald-500">+10.00%</span>
+                 </div>
+                 <div className="w-full h-1 bg-zinc-900 rounded-full overflow-hidden">
+                    <div className="h-full bg-blue-600 w-[40%]" />
+                 </div>
+              </div>
            </div>
-           <button className="bg-white text-blue-600 w-full py-4 rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] hover:bg-zinc-100 transition shadow-xl relative z-10 active:scale-95">
+           <button className="bg-blue-600 text-white w-full py-4 rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] hover:bg-blue-700 transition shadow-xl relative z-10 active:scale-95">
              Generate Access Link
            </button>
         </div>

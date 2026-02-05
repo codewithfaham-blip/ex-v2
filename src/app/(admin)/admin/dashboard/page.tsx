@@ -1,5 +1,5 @@
 import { db } from "@/lib/db";
-import { Users, Wallet, ArrowUpRight, Clock, Activity, ShieldAlert, BarChart3, Zap, Globe, Cpu, Server, History, ArrowDownLeft } from "lucide-react";
+import { Users, Wallet, ArrowUpRight, Clock, Activity, ShieldAlert, BarChart3, Zap, Globe, Cpu, Server, History, ArrowDownLeft, TrendingUp } from "lucide-react";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
@@ -92,52 +92,60 @@ export default async function AdminDashboard() {
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
         
         {/* Live Data Stream (Visual) */}
-        <div className="xl:col-span-2 bg-zinc-900/20 border border-zinc-800/50 rounded-[2.5rem] p-8 relative overflow-hidden min-h-[400px]">
-           <div className="absolute inset-0 opacity-10 pointer-events-none" 
-                style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, #3b82f6 1px, transparent 0)', backgroundSize: '24px 24px' }} />
+        <div className="xl:col-span-2 bg-zinc-900/20 border border-zinc-800/50 rounded-[2.5rem] p-8 relative overflow-hidden min-h-[450px]">
+           <div className="absolute inset-0 opacity-[0.03] pointer-events-none" 
+                style={{ backgroundImage: 'linear-gradient(rgba(59, 130, 246, 0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(59, 130, 246, 0.5) 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
            
            <div className="relative z-10 flex flex-col h-full">
               <div className="flex items-center justify-between mb-8">
                 <div className="flex items-center gap-3">
-                  <Cpu size={18} className="text-blue-500" />
-                  <h2 className="text-sm font-black uppercase tracking-[0.2em] italic">Network Grid Visualization</h2>
+                  <div className="p-2 bg-blue-600/10 rounded-lg border border-blue-600/20">
+                    <Cpu size={18} className="text-blue-500 animate-pulse" />
+                  </div>
+                  <h2 className="text-sm font-black uppercase tracking-[0.2em] italic">Infrastructure Neural Grid</h2>
                 </div>
-                <div className="flex gap-2">
-                   <div className="h-1.5 w-1.5 rounded-full bg-blue-500 animate-ping" />
-                   <span className="text-[8px] font-black uppercase text-blue-500">Live Traffic</span>
+                <div className="flex items-center gap-4">
+                   <div className="flex items-center gap-2">
+                      <div className="h-1.5 w-1.5 rounded-full bg-blue-500 animate-ping" />
+                      <span className="text-[8px] font-black uppercase text-blue-500">Processing Loop</span>
+                   </div>
+                   <div className="w-px h-3 bg-zinc-800" />
+                   <span className="text-[8px] font-black uppercase text-zinc-500">Uptime: 99.99%</span>
                 </div>
               </div>
 
-              {/* Fake Network Grid */}
-              <div className="flex-1 grid grid-cols-10 grid-rows-6 gap-2 opacity-40">
-                {Array.from({ length: 60 }).map((_, i) => (
-                  <div key={i} className={`h-full rounded-sm transition-colors duration-1000 ${
-                    Math.random() > 0.9 ? 'bg-blue-600 shadow-[0_0_10px_#1e40af]' : 
-                    Math.random() > 0.7 ? 'bg-zinc-800' : 'bg-zinc-900/50'
+              <div className="flex-1 grid grid-cols-12 grid-rows-8 gap-1.5 overflow-hidden">
+                {Array.from({ length: 96 }).map((_, i) => (
+                  <div key={i} className={`h-full rounded-[2px] transition-all duration-[2000ms] ${
+                    Math.random() > 0.95 ? 'bg-blue-600 shadow-[0_0_15px_#3b82f6] scale-110' : 
+                    Math.random() > 0.8 ? 'bg-zinc-700/50' : 'bg-zinc-900'
                   }`} />
                 ))}
               </div>
 
-              <div className="mt-8 grid grid-cols-3 gap-4">
-                 <div className="bg-zinc-950/50 border border-zinc-900 p-4 rounded-2xl">
+              <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
+                 <div className="bg-zinc-950/50 border border-zinc-900 p-4 rounded-2xl relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 p-1 opacity-20"><TrendingUp size={30} className="text-blue-500" /></div>
                     <p className="text-[8px] font-black text-zinc-600 uppercase mb-1">Inflow Velocity</p>
-                    <div className="flex items-center justify-between">
-                       <span className="text-xs font-bold text-white uppercase italic">Critical</span>
+                    <div className="flex items-center justify-between relative z-10">
+                       <span className="text-xs font-bold text-white uppercase italic">7.2k req/s</span>
                        <TrendingUpBar percentage={75} color="blue" />
                     </div>
                  </div>
-                 <div className="bg-zinc-950/50 border border-zinc-900 p-4 rounded-2xl">
+                 <div className="bg-zinc-950/50 border border-zinc-900 p-4 rounded-2xl relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 p-1 opacity-20"><Zap size={30} className="text-emerald-500" /></div>
                     <p className="text-[8px] font-black text-zinc-600 uppercase mb-1">Node Stability</p>
-                    <div className="flex items-center justify-between">
-                       <span className="text-xs font-bold text-white uppercase italic">Optimal</span>
+                    <div className="flex items-center justify-between relative z-10">
+                       <span className="text-xs font-bold text-white uppercase italic">99% Secure</span>
                        <TrendingUpBar percentage={92} color="emerald" />
                     </div>
                  </div>
-                 <div className="bg-zinc-950/50 border border-zinc-900 p-4 rounded-2xl">
-                    <p className="text-[8px] font-black text-zinc-600 uppercase mb-1">Queue Load</p>
-                    <div className="flex items-center justify-between">
-                       <span className="text-xs font-bold text-white uppercase italic">Minimal</span>
-                       <TrendingUpBar percentage={12} color="amber" />
+                 <div className="bg-zinc-950/50 border border-zinc-900 p-4 rounded-2xl relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 p-1 opacity-20"><ShieldAlert size={30} className="text-amber-500" /></div>
+                    <p className="text-[8px] font-black text-zinc-600 uppercase mb-1">Packet Loss</p>
+                    <div className="flex items-center justify-between relative z-10">
+                       <span className="text-xs font-bold text-white uppercase italic">0.02% Trace</span>
+                       <TrendingUpBar percentage={5} color="amber" />
                     </div>
                  </div>
               </div>
@@ -206,24 +214,27 @@ export default async function AdminDashboard() {
                 <tr key={user.id} className="hover:bg-zinc-900/40 transition-all group">
                   <td className="py-6 px-4">
                     <div className="flex flex-col">
-                       <span className="text-[10px] font-bold text-zinc-300">{user.email}</span>
-                       <span className="text-[7px] text-zinc-600 uppercase font-black italic">UID: {user.id.slice(0,8)}</span>
+                       <div className="flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 bg-blue-500 rounded-full group-hover:animate-ping" />
+                          <span className="text-[10px] font-bold text-zinc-300">{user.email}</span>
+                       </div>
+                       <span className="text-[7px] text-zinc-600 uppercase font-black italic ml-3.5">UID: {user.id.slice(0,8)}</span>
                     </div>
                   </td>
                   <td className="py-6 px-4">
-                    <span className="text-sm font-black text-white tracking-widest">${user.balance.toFixed(2)}</span>
+                    <span className="text-sm font-black text-white tracking-widest leading-none">${user.balance.toFixed(2)}</span>
                   </td>
                   <td className="py-6 px-4">
                      <div className="flex items-center gap-3">
                         <div className="flex-1 max-w-[100px] h-1 bg-zinc-950 rounded-full overflow-hidden">
-                           <div className="h-full bg-blue-600 shadow-[0_0_8px_#3b82f6]" style={{ width: `${Math.min(user.deposits.length * 15, 100)}%` }} />
+                           <div className="h-full bg-blue-600 shadow-[0_0_8px_#3b82f6] transition-all duration-1000" style={{ width: `${Math.min(user.deposits.length * 15, 100)}%` }} />
                         </div>
-                        <span className="text-[8px] font-black text-zinc-500">{user.deposits.length} Tx</span>
+                        <span className="text-[8px] font-black text-zinc-500">{user.deposits.length} Nodes</span>
                      </div>
                   </td>
                   <td className="py-6 px-4 text-right">
-                    <button className="bg-zinc-950 border border-zinc-900 text-zinc-500 px-4 py-2 rounded-lg text-[8px] font-black uppercase hover:bg-blue-600 hover:text-white hover:border-blue-500 transition-all italic active:scale-95">
-                      Open Node
+                    <button className="bg-zinc-950 border border-zinc-900 text-zinc-500 px-4 py-2 rounded-lg text-[8px] font-black uppercase hover:bg-blue-600 hover:text-white hover:border-blue-500 transition-all italic active:scale-95 group/btn">
+                      <span className="group-hover/btn:translate-x-1 transition-transform inline-block">Investigate Terminal</span>
                     </button>
                   </td>
                 </tr>
