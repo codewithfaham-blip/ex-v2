@@ -30,9 +30,10 @@ export default function AdminSidebar() {
       {/* Mobile Header - Only visible on small screens */}
       <div className="lg:hidden fixed top-0 left-0 w-full bg-zinc-950/90 backdrop-blur-md border-b border-zinc-900 px-6 py-4 z-[50] flex justify-between items-center">
         <span className="text-xl font-black tracking-tighter italic text-blue-600">EXOTIC<span className="text-white">ADMIN</span></span>
-        <button onClick={() => setIsOpen(!isOpen)} className="bg-blue-600 p-2.5 rounded-xl shadow-lg shadow-blue-600/20">
-          {isOpen ? <X size={20} className="text-white" /> : <Menu size={20} className="text-white" />}
-        </button>
+        <div className="flex items-center gap-2">
+           <div className="w-2 h-2 bg-blue-600 rounded-full animate-pulse shadow-[0_0_10px_#2563eb]" />
+           <span className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Node Secure</span>
+        </div>
       </div>
 
       {/* Sidebar Panel */}
