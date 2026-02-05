@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { signIn, getSession } from "next-auth/react";
 import { LogIn, Mail, Lock, Eye, EyeOff, Loader2, ShieldCheck, AlertCircle } from "lucide-react";
+import Logo from "@/components/Logo";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -54,16 +55,18 @@ export default function LoginPage() {
       <div className="w-full max-w-[380px] space-y-6">
         
         {/* Logo & Info */}
-        <div className="text-center space-y-2">
-          <div className="flex justify-center mb-4">
-            <div className="bg-blue-600/10 p-3 rounded-2xl border border-blue-600/20">
-              <ShieldCheck className="text-blue-500" size={32} />
+        {/* Logo & Info */}
+        <div className="text-center space-y-4">
+          <Link href="/" className="inline-flex flex-col items-center group">
+            <div className="bg-blue-600/10 p-4 rounded-[2rem] border border-blue-600/20 mb-3 group-hover:scale-110 transition-transform">
+               <Logo className="w-12 h-12" />
             </div>
-          </div>
-          <h1 className="text-3xl font-black tracking-tighter text-white uppercase italic">
-            Secure <span className="text-blue-600">Login</span>
-          </h1>
-          <p className="text-zinc-500 text-xs font-bold uppercase tracking-[0.2em]">User & Admin Portal</p>
+            <div className="flex flex-col leading-none">
+              <span className="text-3xl font-black text-blue-600 tracking-tighter italic uppercase">Exotic</span>
+              <span className="text-xs font-bold text-white uppercase tracking-[0.6em] ml-1">Cash</span>
+            </div>
+          </Link>
+          <p className="text-zinc-500 text-[10px] font-black uppercase tracking-[0.3em]">Accessing Secure Intelligence Node</p>
         </div>
 
         {/* Error Box */}

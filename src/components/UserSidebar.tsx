@@ -25,7 +25,13 @@ export default function UserSidebar() {
   return (
     <>
       <div className="lg:hidden fixed top-0 left-0 w-full bg-zinc-950/90 backdrop-blur-md border-b border-zinc-900 px-6 py-4 z-[50] flex justify-between items-center">
-        <span className="text-xl font-black tracking-tighter italic text-blue-600">EXOTIC<span className="text-white">CASH</span></span>
+        <div className="flex items-center gap-2">
+           <Logo className="w-8 h-8" />
+           <div className="flex flex-col leading-none">
+              <span className="text-lg font-black tracking-tighter italic text-blue-600 uppercase">Exotic</span>
+              <span className="text-[8px] font-bold tracking-[0.4em] text-white uppercase ml-0.5">Cash</span>
+           </div>
+        </div>
         <div className="flex items-center gap-4">
            <div className="flex items-center gap-2 border-r border-zinc-800 pr-4">
               <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_10px_#10b981]" />
@@ -47,10 +53,11 @@ export default function UserSidebar() {
       `}>
         <div className="p-8">
           <Link href="/dashboard" className="flex items-center gap-3 group">
-            <Logo className="w-9 h-9 group-hover:rotate-12 transition-transform" />
-            <span className="text-2xl font-black text-blue-600 tracking-tighter italic">
-              EXOTIC<span className="text-white text-[10px] ml-1.5 uppercase tracking-[0.3em] font-bold">User</span>
-            </span>
+            <Logo className="w-10 h-10 group-hover:rotate-12 transition-transform" />
+            <div className="flex flex-col leading-none">
+              <span className="text-xl font-black text-blue-600 tracking-tighter italic uppercase">Exotic</span>
+              <span className="text-[10px] font-bold text-white uppercase tracking-[0.4em] ml-0.5">Cash</span>
+            </div>
           </Link>
         </div>
 
