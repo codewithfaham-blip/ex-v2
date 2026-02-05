@@ -1,6 +1,7 @@
 "use client";
 import { ShieldAlert, Wallet, Save, Loader2, CheckCircle2 } from "lucide-react";
 import { useState, useEffect } from "react";
+import TwoFactorSetup from "@/components/TwoFactorSetup";
 
 export default function AdminSettings() {
   const [loading, setLoading] = useState(true);
@@ -197,6 +198,9 @@ export default function AdminSettings() {
              </div>
           </div>
         </div>
+
+        {/* 2FA Section */}
+        <TwoFactorSetup />
 
         <button 
           onClick={handleSave}

@@ -23,6 +23,7 @@ export const metadata: Metadata = {
 import AuthProvider from "@/components/SessionProvider";
 import TonProvider from "@/components/TonProvider";
 import Navbar from "@/components/Navbar";
+import { Toaster } from "sonner";
 
 export default function RootLayout({
   children,
@@ -37,6 +38,7 @@ export default function RootLayout({
         <AuthProvider>
           <TonProvider>
             <Navbar />
+            <Toaster position="top-center" richColors theme="dark" />
             {children}
           </TonProvider>
         </AuthProvider>

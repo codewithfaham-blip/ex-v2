@@ -16,6 +16,8 @@ model User {
   createdAt     DateTime     @default(now())
   name          String?
   walletAddress String?
+  twoFactorSecret String?
+  isTwoFactorEnabled Boolean @default(false)
   deposits      Deposit[]
   withdrawals   Withdrawal[]
 }

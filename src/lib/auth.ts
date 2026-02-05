@@ -2,6 +2,7 @@ import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { db } from "@/lib/db";
 import bcrypt from "bcryptjs";
+import { authenticator } from "otplib";
 
 
 export const authOptions: NextAuthOptions = {
@@ -10,7 +11,8 @@ export const authOptions: NextAuthOptions = {
       name: "credentials",
       credentials: {
         email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" }
+        password: { label: "Password", type: "password" },
+        code: { label: "2FA Code", type: "text" }
       },
       async authorize(credentials) {
         try {
@@ -45,6 +47,24 @@ export const authOptions: NextAuthOptions = {
           if (!isValid) {
             console.error('❌ Invalid password for:', credentials.email);
             throw new Error("Incorrect password");
+          }
+
+          // 2FA Logic
+          if (user.isTwoFactorEnabled) {
+            if (!credentials.code) {
+               console.log('⚠️ 2FA Required for:', user.email);
+               throw new Error("2FA_REQUIRED");
+            }
+
+            const isValidToken = authenticator.verify({
+              token: credentials.code,
+              secret: user.twoFactorSecret || ""
+            });
+
+            if (!isValidToken) {
+              console.error('❌ Invalid 2FA code for:', user.email);
+              throw new Error("Invalid 2FA Code");
+            }
           }
 
           console.log('✅ Login successful for:', user.email);
