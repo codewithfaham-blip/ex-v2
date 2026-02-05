@@ -1,7 +1,7 @@
 "use client";
 
-import { Zap, ShieldCheck, Trophy, Crown, ArrowRight, X, Loader2, CheckCircle2 } from "lucide-react";
-import { useState } from "react";
+import { Zap, ShieldCheck, Trophy, Crown, ArrowRight, X, Loader2, CheckCircle2, Cpu } from "lucide-react";
+import { useState, useEffect } from "react";
 
 const plans = [
   { name: "Starter Pulse", min: 10, max: 99, roi: "1.5%", duration: "24 Hours", icon: <Zap className="text-blue-500" />, popular: false },
@@ -14,6 +14,26 @@ export default function PlansPage() {
   const [amount, setAmount] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [activeTerminals, setActiveTerminals] = useState<any[]>([]);
+  const [fetchingActive, setFetchingActive] = useState(true);
+
+  useEffect(() => {
+    fetchActivePlans();
+  }, []);
+
+  const fetchActivePlans = async () => {
+    try {
+      const res = await fetch("/api/user/active-plans");
+      const data = await res.json();
+      if (Array.isArray(data)) {
+        setActiveTerminals(data);
+      }
+    } catch (err) {
+      console.error("Failed to fetch active plans");
+    } finally {
+      setFetchingActive(false);
+    }
+  };
 
   const handlePurchase = async () => {
     if (!amount || parseFloat(amount) < selectedPlan.min || parseFloat(amount) > selectedPlan.max) {
@@ -35,6 +55,7 @@ export default function PlansPage() {
       const data = await res.json();
       if (res.ok) {
         setSuccess(true);
+        fetchActivePlans(); // Refresh the list
         setTimeout(() => {
           setSuccess(false);
           setSelectedPlan(null);
@@ -51,51 +72,102 @@ export default function PlansPage() {
   };
 
   return (
-    <div className="p-4 md:p-8 pt-24 lg:pt-10 max-w-7xl mx-auto min-h-screen">
+    <div className="p-4 md:p-8 pt-24 lg:pt-10 max-w-7xl mx-auto min-h-screen space-y-12">
+      {/* Page Header */}
       <div className="mb-10 text-white">
         <div className="flex items-center gap-3 mb-2">
           <div className="bg-blue-600 h-8 w-1.5 rounded-full shadow-[0_0_15px_rgba(37,99,235,0.5)]" />
           <h1 className="text-3xl font-black uppercase tracking-tighter italic text-white leading-none">
-            Active <span className="text-blue-600">Terminals</span>
+            Investment <span className="text-blue-600">Terminals</span>
           </h1>
         </div>
         <p className="text-zinc-500 text-[10px] font-black uppercase tracking-[0.4em] ml-5">
-           Select a Liquidity Pool to Deploy Capital • Platform Health: <span className="text-emerald-500 italic uppercase">Optimal</span>
+           Deploy Assets to Liquidity Pools • Platform Health: <span className="text-emerald-500 italic uppercase">Optimal</span>
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {plans.map((plan, i) => (
-          <div key={i} className={`relative bg-zinc-900/30 border ${plan.popular ? 'border-blue-600/50 shadow-[0_0_30px_-10px_rgba(37,99,235,0.3)]' : 'border-zinc-800/50'} p-8 rounded-[2.5rem] flex flex-col`}>
-            {plan.popular && <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-blue-600 text-[9px] font-black px-4 py-1 rounded-full uppercase italic">Top Performer</span>}
-            
-            <div className="bg-zinc-950 p-4 w-fit rounded-2xl border border-zinc-800 mb-6">{plan.icon}</div>
-            <h3 className="text-xl font-black uppercase italic tracking-tighter mb-4 text-white">{plan.name}</h3>
-            
-            <div className="mb-8">
-              <span className="text-5xl font-black text-white">{plan.roi}</span>
-              <span className="text-[10px] font-black text-zinc-500 uppercase ml-2">Daily Yield</span>
-            </div>
+      {/* 2. Active Deployments Section */}
+      <div className="space-y-6">
+        <div className="flex items-center gap-3">
+           <Cpu size={16} className="text-blue-500 animate-pulse" />
+           <h2 className="text-xs font-black uppercase tracking-[0.3em] text-zinc-500 italic">Deployment Status: Live Nodes</h2>
+        </div>
 
-            <div className="space-y-4 mb-8 text-xs font-bold uppercase tracking-wider text-zinc-300">
-              <div className="flex justify-between border-b border-zinc-800/50 pb-2">
-                <span className="text-zinc-500">Min/Max:</span> 
-                <span>${plan.min} - ${plan.max}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-zinc-500">Cycle:</span> 
-                <span>{plan.duration}</span>
-              </div>
-            </div>
-
-            <button 
-              onClick={() => setSelectedPlan(plan)}
-              className={`w-full py-4 rounded-2xl font-black text-[11px] uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-2 text-white ${plan.popular ? 'bg-blue-600 hover:bg-blue-700 shadow-xl shadow-blue-600/20' : 'bg-zinc-800 hover:bg-zinc-700'}`}
-            >
-              Initiate Node <ArrowRight size={14} />
-            </button>
+        {fetchingActive ? (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[1, 2, 3].map(i => (
+              <div key={i} className="h-32 bg-zinc-900/30 border border-zinc-800 rounded-[2rem] animate-pulse" />
+            ))}
           </div>
-        ))}
+        ) : activeTerminals.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {activeTerminals.map((node: any) => (
+              <div key={node.id} className="bg-zinc-900/40 border border-blue-600/30 p-6 rounded-[2rem] relative overflow-hidden group">
+                 <div className="absolute top-0 right-0 p-4">
+                    <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_10px_#10b981]" />
+                 </div>
+                 <div className="flex flex-col gap-1 mb-4">
+                    <p className="text-[9px] font-black text-blue-500 uppercase tracking-widest">{node.planName}</p>
+                    <h3 className="text-xl font-bold text-white tracking-tighter italic">${node.amount.toFixed(2)}</h3>
+                 </div>
+                 <div className="flex items-center justify-between mt-auto pt-4 border-t border-zinc-800/50">
+                    <div className="flex flex-col">
+                       <span className="text-[8px] font-black text-zinc-600 uppercase">Deployed On</span>
+                       <span className="text-[10px] font-bold text-zinc-400">{new Date(node.createdAt).toLocaleDateString()}</span>
+                    </div>
+                    <div className="bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/10">
+                       <span className="text-[9px] font-black text-emerald-500 uppercase tracking-tighter">Harvesting...</span>
+                    </div>
+                 </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="bg-zinc-900/20 border border-zinc-800/50 p-10 rounded-[2.5rem] text-center">
+             <p className="text-zinc-600 text-[10px] font-black uppercase tracking-[0.2em] italic">No active nodes detected. Deploy assets below to initiate yield.</p>
+          </div>
+        )}
+      </div>
+
+      {/* 3. Available Plans Grid */}
+      <div className="space-y-6">
+        <div className="flex items-center gap-3">
+           <Zap size={16} className="text-yellow-500" />
+           <h2 className="text-xs font-black uppercase tracking-[0.3em] text-zinc-500 italic">Available Liquidity Pools</h2>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {plans.map((plan, i) => (
+            <div key={i} className={`relative bg-zinc-900/30 border ${plan.popular ? 'border-blue-600/50 shadow-[0_0_30px_-10px_rgba(37,99,235,0.3)]' : 'border-zinc-800/50'} p-8 rounded-[2.5rem] flex flex-col group hover:scale-[1.02] transition-transform`}>
+              {plan.popular && <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-blue-600 text-[9px] font-black px-4 py-1 rounded-full uppercase italic">Top Performer</span>}
+              
+              <div className="bg-zinc-950 p-4 w-fit rounded-2xl border border-zinc-800 mb-6 group-hover:border-blue-500/30 transition-colors">{plan.icon}</div>
+              <h3 className="text-xl font-black uppercase italic tracking-tighter mb-4 text-white">{plan.name}</h3>
+              
+              <div className="mb-8">
+                <span className="text-5xl font-black text-white">{plan.roi}</span>
+                <span className="text-[10px] font-black text-zinc-500 uppercase ml-2">Daily Yield</span>
+              </div>
+
+              <div className="space-y-4 mb-8 text-xs font-bold uppercase tracking-wider text-zinc-300">
+                <div className="flex justify-between border-b border-zinc-800/50 pb-2">
+                  <span className="text-zinc-500">Min/Max:</span> 
+                  <span>${plan.min} - ${plan.max}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-zinc-500">Cycle:</span> 
+                  <span>{plan.duration}</span>
+                </div>
+              </div>
+
+              <button 
+                onClick={() => setSelectedPlan(plan)}
+                className={`w-full py-4 rounded-2xl font-black text-[11px] uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-2 text-white ${plan.popular ? 'bg-blue-600 hover:bg-blue-700 shadow-xl shadow-blue-600/20' : 'bg-zinc-800 hover:bg-zinc-700'}`}
+              >
+                Initiate Node <ArrowRight size={14} />
+              </button>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* Purchase Modal */}
