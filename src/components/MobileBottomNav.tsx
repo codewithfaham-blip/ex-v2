@@ -10,9 +10,10 @@ export default function MobileBottomNav() {
   const pathname = usePathname();
 
   const navItems = [
-    { icon: <LayoutDashboard size={20} />, label: "Home", href: "/dashboard" },
     { icon: <Landmark size={20} />, label: "Plans", href: "/dashboard/plans" },
-    { icon: <Users2 size={20} />, label: "Team", href: "/dashboard/affiliates" },
+    { icon: <ArrowDownRight size={20} />, label: "Deposit", href: "/dashboard/deposit" },
+    { icon: <LayoutDashboard size={20} />, label: "Home", href: "/dashboard" },
+    { icon: <ArrowUpLeft size={20} />, label: "Withdraw", href: "/dashboard/withdraw" },
     { icon: <Settings size={20} />, label: "Settings", href: "/dashboard/settings" },
   ];
 

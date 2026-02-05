@@ -60,15 +60,7 @@ export default function AdminSidebar() {
         fixed top-0 left-0 h-full z-[60] w-64 bg-zinc-950 border-r border-zinc-900 transition-transform duration-300 ease-in-out
         ${isOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0
       `}>
-        {/* Mobile-only close button */}
-        <div className="lg:hidden absolute top-4 -right-12">
-           <button 
-            onClick={() => setIsOpen(false)}
-            className="p-2.5 bg-zinc-950 border border-zinc-900 text-white rounded-xl shadow-2xl active:scale-95 transition-all"
-           >
-              <ArrowLeft size={20} className="text-blue-500" />
-           </button>
-        </div>
+
 
         <div className="p-8">
           <Link href="/admin/dashboard" className="group" onClick={() => setIsOpen(false)}>
