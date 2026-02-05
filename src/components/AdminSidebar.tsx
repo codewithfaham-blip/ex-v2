@@ -30,9 +30,17 @@ export default function AdminSidebar() {
       {/* Mobile Header - Only visible on small screens */}
       <div className="lg:hidden fixed top-0 left-0 w-full bg-zinc-950/90 backdrop-blur-md border-b border-zinc-900 px-6 py-4 z-[50] flex justify-between items-center">
         <span className="text-xl font-black tracking-tighter italic text-blue-600">EXOTIC<span className="text-white">ADMIN</span></span>
-        <div className="flex items-center gap-2">
-           <div className="w-2 h-2 bg-blue-600 rounded-full animate-pulse shadow-[0_0_10px_#2563eb]" />
-           <span className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Node Secure</span>
+        <div className="flex items-center gap-4">
+           <div className="flex items-center gap-2 border-r border-zinc-800 pr-4">
+              <div className="w-2 h-2 bg-blue-600 rounded-full animate-pulse shadow-[0_0_10px_#2563eb]" />
+              <span className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Secure</span>
+           </div>
+           <button 
+            onClick={() => signOut({ callbackUrl: "/login" })}
+            className="p-2 bg-red-500/10 text-red-500 rounded-xl border border-red-500/20 active:scale-90 transition-all shadow-[0_0_15px_rgba(239,68,68,0.1)]"
+           >
+              <LogOut size={18} />
+           </button>
         </div>
       </div>
 
