@@ -103,13 +103,19 @@ export default async function UserDashboard() {
                   <div key={dep.id} className="flex items-center justify-between p-6 bg-zinc-950/50 border border-zinc-900 rounded-[1.5rem] hover:border-zinc-700 transition-all group">
                     <div className="flex items-center gap-5">
                        {dep.gateway === 'JazzCash' && (
-                         <div className="w-8 h-8 bg-[#DE2128] rounded-lg flex items-center justify-center font-black text-white text-[7px] shrink-0">JAZZ</div>
+                         <div className="w-8 h-8 flex items-center justify-center overflow-hidden rounded-lg bg-white p-1 shrink-0">
+                           <img src="https://crystalpng.com/wp-content/uploads/2024/12/new-Jazzcash-logo.png" alt="JazzCash" className="w-full h-full object-contain" />
+                         </div>
                        )}
                        {dep.gateway === 'EasyPaisa' && (
-                         <div className="w-8 h-8 bg-[#00A950] rounded-lg flex items-center justify-center font-black text-white text-[7px] shrink-0">EP</div>
+                         <div className="w-8 h-8 flex items-center justify-center overflow-hidden rounded-lg bg-white p-1 shrink-0">
+                           <img src="https://crystalpng.com/wp-content/uploads/2024/10/Easypaisa-logo.png" alt="EasyPaisa" className="w-full h-full object-contain" />
+                         </div>
                        )}
                        {dep.gateway?.includes('USDT') && (
-                         <div className="w-8 h-8 bg-[#26A17B] rounded-lg flex items-center justify-center font-black text-white text-xs shrink-0">₮</div>
+                         <div className="w-8 h-8 flex items-center justify-center overflow-hidden rounded-lg bg-white p-1 shrink-0">
+                           <img src="https://cdn.worldvectorlogo.com/logos/tether.svg" alt="USDT" className="w-full h-full object-contain" />
+                         </div>
                        )}
                        {!['JazzCash', 'EasyPaisa'].includes(dep.gateway || '') && !dep.gateway?.includes('USDT') && (
                          <div className="bg-blue-600/10 p-3 rounded-xl text-blue-500 group-hover:bg-blue-600 group-hover:text-white transition-all shrink-0">

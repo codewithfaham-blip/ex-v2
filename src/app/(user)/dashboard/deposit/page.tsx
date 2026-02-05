@@ -23,8 +23,8 @@ export default function DepositPage() {
       account: settings.jazzCashNumber, 
       type: 'local',
       logo: (
-        <div className="w-10 h-10 bg-[#DE2128] rounded-full flex items-center justify-center font-black text-white text-[10px] shadow-lg shadow-red-600/20">
-          JAZZ
+        <div className="w-12 h-12 flex items-center justify-center overflow-hidden rounded-xl bg-white p-1">
+          <img src="https://crystalpng.com/wp-content/uploads/2024/12/new-Jazzcash-logo.png" alt="JazzCash" className="w-full h-full object-contain" />
         </div>
       )
     },
@@ -35,8 +35,8 @@ export default function DepositPage() {
       account: settings.easyPaisaNumber, 
       type: 'local',
       logo: (
-        <div className="w-10 h-10 bg-[#00A950] rounded-full flex items-center justify-center font-black text-white text-[10px] shadow-lg shadow-emerald-600/20">
-          EP
+        <div className="w-12 h-12 flex items-center justify-center overflow-hidden rounded-xl bg-white p-1">
+          <img src="https://crystalpng.com/wp-content/uploads/2024/10/Easypaisa-logo.png" alt="EasyPaisa" className="w-full h-full object-contain" />
         </div>
       )
     },
@@ -46,8 +46,8 @@ export default function DepositPage() {
       address: settings.adminWalletAddress, 
       type: 'crypto',
       logo: (
-        <div className="w-10 h-10 bg-[#26A17B] rounded-full flex items-center justify-center font-black text-white text-xs shadow-lg shadow-teal-600/20">
-          ₮
+        <div className="w-12 h-12 flex items-center justify-center overflow-hidden rounded-xl bg-white p-1">
+          <img src="https://cdn.worldvectorlogo.com/logos/tether.svg" alt="USDT" className="w-full h-full object-contain" />
         </div>
       )
     }

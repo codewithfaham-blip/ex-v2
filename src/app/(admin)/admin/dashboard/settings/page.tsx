@@ -81,8 +81,8 @@ export default function AdminSettings() {
         <div className="bg-zinc-900/40 border border-zinc-800/50 p-8 rounded-[3rem]">
           <div className="flex items-center justify-between mb-8">
             <div className="flex items-center gap-4">
-              <div className="w-10 h-10 bg-[#26A17B] rounded-full flex items-center justify-center font-black text-white text-xs shadow-lg shadow-teal-600/20">
-                ₮
+              <div className="w-10 h-10 flex items-center justify-center overflow-hidden rounded-lg bg-white p-1">
+                <img src="https://cdn.worldvectorlogo.com/logos/tether.svg" alt="USDT" className="w-full h-full object-contain" />
               </div>
               <h2 className="text-sm font-black uppercase tracking-widest italic">Master USDT Wallet (BEP20)</h2>
             </div>
@@ -121,8 +121,8 @@ export default function AdminSettings() {
           {/* JazzCash */}
           <div className="bg-zinc-900/40 border border-zinc-800/50 p-8 rounded-[3rem]">
             <div className="flex items-center gap-4 mb-6">
-              <div className="w-10 h-10 bg-[#DE2128] rounded-full flex items-center justify-center font-black text-white text-[10px] shadow-lg shadow-red-600/20">
-                JAZZ
+              <div className="w-10 h-10 flex items-center justify-center overflow-hidden rounded-lg bg-white p-1 shadow-lg shadow-red-600/10">
+                <img src="https://crystalpng.com/wp-content/uploads/2024/12/new-Jazzcash-logo.png" alt="JazzCash" className="w-full h-full object-contain" />
               </div>
               <h2 className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-300 italic">JazzCash Configuration</h2>
             </div>
@@ -147,8 +147,8 @@ export default function AdminSettings() {
           {/* EasyPaisa */}
           <div className="bg-zinc-900/40 border border-zinc-800/50 p-8 rounded-[3rem]">
             <div className="flex items-center gap-4 mb-6">
-              <div className="w-10 h-10 bg-[#00A950] rounded-full flex items-center justify-center font-black text-white text-[10px] shadow-lg shadow-emerald-600/20">
-                EP
+              <div className="w-10 h-10 flex items-center justify-center overflow-hidden rounded-lg bg-white p-1 shadow-lg shadow-emerald-600/10">
+                <img src="https://crystalpng.com/wp-content/uploads/2024/10/Easypaisa-logo.png" alt="EasyPaisa" className="w-full h-full object-contain" />
               </div>
               <h2 className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-300 italic">EasyPaisa Configuration</h2>
             </div>
