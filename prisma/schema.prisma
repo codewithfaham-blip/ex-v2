@@ -29,14 +29,16 @@ model SystemSetting {
 }
 
 model Deposit {
-  id            String   @id @default(cuid())
-  userId        String
-  amount        Float
-  gateway       String   // "JazzCash", "EasyPaisa", "USDT"
-  transactionId String   @unique // User jo TID dalay ga
-  status        DepositStatus @default(PENDING)
-  createdAt     DateTime @default(now())
-  user          User     @relation(fields: [userId], references: [id])
+  id              String   @id @default(cuid())
+  userId          String
+  amount          Float
+  gateway         String?  // "JazzCash", "EasyPaisa", "USDT"
+  planName        String?  @default("Manual Deposit")
+  transactionId   String?  @unique // User jo TID dalay ga (Manual)
+  transactionHash String?  @unique // User jo hash dalay ga (Crypto/Plan)
+  status          DepositStatus @default(PENDING)
+  createdAt       DateTime @default(now())
+  user            User     @relation(fields: [userId], references: [id])
 }
 
 model Withdrawal {
