@@ -31,17 +31,20 @@ export default async function UserDashboard() {
       
       {/* 1. Header Section */}
       <div className="mb-8 flex flex-col lg:flex-row justify-between items-stretch lg:items-center gap-6">
-        <div className="bg-blue-600/5 border border-blue-600/10 p-8 rounded-[2.5rem] flex-grow">
-          <h1 className="text-3xl font-black uppercase tracking-tighter italic text-white leading-none">
-            System <span className="text-blue-500">Access:</span> {user.email?.split('@')[0]}
-          </h1>
-          <p className="text-zinc-500 text-[10px] font-bold uppercase tracking-[0.3em] mt-3 flex items-center gap-2">
-            <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
+        <div>
+          <div className="flex items-center gap-3 mb-2">
+            <div className="bg-blue-600 h-8 w-1.5 rounded-full shadow-[0_0_15px_rgba(37,99,235,0.5)]" />
+            <h1 className="text-3xl font-black uppercase tracking-tighter italic text-white leading-none">
+              System <span className="text-blue-500">Access:</span> {user.email?.split('@')[0]}
+            </h1>
+          </div>
+          <p className="text-zinc-500 text-[10px] font-black uppercase tracking-[0.4em] ml-5 flex items-center gap-2">
+            <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
             Node Status: Operational ✓
           </p>
         </div>
         
-        {/* Telegram Wallet Container integrated into header area or as a main component */}
+        {/* Telegram Wallet Container integrated into header area */}
         <div className="lg:w-[400px]">
            <TelegramWalletContainer />
         </div>

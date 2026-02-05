@@ -27,10 +27,11 @@ export default function AdminSidebar() {
   return (
     <>
       {/* Mobile Header - Only visible on small screens */}
-      <div className="lg:hidden fixed top-0 left-0 w-full bg-zinc-950 border-b border-zinc-900 p-4 z-[50] flex justify-between items-center">
-        <span className="text-blue-600 font-black tracking-tighter italic">EXOTIC<span className="text-white">ADMIN</span></span>
-        <button onClick={() => setIsOpen(!isOpen)} className="bg-blue-600 p-2 rounded-lg">
-          {isOpen ? <X size={20} /> : <Menu size={20} />}
+      {/* Mobile Header - Only visible on small screens */}
+      <div className="lg:hidden fixed top-0 left-0 w-full bg-zinc-950/90 backdrop-blur-md border-b border-zinc-900 px-6 py-4 z-[50] flex justify-between items-center">
+        <span className="text-xl font-black tracking-tighter italic text-blue-600">EXOTIC<span className="text-white">ADMIN</span></span>
+        <button onClick={() => setIsOpen(!isOpen)} className="bg-blue-600 p-2.5 rounded-xl shadow-lg shadow-blue-600/20">
+          {isOpen ? <X size={20} className="text-white" /> : <Menu size={20} className="text-white" />}
         </button>
       </div>
 
@@ -41,9 +42,9 @@ export default function AdminSidebar() {
       `}>
         <div className="p-8">
           <Link href="/admin/dashboard" className="flex items-center gap-3 group">
-            <Logo className="w-8 h-8 group-hover:rotate-12 transition-transform" />
+            <Logo className="w-9 h-9 group-hover:rotate-12 transition-transform" />
             <span className="text-2xl font-black text-blue-600 tracking-tighter italic">
-              EXOTIC<span className="text-white text-xs ml-1 uppercase tracking-[0.3em] font-bold">Admin</span>
+              EXOTIC<span className="text-white text-[10px] ml-1.5 uppercase tracking-[0.3em] font-bold">Admin</span>
             </span>
           </Link>
         </div>
@@ -67,12 +68,12 @@ export default function AdminSidebar() {
           })}
         </nav>
 
-        <div className="absolute bottom-8 left-0 w-full px-4">
+        <div className="absolute bottom-8 left-0 w-full px-4 text-center">
           <button 
             onClick={() => signOut({ callbackUrl: "/login" })}
-            className="flex items-center gap-4 w-full px-4 py-3.5 rounded-2xl text-red-500 hover:bg-red-500/10 transition-all font-bold text-[11px] uppercase tracking-widest"
+            className="flex items-center justify-center gap-3 w-full px-4 py-4 rounded-2xl text-red-500 bg-red-500/5 hover:bg-red-500/10 transition-all font-black text-[11px] uppercase tracking-widest"
           >
-            <LogOut size={18} /> Exit Terminal
+            <LogOut size={16} /> Exit Terminal
           </button>
         </div>
       </aside>

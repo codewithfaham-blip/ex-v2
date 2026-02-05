@@ -10,9 +10,16 @@ const plans = [
 export default function PlansPage() {
   return (
     <div className="p-4 md:p-8 pt-24 lg:pt-10 max-w-7xl mx-auto">
-      <div className="mb-10 text-center lg:text-left">
-        <h1 className="text-3xl font-black tracking-tighter uppercase italic">Active <span className="text-blue-600">Terminals</span></h1>
-        <p className="text-zinc-500 text-[10px] font-bold uppercase tracking-[0.3em] mt-1">Select a liquidity pool to deploy capital</p>
+      <div className="mb-10 text-white">
+        <div className="flex items-center gap-3 mb-2">
+          <div className="bg-blue-600 h-8 w-1.5 rounded-full shadow-[0_0_15px_rgba(37,99,235,0.5)]" />
+          <h1 className="text-3xl font-black uppercase tracking-tighter italic text-white leading-none">
+            Active <span className="text-blue-600">Terminals</span>
+          </h1>
+        </div>
+        <p className="text-zinc-500 text-[10px] font-black uppercase tracking-[0.4em] ml-5">
+           Select a Liquidity Pool to Deploy Capital • Platform Health: <span className="text-emerald-500 italic uppercase">Optimal</span>
+        </p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

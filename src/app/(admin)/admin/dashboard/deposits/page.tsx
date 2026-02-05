@@ -12,8 +12,15 @@ export default async function AdminDeposits() {
   return (
     <div className="p-4 md:p-10 pt-24 lg:pt-10 max-w-[1600px] mx-auto text-white">
       <div className="mb-10">
-        <h1 className="text-3xl font-black uppercase tracking-tighter italic">Inbound <span className="text-emerald-500">Validation</span></h1>
-        <p className="text-zinc-500 text-[10px] font-bold uppercase tracking-[0.3em] mt-2 italic">Verify blockchain hashes and update user liquidity</p>
+        <div className="flex items-center gap-3 mb-2">
+          <div className="bg-blue-600 h-8 w-1.5 rounded-full shadow-[0_0_15px_rgba(37,99,235,0.5)]" />
+          <h1 className="text-3xl font-black uppercase tracking-tighter italic text-white leading-none">
+            Inbound <span className="text-emerald-500">Validation</span>
+          </h1>
+        </div>
+        <p className="text-zinc-500 text-[10px] font-black uppercase tracking-[0.4em] ml-5 italic">
+          Verify blockchain hashes and update user liquidity • Status: <span className="text-emerald-500 italic">Live Tracking</span>
+        </p>
       </div>
 
       <div className="bg-zinc-900/30 border border-zinc-800/50 rounded-[2.5rem] overflow-hidden backdrop-blur-md">

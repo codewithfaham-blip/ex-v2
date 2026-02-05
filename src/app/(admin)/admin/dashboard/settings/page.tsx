@@ -72,8 +72,15 @@ export default function AdminSettings() {
   return (
     <div className="p-4 md:p-10 pt-24 lg:pt-10 max-w-[1000px] mx-auto text-white">
       <div className="mb-10">
-        <h1 className="text-3xl font-black uppercase tracking-tighter italic">Core <span className="text-blue-600 text-5xl">Parameters</span></h1>
-        <p className="text-zinc-500 text-[10px] font-bold uppercase tracking-[0.3em] mt-2">Global system security and wallet configuration</p>
+        <div className="flex items-center gap-3 mb-2">
+          <div className="bg-blue-600 h-8 w-1.5 rounded-full shadow-[0_0_15px_rgba(37,99,235,0.5)]" />
+          <h1 className="text-3xl font-black uppercase tracking-tighter italic text-white leading-none">
+            Core <span className="text-blue-600">Parameters</span>
+          </h1>
+        </div>
+        <p className="text-zinc-500 text-[10px] font-black uppercase tracking-[0.4em] ml-5">
+          Global System Security and Wallet Configuration • Authorization: <span className="text-blue-500 italic">Root Level</span>
+        </p>
       </div>
 
       <div className="space-y-8">

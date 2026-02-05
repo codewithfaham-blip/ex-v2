@@ -3,12 +3,19 @@ import { useState } from "react";
 import Link from "next/link";
 import { Menu, X, LayoutDashboard, LogOut, Loader2 } from "lucide-react";
 import { useSession, signOut } from "next-auth/react";
+import { usePathname } from "next/navigation";
 import Logo from "./Logo";
 
 export default function Navbar() {
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const { data: session, status } = useSession();
   const isLoading = status === "loading";
+
+  // Hide Navbar in Dashboard routes to prevent "Double Header" confusion
+  if (pathname.startsWith("/dashboard") || pathname.startsWith("/admin")) {
+    return null;
+  }
 
   const dashboardHref = (session?.user as any)?.role === "ADMIN" ? "/admin/dashboard" : "/dashboard";
 

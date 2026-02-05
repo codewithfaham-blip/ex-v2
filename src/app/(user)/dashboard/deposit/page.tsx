@@ -85,8 +85,18 @@ export default function DepositPage() {
   };
 
   return (
-    <div className="p-6 max-w-4xl mx-auto space-y-8 bg-black min-h-screen text-white">
-      <h1 className="text-3xl font-black italic tracking-tighter text-blue-600">INITIALIZE_DEPOSIT</h1>
+    <div className="p-4 md:p-10 pt-24 lg:pt-10 max-w-4xl mx-auto space-y-8 text-white">
+      <div>
+        <div className="flex items-center gap-3 mb-2">
+          <div className="bg-blue-600 h-8 w-1.5 rounded-full shadow-[0_0_15px_rgba(37,99,235,0.5)]" />
+          <h1 className="text-3xl font-black uppercase tracking-tighter italic text-white leading-none">
+            Initialize <span className="text-blue-600">Deposit</span>
+          </h1>
+        </div>
+        <p className="text-zinc-500 text-[10px] font-black uppercase tracking-[0.3em] ml-5">
+          Secure Capital Injection Terminal • Gateway: <span className="text-blue-500 italic">Verified</span>
+        </p>
+      </div>
 
       {/* 1. Select Method */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

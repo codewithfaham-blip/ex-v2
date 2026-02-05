@@ -24,22 +24,23 @@ export default function UserSidebar() {
 
   return (
     <>
-      <div className="lg:hidden fixed top-0 left-0 w-full bg-zinc-950 border-b border-zinc-900 p-4 z-[50] flex justify-between items-center">
-        <span className="text-blue-500 font-black tracking-tighter italic text-lg">EXOTIC<span className="text-white">CASH</span></span>
-        <button onClick={() => setIsOpen(!isOpen)} className="bg-blue-600 p-2 rounded-xl">
+      <div className="lg:hidden fixed top-0 left-0 w-full bg-zinc-950/90 backdrop-blur-md border-b border-zinc-900 px-6 py-4 z-[50] flex justify-between items-center">
+        <span className="text-xl font-black tracking-tighter italic text-blue-600">EXOTIC<span className="text-white">CASH</span></span>
+        <button onClick={() => setIsOpen(!isOpen)} className="bg-blue-600 p-2.5 rounded-xl shadow-lg shadow-blue-600/20">
           {isOpen ? <X size={20} className="text-white" /> : <Menu size={20} className="text-white" />}
         </button>
       </div>
 
+      {/* Sidebar Panel */}
       <aside className={`
         fixed top-0 left-0 h-full z-[60] w-64 bg-zinc-950 border-r border-zinc-900 transition-transform duration-300 ease-in-out
         ${isOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0
       `}>
         <div className="p-8">
           <Link href="/dashboard" className="flex items-center gap-3 group">
-            <Logo className="w-8 h-8 group-hover:rotate-12 transition-transform" />
+            <Logo className="w-9 h-9 group-hover:rotate-12 transition-transform" />
             <span className="text-2xl font-black text-blue-600 tracking-tighter italic">
-              EXOTIC<span className="text-white text-xs ml-1 uppercase tracking-[0.2em] font-bold">User</span>
+              EXOTIC<span className="text-white text-[10px] ml-1.5 uppercase tracking-[0.3em] font-bold">User</span>
             </span>
           </Link>
         </div>
