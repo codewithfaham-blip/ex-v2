@@ -14,7 +14,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Exotic Cash | High-Yield Asset Terminal",
-  description: "Secure, fast, and transparent high-yield investment platform for digital assets.",
+  description:
+    "Secure, fast, and transparent high-yield investment platform for digital assets.",
   icons: {
     icon: "/favicon.svg",
   },
