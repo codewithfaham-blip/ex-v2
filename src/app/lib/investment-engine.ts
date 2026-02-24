@@ -6,12 +6,19 @@ export async function distributeDailyProfits() {
     where: { status: "ACTIVE" },
   });
 
+  // Fetch all plans once to avoid repeated queries in the loop
+  const plans = await db.plan.findMany();
+  const planMap = new Map(plans.map(p => [(p as any).name, p]));
+
   for (const deposit of activeDeposits) {
-    // Plan-based Profit Rates
-    let rate = 0.01; // Default 1%
-    if (deposit.planName === "Basic Starter") rate = 0.015;
-    if (deposit.planName === "Basic") rate = 0.025;
-    if (deposit.planName === "Standard") rate = 0.05;
+    const plan: any = planMap.get(deposit.planName || "");
+    
+    // Default rate if plan not found (fallback)
+    let rate = 0.01; 
+    
+    if (plan) {
+      rate = plan.roi / 100; // Database stores as percentage (e.g., 2.5)
+    }
 
     const profit = deposit.amount * rate;
 
@@ -23,6 +30,6 @@ export async function distributeDailyProfits() {
       }
     });
 
-    console.log(`[ENGINE] Profit of ${profit} (${(rate*100).toFixed(0)}%) added to user ${deposit.userId} for plan ${deposit.planName}`);
+    console.log(`[ENGINE] Profit of ${profit} (${(rate*100).toFixed(1)}%) added to user ${deposit.userId} for plan ${deposit.planName}`);
   }
 }

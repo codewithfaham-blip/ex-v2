@@ -75,3 +75,17 @@ enum DepositStatus {
   REJECTED
   ACTIVE
 }
+
+model Plan {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  minAmount   Float
+  maxAmount   Float
+  roi         Float    // Percentage value (e.g., 2.5 for 2.5%)
+  duration    String   // e.g., "24 Hours"
+  icon        String?  @default("Zap")
+  popular     Boolean  @default(false)
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

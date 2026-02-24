@@ -13,15 +13,12 @@ export async function POST(req: Request) {
     const { planName, amount: rawAmount } = await req.json();
     const amount = parseFloat(rawAmount);
 
-    // 1. Strict Plan Validation
-    const VALID_PLANS: Record<string, { min: number; max: number }> = {
-      "Basic Starter": { min: 10, max: 99 },
-      "Basic": { min: 100, max: 499 },
-      "Standard": { min: 500, max: 1000 }
-    };
+    // 1. Fetch Plan from DB for validation
+    const plan = await db.plan.findUnique({
+      where: { name: planName, active: true }
+    });
 
-    const plan = VALID_PLANS[planName];
-    if (!plan || amount < plan.min || amount > plan.max) {
+    if (!plan || amount < plan.minAmount || amount > plan.maxAmount) {
       return NextResponse.json({ error: "Invalid plan or amount out of range" }, { status: 400 });
     }
 
