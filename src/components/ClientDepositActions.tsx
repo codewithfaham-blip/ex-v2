@@ -3,30 +3,39 @@
 import { useState } from "react";
 import { Check, X } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export default function ClientDepositActions({ depositId }: { depositId: string }) {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const handleApprove = async () => {
-    if (!confirm("Are you sure you want to approve this deposit?")) return;
+    if (!confirm("Are you sure you want to approve this investment injection? This will activate the node for the user.")) return;
+    
     setLoading(true);
-    try {
-      const res = await fetch("/api/admin/deposit/approve", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ depositId }),
-      });
+    const promise = fetch("/api/admin/deposit/approve", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ depositId }),
+    });
 
-      if (res.ok) {
-        alert("Deposit Approved!");
+    toast.promise(promise, {
+      loading: 'Authorizing liquidity injection...',
+      success: async (res) => {
+        if (!res.ok) {
+           const err = await res.json();
+           throw new Error(err.error || "Authorization failed");
+        }
         router.refresh();
-      } else {
-        const err = await res.json();
-        alert(err.error || "Failed to approve");
-      }
+        return 'Node successfully activated and synchronized';
+      },
+      error: (err) => err.message || 'Injection failed. Check system logs.',
+    });
+
+    try {
+      await promise;
     } catch (error) {
-       alert("An error occurred");
+       console.error("❌ Approval error:", error);
     } finally {
       setLoading(false);
     }
