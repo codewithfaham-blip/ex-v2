@@ -12,10 +12,11 @@ export async function GET() {
 
   try {
     const plans = await db.plan.findMany({
-      orderBy: { createdAt: 'desc' }
+      orderBy: { minAmount: 'asc' }
     });
     return NextResponse.json(plans);
   } catch (error) {
+    console.error("Fetch plans error:", error);
     return NextResponse.json({ error: "Failed to fetch plans" }, { status: 500 });
   }
 }
@@ -23,26 +24,36 @@ export async function GET() {
 // Create new plan
 export async function POST(req: Request) {
   const session = await getServerSession(authOptions);
-  if ((session?.user as any)?.role !== "ADMIN") {
+  const user = session?.user as any;
+
+  if (user?.role !== "ADMIN") {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   try {
     const body = await req.json();
+    console.log(`[API] Creating new plan:`, body);
+
     const plan = await db.plan.create({
       data: {
         name: body.name,
-        minAmount: parseFloat(body.minAmount),
-        maxAmount: parseFloat(body.maxAmount),
-        roi: parseFloat(body.roi),
+        minAmount: parseFloat(body.minAmount) || 0,
+        maxAmount: parseFloat(body.maxAmount) || 0,
+        roi: parseFloat(body.roi) || 0,
         duration: body.duration,
         icon: body.icon || "Zap",
-        popular: body.popular || false,
+        popular: body.popular === true,
         active: body.active !== undefined ? body.active : true,
       }
     });
+
+    console.log(`✅ Plan ${plan.id} created successfully`);
     return NextResponse.json(plan);
-  } catch (error) {
-    return NextResponse.json({ error: "Failed to create plan" }, { status: 500 });
+  } catch (error: any) {
+    console.error("❌ Create plan error:", error);
+    return NextResponse.json({ 
+      error: "Failed to create plan",
+      details: error.message 
+    }, { status: 500 });
   }
 }

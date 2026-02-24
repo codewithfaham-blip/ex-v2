@@ -1,6 +1,7 @@
 "use client";
 import { Layers, Edit3, Plus, Power, Trash2, X, Loader2, CheckCircle2, Save, Zap, Trophy, Crown } from "lucide-react";
 import { useState, useEffect } from "react";
+import { toast } from "sonner";
 
 const icons = ["Zap", "Trophy", "Crown"];
 
@@ -32,9 +33,14 @@ export default function AdminPlans() {
     try {
       const res = await fetch("/api/admin/plans");
       const data = await res.json();
-      if (Array.isArray(data)) setPlans(data);
+      if (Array.isArray(data)) {
+        setPlans(data);
+      } else {
+        console.error("Fetch plans failed:", data);
+      }
     } catch (err) {
-      console.error("Failed to fetch plans");
+      console.error("Failed to fetch plans:", err);
+      toast.error("Failed to sync plans with network");
     } finally {
       setLoading(false);
     }
@@ -55,6 +61,7 @@ export default function AdminPlans() {
   };
 
   const handleEdit = (plan: any) => {
+    console.log("✏️ Editing plan:", plan);
     setEditingPlan(plan);
     setFormData({
       name: plan.name,
@@ -72,11 +79,26 @@ export default function AdminPlans() {
   const handleDelete = async (id: string) => {
     if (!confirm("Are you sure you want to delete this plan? This will NOT affect existing deposits but will disappear from future options.")) return;
     
+    const promise = fetch(`/api/admin/plans/${id}`, { method: "DELETE" });
+    
+    toast.promise(promise, {
+      loading: 'Executing decommissioning protocol...',
+      success: (res) => {
+        if (!res.ok) throw new Error("Deletion failed");
+        fetchPlans();
+        return 'Protocol successfully removed from network';
+      },
+      error: 'Decommissioning failed. Check logs.',
+    });
+
     try {
-      const res = await fetch(`/api/admin/plans/${id}`, { method: "DELETE" });
-      if (res.ok) fetchPlans();
+      const res = await promise;
+      if (!res.ok) {
+        const errorData = await res.json();
+        console.error("❌ Delete failed:", errorData);
+      }
     } catch (err) {
-      alert("Failed to delete plan");
+      console.error("❌ Delete error:", err);
     }
   };
 
@@ -85,8 +107,11 @@ export default function AdminPlans() {
     setSubmitting(true);
     setSuccess(false);
 
-    const url = editingPlan ? `/api/admin/plans/${editingPlan.id}` : "/api/admin/plans";
-    const method = editingPlan ? "PUT" : "POST";
+    const isEditing = !!editingPlan;
+    const url = isEditing ? `/api/admin/plans/${editingPlan.id}` : "/api/admin/plans";
+    const method = isEditing ? "PUT" : "POST";
+
+    console.log(`🚀 Sending ${method} to ${url}`, formData);
 
     try {
       const res = await fetch(url, {
@@ -95,20 +120,24 @@ export default function AdminPlans() {
         body: JSON.stringify(formData),
       });
 
+      const data = await res.json();
+
       if (res.ok) {
         setSuccess(true);
+        toast.success(isEditing ? 'Protocol updated successfully' : 'New protocol deployed');
         setTimeout(() => {
           setIsModalOpen(false);
           setSuccess(false);
           resetForm();
           fetchPlans();
-        }, 1500);
+        }, 800);
       } else {
-        const data = await res.json();
-        alert(data.error || "Failed to save plan");
+        console.error("❌ Action failed:", data);
+        toast.error(data.error || "Failed to commit changes");
       }
     } catch (err) {
-      alert("Something went wrong");
+      console.error("❌ Network error:", err);
+      toast.error("Network communication failure");
     } finally {
       setSubmitting(false);
     }
@@ -126,80 +155,98 @@ export default function AdminPlans() {
     <div className="p-4 md:p-10 pt-24 lg:pt-10 max-w-[1600px] mx-auto text-white">
       <div className="flex justify-between items-center mb-10">
         <div>
-          <h1 className="text-3xl font-black uppercase tracking-tighter italic text-white">
-            Investment <span className="text-blue-600">Protocols</span>
+          <h1 className="text-3xl font-black uppercase tracking-tighter italic text-white flex items-center gap-3">
+             <Layers className="text-blue-600" size={32} />
+             Investment <span className="text-blue-600">Protocols</span>
           </h1>
-          <p className="text-zinc-500 text-[10px] font-bold uppercase tracking-[0.3em] mt-2">
+          <p className="text-zinc-500 text-[10px] font-bold uppercase tracking-[0.3em] mt-2 ml-1">
             Configure ROI rates and participation limits
           </p>
         </div>
         <button 
           onClick={() => { resetForm(); setIsModalOpen(true); }}
-          className="bg-blue-600 text-white px-6 py-3 rounded-2xl flex items-center gap-2 font-black text-[11px] uppercase tracking-widest hover:shadow-lg hover:shadow-blue-600/20 transition-all active:scale-95"
+          className="bg-blue-600 text-white px-6 py-3 rounded-2xl flex items-center gap-2 font-black text-[11px] uppercase tracking-widest hover:shadow-lg hover:shadow-blue-600/20 transition-all active:scale-95 group"
         >
-          <Plus size={18} /> New Protocol
+          <Plus size={18} className="group-hover:rotate-90 transition-transform" /> New Protocol
         </button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {plans.map((plan) => (
-          <div key={plan.id} className={`bg-zinc-900/40 border ${plan.active ? 'border-zinc-800/50' : 'border-red-900/30 grayscale'} p-8 rounded-[2.5rem] relative group overflow-hidden transition-all hover:border-blue-500/30`}>
-            <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:scale-110 transition-transform">
-              <Layers size={80} />
-            </div>
-            
-            {!plan.active && (
-              <div className="absolute top-4 left-1/2 -translate-x-1/2 bg-red-600 text-[8px] font-black px-3 py-1 rounded-full uppercase italic z-10">
-                Disabled
+      {plans.length === 0 ? (
+        <div className="bg-zinc-900/20 border border-zinc-800/50 rounded-[2.5rem] p-20 text-center">
+           <Database className="mx-auto text-zinc-800 mb-6" size={60} />
+           <p className="text-zinc-500 font-black uppercase tracking-widest italic text-sm">No protocols found in database</p>
+           <button onClick={fetchPlans} className="mt-6 text-blue-500 text-[10px] font-bold uppercase tracking-widest underline underline-offset-4">Force Refresh</button>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {plans.map((plan) => (
+            <div key={plan.id} className={`bg-zinc-900/40 border ${plan.active ? 'border-zinc-800/50' : 'border-red-900/30 grayscale'} p-8 rounded-[2.5rem] relative group overflow-hidden transition-all hover:border-blue-500/30 hover:bg-zinc-900/60`}>
+              <div className="absolute top-0 right-0 p-8 opacity-[0.03] group-hover:scale-110 transition-transform group-hover:opacity-[0.08]">
+                {plan.icon === "Zap" && <Zap size={100} />}
+                {plan.icon === "Trophy" && <Trophy size={100} />}
+                {plan.icon === "Crown" && <Crown size={100} />}
               </div>
-            )}
+              
+              {!plan.active && (
+                <div className="absolute top-4 left-1/2 -translate-x-1/2 bg-red-600 text-[8px] font-black px-3 py-1 rounded-full uppercase italic z-10 shadow-lg shadow-red-900/50">
+                  Suspended
+                </div>
+              )}
 
-            <div className="flex justify-between items-start mb-6">
-              <div>
-                <h3 className="text-xl font-black uppercase italic tracking-tighter text-white">
-                  {plan.name}
-                  {plan.popular && <span className="text-blue-500 ml-2 animate-pulse">*</span>}
-                </h3>
-                <p className="text-[10px] text-zinc-500 font-bold uppercase tracking-widest">{plan.duration}</p>
+              <div className="flex justify-between items-start mb-6">
+                <div className="flex items-center gap-4">
+                  <div className={`p-4 rounded-2xl ${plan.active ? 'bg-zinc-950 border border-zinc-800' : 'bg-red-950/20 border border-red-900/30'} flex items-center justify-center`}>
+                     {plan.icon === "Zap" && <Zap size={24} className="text-blue-500" />}
+                     {plan.icon === "Trophy" && <Trophy size={24} className="text-yellow-500" />}
+                     {plan.icon === "Crown" && <Crown size={24} className="text-purple-500" />}
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-black uppercase italic tracking-tighter text-white">
+                      {plan.name}
+                      {plan.popular && <span className="text-blue-500 ml-2 animate-pulse text-xs">★</span>}
+                    </h3>
+                    <p className="text-[10px] text-zinc-500 font-bold uppercase tracking-widest">{plan.duration}</p>
+                  </div>
+                </div>
+                <div className="flex gap-2 relative z-20">
+                  <button 
+                    onClick={() => handleEdit(plan)}
+                    className="p-3 bg-zinc-950 border border-zinc-800 rounded-xl text-zinc-500 hover:text-white hover:bg-blue-600 hover:border-blue-500 transition-all active:scale-90 shadow-lg"
+                  >
+                    <Edit3 size={16}/>
+                  </button>
+                  <button 
+                    onClick={() => handleDelete(plan.id)}
+                    className="p-3 bg-zinc-950 border border-zinc-800 rounded-xl text-red-500/50 hover:text-white hover:bg-red-600 hover:border-red-500 transition-all active:scale-90 shadow-lg"
+                  >
+                    <Trash2 size={16}/>
+                  </button>
+                </div>
               </div>
-              <div className="flex gap-2">
-                <button 
-                  onClick={() => handleEdit(plan)}
-                  className="p-2 bg-zinc-950 border border-zinc-800 rounded-lg text-zinc-500 hover:text-blue-500 transition active:scale-90"
-                >
-                  <Edit3 size={16}/>
-                </button>
-                <button 
-                  onClick={() => handleDelete(plan.id)}
-                  className="p-2 bg-zinc-950 border border-zinc-800 rounded-lg text-red-500/50 hover:text-red-500 transition active:scale-90"
-                >
-                  <Trash2 size={16}/>
-                </button>
-              </div>
-            </div>
 
-            <div className="grid grid-cols-3 gap-4 border-t border-zinc-800/50 pt-6">
-              <div>
-                <p className="text-[9px] text-zinc-600 font-black uppercase mb-1 tracking-widest">Daily ROI</p>
-                <p className="text-lg font-black text-blue-500">{plan.roi}%</p>
-              </div>
-              <div>
-                <p className="text-[9px] text-zinc-600 font-black uppercase mb-1 tracking-widest">Min Entry</p>
-                <p className="text-lg font-black text-white">${plan.minAmount}</p>
-              </div>
-              <div>
-                <p className="text-[9px] text-zinc-600 font-black uppercase mb-1 tracking-widest">Max Entry</p>
-                <p className="text-lg font-black text-white">${plan.maxAmount}</p>
+              <div className="grid grid-cols-3 gap-4 border-t border-zinc-800/50 pt-6 mt-4">
+                <div>
+                  <p className="text-[9px] text-zinc-600 font-black uppercase mb-1 tracking-widest">Daily ROI</p>
+                  <p className="text-lg font-black text-blue-500">{plan.roi}%</p>
+                </div>
+                <div>
+                  <p className="text-[9px] text-zinc-600 font-black uppercase mb-1 tracking-widest">Min Entry</p>
+                  <p className="text-lg font-black text-white">${plan.minAmount}</p>
+                </div>
+                <div>
+                  <p className="text-[9px] text-zinc-600 font-black uppercase mb-1 tracking-widest">Max Entry</p>
+                  <p className="text-lg font-black text-white">${plan.maxAmount}</p>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
 
       {/* Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-300">
-          <div className="bg-zinc-950 border border-zinc-800 w-full max-w-lg rounded-[2.5rem] p-8 relative overflow-hidden">
+          <div className="bg-zinc-950 border border-zinc-800 w-full max-w-lg rounded-[2.5rem] p-8 relative overflow-hidden shadow-2xl">
             <div className="absolute -top-24 -right-24 w-64 h-64 bg-blue-600/10 rounded-full blur-[80px]" />
             
             <div className="flex justify-between items-center mb-8 relative z-10">
@@ -208,7 +255,7 @@ export default function AdminPlans() {
               </h2>
               <button 
                 onClick={() => { setIsModalOpen(false); resetForm(); }}
-                className="text-zinc-500 hover:text-white transition"
+                className="text-zinc-500 hover:text-white transition-colors p-2 hover:bg-zinc-900 rounded-full"
               >
                 <X size={24} />
               </button>
@@ -217,52 +264,53 @@ export default function AdminPlans() {
             <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
               <div className="grid grid-cols-2 gap-4">
                 <div className="col-span-2">
-                  <label className="text-[10px] font-black uppercase text-zinc-500 ml-1">Plan Name</label>
+                  <label className="text-[10px] font-black uppercase text-zinc-500 ml-1 mb-2 block">Plan Full Identity</label>
                   <input 
                     required
                     type="text" 
+                    placeholder="e.g. ULTRA PULSE"
                     value={formData.name}
                     onChange={(e) => setFormData({...formData, name: e.target.value})}
-                    className="w-full bg-zinc-900 border border-zinc-800 rounded-2xl py-4 px-6 mt-2 text-white focus:outline-none focus:border-blue-600 transition-all font-bold"
+                    className="w-full bg-zinc-900 border border-zinc-800 rounded-2xl py-4 px-6 text-white focus:outline-none focus:border-blue-600 transition-all font-bold placeholder:text-zinc-700"
                   />
                 </div>
                 <div>
-                  <label className="text-[10px] font-black uppercase text-zinc-500 ml-1">Min amount ($)</label>
+                  <label className="text-[10px] font-black uppercase text-zinc-500 ml-1 mb-2 block">Min Liquidity ($)</label>
                   <input 
                     required
                     type="number" 
                     value={formData.minAmount}
                     onChange={(e) => setFormData({...formData, minAmount: e.target.value})}
-                    className="w-full bg-zinc-900 border border-zinc-800 rounded-2xl py-4 px-6 mt-2 text-white focus:outline-none focus:border-blue-600 transition-all font-bold"
+                    className="w-full bg-zinc-900 border border-zinc-800 rounded-2xl py-4 px-6 text-white focus:outline-none focus:border-blue-600 transition-all font-bold"
                   />
                 </div>
                 <div>
-                  <label className="text-[10px] font-black uppercase text-zinc-500 ml-1">Max amount ($)</label>
+                  <label className="text-[10px] font-black uppercase text-zinc-500 ml-1 mb-2 block">Max Liquidity ($)</label>
                   <input 
                     required
                     type="number" 
                     value={formData.maxAmount}
                     onChange={(e) => setFormData({...formData, maxAmount: e.target.value})}
-                    className="w-full bg-zinc-900 border border-zinc-800 rounded-2xl py-4 px-6 mt-2 text-white focus:outline-none focus:border-blue-600 transition-all font-bold"
+                    className="w-full bg-zinc-900 border border-zinc-800 rounded-2xl py-4 px-6 text-white focus:outline-none focus:border-blue-600 transition-all font-bold"
                   />
                 </div>
                 <div>
-                  <label className="text-[10px] font-black uppercase text-zinc-500 ml-1">Daily ROI (%)</label>
+                  <label className="text-[10px] font-black uppercase text-zinc-500 ml-1 mb-2 block">Daily Yield (%)</label>
                   <input 
                     required
                     type="number" 
                     step="0.1"
                     value={formData.roi}
                     onChange={(e) => setFormData({...formData, roi: e.target.value})}
-                    className="w-full bg-zinc-900 border border-zinc-800 rounded-2xl py-4 px-6 mt-2 text-blue-500 focus:outline-none focus:border-blue-600 transition-all font-bold"
+                    className="w-full bg-zinc-900 border border-zinc-800 rounded-2xl py-4 px-6 text-blue-500 focus:outline-none focus:border-blue-600 transition-all font-bold"
                   />
                 </div>
                 <div>
-                  <label className="text-[10px] font-black uppercase text-zinc-500 ml-1">Duration</label>
+                  <label className="text-[10px] font-black uppercase text-zinc-500 ml-1 mb-2 block">Cycle Duration</label>
                   <select 
                     value={formData.duration}
                     onChange={(e) => setFormData({...formData, duration: e.target.value})}
-                    className="w-full bg-zinc-900 border border-zinc-800 rounded-2xl py-4 px-6 mt-2 text-white focus:outline-none focus:border-blue-600 transition-all font-bold appearance-none"
+                    className="w-full bg-zinc-900 border border-zinc-800 rounded-2xl py-4 px-6 text-white focus:outline-none focus:border-blue-600 transition-all font-bold appearance-none bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%234b5563%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C/polyline%3E%3C/svg%3E')] bg-[length:1.2em_1.2em] bg-[right_1.2rem_center] bg-no-repeat"
                   >
                     <option value="24 Hours">24 Hours</option>
                     <option value="48 Hours">48 Hours</option>
@@ -272,36 +320,36 @@ export default function AdminPlans() {
                   </select>
                 </div>
                 <div>
-                  <label className="text-[10px] font-black uppercase text-zinc-500 ml-1">Icon Style</label>
-                  <div className="flex gap-2 mt-2">
+                  <label className="text-[10px] font-black uppercase text-zinc-500 ml-1 mb-2 block">Network Icon</label>
+                  <div className="flex gap-2">
                      {icons.map(icon => (
                        <button 
                         key={icon}
                         type="button"
                         onClick={() => setFormData({...formData, icon})}
-                        className={`p-3 rounded-xl border transition-all ${formData.icon === icon ? 'bg-blue-600 border-blue-500 text-white shadow-lg shadow-blue-600/20' : 'bg-zinc-900 border-zinc-800 text-zinc-500'}`}
+                        className={`flex-1 p-3 rounded-xl border transition-all flex items-center justify-center ${formData.icon === icon ? 'bg-blue-600 border-blue-500 text-white shadow-lg shadow-blue-600/20' : 'bg-zinc-900 border-zinc-800 text-zinc-500 hover:border-zinc-700'}`}
                        >
-                         {icon === "Zap" && <Zap size={16} />}
-                         {icon === "Trophy" && <Trophy size={16} />}
-                         {icon === "Crown" && <Crown size={16} />}
+                         {icon === "Zap" && <Zap size={18} />}
+                         {icon === "Trophy" && <Trophy size={18} />}
+                         {icon === "Crown" && <Crown size={18} />}
                        </button>
                      ))}
                   </div>
                 </div>
-                <div className="flex items-end gap-2 pb-2">
+                <div className="flex items-end gap-2">
                    <button 
                     type="button"
                     onClick={() => setFormData({...formData, popular: !formData.popular})}
-                    className={`flex-1 py-4 rounded-xl border text-[9px] font-black uppercase italic transition-all ${formData.popular ? 'bg-blue-600/20 border-blue-500/50 text-blue-400' : 'bg-zinc-900 border-zinc-800 text-zinc-600'}`}
+                    className={`flex-1 py-4 px-2 rounded-xl border text-[9px] font-black uppercase italic transition-all ${formData.popular ? 'bg-blue-600/20 border-blue-500/50 text-blue-400' : 'bg-zinc-900 border-zinc-800 text-zinc-600'}`}
                    >
                      Recommended
                    </button>
                    <button 
                     type="button"
                     onClick={() => setFormData({...formData, active: !formData.active})}
-                    className={`flex-1 py-4 rounded-xl border text-[9px] font-black uppercase italic transition-all ${formData.active ? 'bg-emerald-600/20 border-emerald-500/50 text-emerald-400' : 'bg-red-600/20 border-red-500/50 text-red-400'}`}
+                    className={`flex-1 py-4 px-2 rounded-xl border text-[9px] font-black uppercase italic transition-all ${formData.active ? 'bg-emerald-600/20 border-emerald-500/50 text-emerald-400' : 'bg-red-600/20 border-red-500/50 text-red-400'}`}
                    >
-                     {formData.active ? 'Protocol Live' : 'Offline'}
+                     {formData.active ? 'Status: Active' : 'Status: Offline'}
                    </button>
                 </div>
               </div>
@@ -309,15 +357,36 @@ export default function AdminPlans() {
               <button 
                 type="submit"
                 disabled={submitting}
-                className={`w-full py-5 rounded-2xl font-black uppercase tracking-[0.2em] text-[11px] transition-all flex items-center justify-center gap-3 ${success ? 'bg-emerald-600' : 'bg-blue-600 hover:bg-blue-700 shadow-xl shadow-blue-600/20'} disabled:opacity-50 text-white mt-4`}
+                className={`w-full py-5 rounded-2xl font-black uppercase tracking-[0.2em] text-[11px] transition-all flex items-center justify-center gap-3 ${success ? 'bg-emerald-600' : 'bg-blue-600 hover:bg-blue-700 shadow-xl shadow-blue-600/20'} disabled:opacity-50 text-white mt-4 active:scale-95`}
               >
                 {submitting ? <Loader2 className="animate-spin" size={18} /> : success ? <CheckCircle2 size={18} /> : <Save size={18} />}
-                {submitting ? "Processing..." : success ? "Updated Successfully" : editingPlan ? "Commit Changes" : "Deploy Protocol"}
+                {submitting ? "Processing Node..." : success ? "Update Synchronized" : editingPlan ? "Commit Protocol Changes" : "Deploy Network Protocol"}
               </button>
             </form>
           </div>
         </div>
       )}
     </div>
+  );
+}
+
+// Dummy icon for fallback 
+function Database({ className, size }: { className?: string, size?: number }) {
+  return (
+    <svg 
+      className={className} 
+      width={size} 
+      height={size} 
+      viewBox="0 0 24 24" 
+      fill="none" 
+      stroke="currentColor" 
+      strokeWidth="2" 
+      strokeLinecap="round" 
+      strokeLinejoin="round"
+    >
+      <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+      <path d="M3 5V19A9 3 0 0 0 21 19V5"></path>
+      <path d="M3 12A9 3 0 0 0 21 12"></path>
+    </svg>
   );
 }
