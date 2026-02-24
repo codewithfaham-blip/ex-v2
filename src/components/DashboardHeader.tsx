@@ -27,29 +27,29 @@ export default function DashboardHeader({ type = "user" }: { type?: "user" | "ad
     };
 
   return (
-    <header className="hidden lg:flex flex-col border-b border-zinc-900 bg-zinc-950/50 backdrop-blur-xl sticky top-0 z-40">
+    <header className="hidden lg:flex flex-col border-b border-slate-200 bg-white/80 backdrop-blur-xl sticky top-0 z-40">
       {/* Main Header Row */}
       <div className="flex items-center justify-between px-10 py-6">
         <div className="flex items-center gap-6">
           <div>
             <div className="flex items-center gap-3 mb-1">
-              <div className={`h-6 w-1 rounded-full shadow-[0_0_10px_rgba(37,99,235,0.5)] ${type === 'admin' ? 'bg-blue-600' : 'bg-emerald-500'}`} />
-              <h1 className="text-xl font-black uppercase tracking-tighter italic text-white leading-none">
+              <div className={`h-6 w-1 rounded-full shadow-[0_0_10px_rgba(147,51,234,0.3)] ${type === 'admin' ? 'bg-purple-600' : 'bg-emerald-500'}`} />
+              <h1 className="text-xl font-black uppercase tracking-tighter italic text-slate-900 leading-none">
                 {getPageTitle()}
               </h1>
             </div>
-            <p className="text-zinc-500 text-[8px] font-black uppercase tracking-[0.3em] ml-4 flex items-center gap-2">
-              <span className={`w-1 h-1 rounded-full animate-pulse ${type === 'admin' ? 'bg-blue-600' : 'bg-emerald-500'}`} />
+            <p className="text-slate-500 text-[8px] font-black uppercase tracking-[0.3em] ml-4 flex items-center gap-2">
+              <span className={`w-1 h-1 rounded-full animate-pulse ${type === 'admin' ? 'bg-purple-600' : 'bg-emerald-500'}`} />
               {getPageSubtitle()}
             </p>
           </div>
         </div>
 
         <div className="flex items-center gap-3">
-             <button className="p-2.5 bg-zinc-900 border border-zinc-800 rounded-xl text-zinc-500 hover:text-white hover:border-zinc-700 transition-all">
+             <button className="p-2.5 bg-slate-100 border border-slate-200 rounded-xl text-slate-500 hover:text-slate-900 hover:border-slate-300 transition-all">
                 <Bell size={16} />
              </button>
-             <button className="p-2.5 bg-zinc-900 border border-zinc-800 rounded-xl text-zinc-500 hover:text-white hover:border-zinc-700 transition-all">
+             <button className="p-2.5 bg-slate-100 border border-slate-200 rounded-xl text-slate-500 hover:text-slate-900 hover:border-slate-300 transition-all">
                 <Search size={16} />
              </button>
           </div>

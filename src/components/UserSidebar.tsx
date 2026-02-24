@@ -24,18 +24,18 @@ export default function UserSidebar() {
 
   return (
     <>
-      <div className="lg:hidden fixed top-0 left-0 w-full bg-zinc-950/90 backdrop-blur-md border-b border-zinc-900 px-6 py-4 z-[50] flex justify-between items-center">
+      <div className="lg:hidden fixed top-0 left-0 w-full bg-white/90 backdrop-blur-md border-b border-slate-200 px-6 py-4 z-[50] flex justify-between items-center shadow-sm">
         <Link href="/dashboard">
           <BrandLogo size="sm" type="user" />
         </Link>
         <div className="flex items-center gap-3">
-           <div className="flex items-center gap-2 border-r border-zinc-800 pr-4">
+           <div className="flex items-center gap-2 border-r border-slate-100 pr-4">
               <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_10px_#10b981]" />
-              <span className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Active</span>
+              <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Active</span>
            </div>
            <button 
              onClick={() => setIsOpen(!isOpen)}
-             className="flex items-center gap-2 px-3 py-1.5 bg-blue-600/10 text-blue-500 rounded-lg border border-blue-600/20 active:scale-90 transition-all shadow-[0_0_15px_rgba(59,130,246,0.1)]"
+             className="flex items-center gap-2 px-3 py-1.5 bg-purple-600/10 text-purple-600 rounded-lg border border-purple-600/20 active:scale-90 transition-all shadow-sm"
            >
               {isOpen ? <X size={16} /> : <Menu size={16} />}
               <span className="text-[10px] font-black uppercase tracking-tighter">Menu</span>
@@ -53,7 +53,7 @@ export default function UserSidebar() {
 
       {/* Sidebar Panel */}
       <aside className={`
-        fixed top-0 left-0 h-full z-[60] w-64 bg-zinc-950 border-r border-zinc-900 transition-transform duration-300 ease-in-out
+        fixed top-0 left-0 h-full z-[60] w-64 bg-white border-r border-slate-200 transition-transform duration-300 ease-in-out
         ${isOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0
       `}>
 
@@ -73,7 +73,7 @@ export default function UserSidebar() {
                 href={item.href}
                 onClick={() => setIsOpen(false)}
                 className={`flex items-center gap-4 px-4 py-4 rounded-2xl transition-all font-bold text-[11px] uppercase tracking-widest
-                  ${isActive ? "bg-blue-600 text-white shadow-lg shadow-blue-600/20" : "text-zinc-500 hover:bg-zinc-900 hover:text-zinc-200"}
+                  ${isActive ? "bg-purple-600 text-white shadow-lg shadow-purple-600/20" : "text-slate-400 hover:bg-slate-50 hover:text-slate-900"}
                 `}
               >
                 {item.icon} {item.label}

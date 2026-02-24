@@ -51,7 +51,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-zinc-950 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-[#f8fafc] flex items-center justify-center p-4">
       <div className="w-full max-w-[380px] space-y-6">
         
         {/* Logo & Info */}
@@ -59,24 +59,24 @@ export default function LoginPage() {
           <Link href="/" className="inline-block group">
             <BrandLogo size="lg" className="flex-col !gap-5" />
           </Link>
-          <p className="text-zinc-500 text-[10px] font-black uppercase tracking-[0.3em]">Accessing Secure Intelligence Node</p>
+          <p className="text-slate-400 text-[10px] font-black uppercase tracking-[0.3em]">Accessing Secure Intelligence Node</p>
         </div>
 
         {/* Error Box */}
         {error && (
-          <div className="bg-red-500/10 border border-red-500/20 text-red-500 text-[10px] font-bold p-4 rounded-xl flex items-center gap-3 uppercase tracking-widest">
+          <div className="bg-red-50 border border-red-100 text-red-500 text-[10px] font-bold p-4 rounded-xl flex items-center gap-3 uppercase tracking-widest">
             <AlertCircle size={16} />
             {error}
           </div>
         )}
 
         {/* Form Container */}
-        <div className="bg-zinc-900/30 border border-zinc-800/50 p-6 rounded-[2.5rem] backdrop-blur-sm">
+        <div className="bg-white border border-slate-200 p-6 rounded-[2.5rem] shadow-xl shadow-slate-200/50">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-1">
-              <label className="text-[10px] font-black uppercase text-zinc-500 ml-1">Identity</label>
+              <label className="text-[10px] font-black uppercase text-slate-400 ml-1">Identity</label>
               <div className="relative group">
-                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-600 group-focus-within:text-blue-500 transition" size={18} />
+                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-purple-600 transition" size={18} />
                 <input 
                   type="email" 
                   required
@@ -84,17 +84,17 @@ export default function LoginPage() {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Email address"
                   autoComplete="email"
-                  className="w-full bg-zinc-950 border border-zinc-800 rounded-2xl py-4 pl-12 pr-4 text-sm text-white focus:outline-none focus:border-blue-600 transition-all placeholder:text-zinc-700"
+                  className="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 pl-12 pr-4 text-sm text-slate-900 focus:outline-none focus:border-purple-600 transition-all placeholder:text-slate-200"
                 />
               </div>
             </div>
 
             <div className="space-y-1">
               <div className="flex justify-between items-center ml-1">
-                <label className="text-[10px] font-black uppercase text-zinc-500">Security Key</label>
+                <label className="text-[10px] font-black uppercase text-slate-400">Security Key</label>
               </div>
               <div className="relative group">
-                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-600 group-focus-within:text-blue-500 transition" size={18} />
+                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-purple-600 transition" size={18} />
                 <input 
                   type={showPassword ? "text" : "password"} 
                   required
@@ -102,12 +102,12 @@ export default function LoginPage() {
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Password"
                   autoComplete="current-password"
-                  className="w-full bg-zinc-950 border border-zinc-800 rounded-2xl py-4 pl-12 pr-12 text-sm text-white focus:outline-none focus:border-blue-600 transition-all placeholder:text-zinc-700"
+                  className="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 pl-12 pr-12 text-sm text-slate-900 focus:outline-none focus:border-purple-600 transition-all placeholder:text-slate-200"
                 />
                 <button 
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-600 hover:text-zinc-400"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-300 hover:text-slate-500"
                 >
                   {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
@@ -117,7 +117,7 @@ export default function LoginPage() {
             <button 
               disabled={loading}
               type="submit" 
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-black py-4 rounded-2xl transition-all active:scale-95 flex items-center justify-center gap-2 shadow-lg shadow-blue-600/10 mt-2 disabled:opacity-70 disabled:cursor-not-allowed"
+              className="w-full bg-purple-600 hover:bg-purple-700 text-white font-black py-4 rounded-2xl transition-all active:scale-95 flex items-center justify-center gap-2 shadow-lg shadow-purple-600/20 mt-2 disabled:opacity-70 disabled:cursor-not-allowed uppercase text-[12px] tracking-widest"
             >
               {loading ? (
                 <><Loader2 className="animate-spin" size={20} /> Authenticating...</>
@@ -129,11 +129,11 @@ export default function LoginPage() {
         </div>
 
         <div className="text-center space-y-4">
-          <p className="text-zinc-500 text-xs">
+          <p className="text-slate-400 text-xs">
             New to Exotic Cash?{" "}
-            <Link href="/register" className="text-blue-500 font-bold hover:underline italic">Register Now</Link>
+            <Link href="/register" className="text-purple-600 font-bold hover:underline italic">Register Now</Link>
           </p>
-          <Link href="/" className="inline-block text-zinc-600 hover:text-zinc-400 text-[10px] font-black uppercase tracking-widest transition italic">
+          <Link href="/" className="inline-block text-slate-400 hover:text-slate-600 text-[10px] font-black uppercase tracking-widest transition italic">
             ← Back to Terminal
           </Link>
         </div>

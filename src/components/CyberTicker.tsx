@@ -29,20 +29,20 @@ export default function CyberTicker() {
 
   return (
     <div className="flex items-center gap-8 overflow-hidden whitespace-nowrap">
-      <div className="flex items-center gap-2 border-r border-zinc-800 pr-6 mr-2 shrink-0">
-         <div className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse shadow-[0_0_8px_#3b82f6]" />
-         <span className="text-[9px] font-black text-blue-500 uppercase tracking-[0.2em] italic">Telemetry Live</span>
+      <div className="flex items-center gap-2 border-r border-slate-200 pr-6 mr-2 shrink-0">
+         <div className="w-1.5 h-1.5 bg-purple-600 rounded-full animate-pulse shadow-[0_0_8px_rgba(147,51,234,0.3)]" />
+         <span className="text-[9px] font-black text-purple-600 uppercase tracking-[0.2em] italic">Telemetry Live</span>
       </div>
       <div className="flex items-center gap-8">
         {prices.map((p, i) => (
           <div key={i} className="flex items-center gap-2 transition-all duration-1000">
-            <span className="text-[10px] font-black text-zinc-600 uppercase tracking-tighter italic">{p.coin}</span>
-            <span className="text-[10px] font-bold text-white tracking-widest font-mono">${p.price}</span>
-            <span className={`text-[8px] font-black px-1.5 py-0.5 rounded-md ${p.up ? "text-emerald-500 bg-emerald-500/5" : "text-red-500 bg-red-500/5"}`}>
+            <span className="text-[10px] font-black text-slate-400 uppercase tracking-tighter italic">{p.coin}</span>
+            <span className="text-[10px] font-bold text-slate-900 tracking-widest font-mono">${p.price}</span>
+            <span className={`text-[8px] font-black px-1.5 py-0.5 rounded-md ${p.up ? "text-emerald-600 bg-emerald-50" : "text-red-500 bg-red-50"}`}>
               {p.up ? <ArrowUp size={8} className="inline mr-1" /> : <ArrowDown size={8} className="inline mr-1" />}
               {p.change}
             </span>
-            {i !== prices.length - 1 && <div className="w-1 h-3 bg-zinc-900 mx-2 rotate-12" />}
+            {i !== prices.length - 1 && <div className="w-1 h-3 bg-slate-100 mx-2 rotate-12" />}
           </div>
         ))}
       </div>

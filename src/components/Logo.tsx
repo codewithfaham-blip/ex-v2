@@ -21,7 +21,7 @@ export default function Logo({ className = "w-10 h-10" }: { className?: string }
       />
       
       {/* Center Power Node */}
-      <circle cx="50" cy="50" r="8" fill="white" className="animate-pulse">
+      <circle cx="50" cy="50" r="8" fill="#9333ea" className="animate-pulse">
         <animate 
           attributeName="opacity" 
           values="0.4;1;0.4" 
@@ -33,7 +33,7 @@ export default function Logo({ className = "w-10 h-10" }: { className?: string }
       {/* Connection Lines */}
       <path 
         d="M50 20V35M50 65V80M30 50H40M60 50H70" 
-        stroke="white" 
+        stroke="#94a3b8" 
         strokeWidth="4" 
         strokeLinecap="round" 
         opacity="0.5" 
@@ -41,12 +41,12 @@ export default function Logo({ className = "w-10 h-10" }: { className?: string }
 
       <defs>
         <linearGradient id="logo_gradient" x1="20" y1="20" x2="80" y2="80" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#3B82F6" />
-          <stop offset="1" stopColor="#1D4ED8" />
+          <stop stopColor="#9333ea" />
+          <stop offset="1" stopColor="#7e22ce" />
         </linearGradient>
         <radialGradient id="logo_glow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(50 50) rotate(90) scale(40)">
-          <stop stopColor="#3B82F6" />
-          <stop offset="1" stopColor="#3B82F6" stopOpacity="0" />
+          <stop stopColor="#9333ea" />
+          <stop offset="1" stopColor="#9333ea" stopOpacity="0" />
         </radialGradient>
       </defs>
     </svg>

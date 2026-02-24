@@ -27,14 +27,14 @@ export default function AdminSidebar() {
     <>
       {/* Mobile Header - Only visible on small screens */}
       {/* Mobile Header - Only visible on small screens */}
-      <div className="lg:hidden fixed top-0 left-0 w-full bg-zinc-950/90 backdrop-blur-md border-b border-zinc-900 px-6 py-4 z-[50] flex justify-between items-center">
+      <div className="lg:hidden fixed top-0 left-0 w-full bg-white/90 backdrop-blur-md border-b border-slate-200 px-6 py-4 z-[50] flex justify-between items-center">
         <Link href="/admin/dashboard">
           <BrandLogo size="sm" type="admin" />
         </Link>
         <div className="flex items-center gap-3">
            <button 
              onClick={() => setIsOpen(!isOpen)}
-             className="flex items-center gap-2 px-3 py-1.5 bg-blue-600/10 text-blue-500 rounded-lg border border-blue-600/20 active:scale-90 transition-all shadow-[0_0_15px_rgba(59,130,246,0.1)]"
+             className="flex items-center gap-2 px-3 py-1.5 bg-purple-600/10 text-purple-600 rounded-lg border border-purple-600/20 active:scale-90 transition-all shadow-[0_0_15px_rgba(147,51,234,0.1)]"
            >
               {isOpen ? <X size={16} /> : <Menu size={16} />}
               <span className="text-[10px] font-black uppercase tracking-tighter">Menu</span>
@@ -52,8 +52,9 @@ export default function AdminSidebar() {
 
       {/* Sidebar Panel */}
       <aside className={`
-        fixed top-0 left-0 h-full z-[60] w-64 bg-zinc-950 border-r border-zinc-900 transition-transform duration-300 ease-in-out
+        fixed top-0 left-0 h-full z-[60] w-64 bg-white border-r border-slate-200 transition-transform duration-300 ease-in-out
         ${isOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0
+        ring-1 ring-purple-500/5
       `}>
 
 
@@ -72,7 +73,7 @@ export default function AdminSidebar() {
                 href={item.href}
                 onClick={() => setIsOpen(false)}
                 className={`flex items-center gap-4 px-4 py-3.5 rounded-2xl transition-all font-bold text-[11px] uppercase tracking-widest
-                  ${isActive ? "bg-blue-600 text-white shadow-lg shadow-blue-600/20" : "text-zinc-500 hover:bg-zinc-900 hover:text-zinc-200"}
+                  ${isActive ? "bg-purple-600 text-white shadow-lg shadow-purple-600/20" : "text-slate-500 hover:bg-slate-50 hover:text-slate-900"}
                 `}
               >
                 {item.icon}
@@ -85,7 +86,7 @@ export default function AdminSidebar() {
         <div className="absolute bottom-8 left-0 w-full px-4 text-center">
           <button 
             onClick={() => signOut({ callbackUrl: "/login" })}
-            className="flex items-center justify-center gap-3 w-full px-4 py-4 rounded-2xl text-red-500 bg-red-500/5 hover:bg-red-500/10 transition-all font-black text-[11px] uppercase tracking-widest"
+            className="flex items-center justify-center gap-3 w-full px-4 py-4 rounded-2xl text-red-600 bg-red-50 hover:bg-red-100 transition-all font-black text-[11px] uppercase tracking-widest"
           >
             <LogOut size={16} /> Exit Terminal
           </button>

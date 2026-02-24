@@ -11,9 +11,9 @@ export default function NeuralGrid() {
 
   if (!mounted) {
     return (
-      <div className="flex-1 grid grid-cols-12 grid-rows-8 gap-1.5 opacity-20">
+      <div className="flex-1 grid grid-cols-12 grid-rows-8 gap-1.5 opacity-50">
         {Array.from({ length: 96 }).map((_, i) => (
-          <div key={i} className="h-full bg-zinc-900 rounded-[2px]" />
+          <div key={i} className="h-full bg-slate-100 rounded-[2px]" />
         ))}
       </div>
     );
@@ -25,8 +25,8 @@ export default function NeuralGrid() {
         <div 
           key={i} 
           className={`h-full rounded-[2px] transition-all duration-[2000ms] ${
-            Math.random() > 0.95 ? 'bg-blue-600 shadow-[0_0_15px_#3b82f6] scale-110' : 
-            Math.random() > 0.8 ? 'bg-zinc-700/50' : 'bg-zinc-900'
+            Math.random() > 0.95 ? 'bg-purple-600 shadow-sm scale-110' : 
+            Math.random() > 0.8 ? 'bg-slate-200' : 'bg-slate-100'
           }`} 
         />
       ))}

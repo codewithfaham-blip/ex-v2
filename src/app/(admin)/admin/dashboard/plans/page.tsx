@@ -152,35 +152,35 @@ export default function AdminPlans() {
   }
 
   return (
-    <div className="p-4 md:p-10 pt-24 lg:pt-10 max-w-[1600px] mx-auto text-white">
+    <div className="p-4 md:p-10 pt-24 lg:pt-10 max-w-[1600px] mx-auto text-slate-900">
       <div className="flex justify-between items-center mb-10">
         <div>
-          <h1 className="text-3xl font-black uppercase tracking-tighter italic text-white flex items-center gap-3">
-             <Layers className="text-blue-600" size={32} />
-             Investment <span className="text-blue-600">Protocols</span>
+          <h1 className="text-3xl font-black uppercase tracking-tighter italic text-slate-900 flex items-center gap-3">
+             <Layers className="text-purple-600" size={32} />
+             Investment <span className="text-purple-600">Protocols</span>
           </h1>
-          <p className="text-zinc-500 text-[10px] font-bold uppercase tracking-[0.3em] mt-2 ml-1">
+          <p className="text-slate-500 text-[10px] font-bold uppercase tracking-[0.3em] mt-2 ml-1">
             Configure ROI rates and participation limits
           </p>
         </div>
         <button 
           onClick={() => { resetForm(); setIsModalOpen(true); }}
-          className="bg-blue-600 text-white px-6 py-3 rounded-2xl flex items-center gap-2 font-black text-[11px] uppercase tracking-widest hover:shadow-lg hover:shadow-blue-600/20 transition-all active:scale-95 group"
+          className="bg-purple-600 text-white px-6 py-3 rounded-2xl flex items-center gap-2 font-black text-[11px] uppercase tracking-widest hover:shadow-lg hover:shadow-purple-600/20 transition-all active:scale-95 group"
         >
           <Plus size={18} className="group-hover:rotate-90 transition-transform" /> New Protocol
         </button>
       </div>
 
       {plans.length === 0 ? (
-        <div className="bg-zinc-900/20 border border-zinc-800/50 rounded-[2.5rem] p-20 text-center">
-           <Database className="mx-auto text-zinc-800 mb-6" size={60} />
-           <p className="text-zinc-500 font-black uppercase tracking-widest italic text-sm">No protocols found in database</p>
-           <button onClick={fetchPlans} className="mt-6 text-blue-500 text-[10px] font-bold uppercase tracking-widest underline underline-offset-4">Force Refresh</button>
+        <div className="bg-slate-50 border border-slate-200 rounded-[2.5rem] p-20 text-center">
+           <Database className="mx-auto text-slate-200 mb-6" size={60} />
+           <p className="text-slate-400 font-black uppercase tracking-widest italic text-sm">No protocols found in database</p>
+           <button onClick={fetchPlans} className="mt-6 text-purple-600 text-[10px] font-bold uppercase tracking-widest underline underline-offset-4">Force Refresh</button>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {plans.map((plan) => (
-            <div key={plan.id} className={`bg-zinc-900/40 border ${plan.active ? 'border-zinc-800/50' : 'border-red-900/30 grayscale'} p-8 rounded-[2.5rem] relative group overflow-hidden transition-all hover:border-blue-500/30 hover:bg-zinc-900/60`}>
+            <div key={plan.id} className={`bg-white border ${plan.active ? 'border-slate-200' : 'border-red-100 grayscale'} p-8 rounded-[2.5rem] relative group overflow-hidden transition-all hover:border-purple-500/30 hover:shadow-md`}>
               <div className="absolute top-0 right-0 p-8 opacity-[0.03] group-hover:scale-110 transition-transform group-hover:opacity-[0.08]">
                 {plan.icon === "Zap" && <Zap size={100} />}
                 {plan.icon === "Trophy" && <Trophy size={100} />}
@@ -193,49 +193,49 @@ export default function AdminPlans() {
                 </div>
               )}
 
-              <div className="flex justify-between items-start mb-6">
+               <div className="flex justify-between items-start mb-6">
                 <div className="flex items-center gap-4">
-                  <div className={`p-4 rounded-2xl ${plan.active ? 'bg-zinc-950 border border-zinc-800' : 'bg-red-950/20 border border-red-900/30'} flex items-center justify-center`}>
-                     {plan.icon === "Zap" && <Zap size={24} className="text-blue-500" />}
-                     {plan.icon === "Trophy" && <Trophy size={24} className="text-yellow-500" />}
-                     {plan.icon === "Crown" && <Crown size={24} className="text-purple-500" />}
+                  <div className={`p-4 rounded-2xl ${plan.active ? 'bg-slate-50 border border-slate-100' : 'bg-red-50 border border-red-100'} flex items-center justify-center`}>
+                     {plan.icon === "Zap" && <Zap size={24} className="text-purple-600" />}
+                     {plan.icon === "Trophy" && <Trophy size={24} className="text-yellow-600" />}
+                     {plan.icon === "Crown" && <Crown size={24} className="text-indigo-600" />}
                   </div>
                   <div>
-                    <h3 className="text-xl font-black uppercase italic tracking-tighter text-white">
+                    <h3 className="text-xl font-black uppercase italic tracking-tighter text-slate-900">
                       {plan.name}
-                      {plan.popular && <span className="text-blue-500 ml-2 animate-pulse text-xs">★</span>}
+                      {plan.popular && <span className="text-purple-600 ml-2 animate-pulse text-xs">★</span>}
                     </h3>
-                    <p className="text-[10px] text-zinc-500 font-bold uppercase tracking-widest">{plan.duration}</p>
+                    <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">{plan.duration}</p>
                   </div>
                 </div>
                 <div className="flex gap-2 relative z-20">
                   <button 
                     onClick={() => handleEdit(plan)}
-                    className="p-3 bg-zinc-950 border border-zinc-800 rounded-xl text-zinc-500 hover:text-white hover:bg-blue-600 hover:border-blue-500 transition-all active:scale-90 shadow-lg"
+                    className="p-3 bg-white border border-slate-200 rounded-xl text-slate-400 hover:text-white hover:bg-purple-600 hover:border-purple-500 transition-all active:scale-90 shadow-sm"
                   >
                     <Edit3 size={16}/>
                   </button>
                   <button 
                     onClick={() => handleDelete(plan.id)}
-                    className="p-3 bg-zinc-950 border border-zinc-800 rounded-xl text-red-500/50 hover:text-white hover:bg-red-600 hover:border-red-500 transition-all active:scale-90 shadow-lg"
+                    className="p-3 bg-white border border-slate-200 rounded-xl text-red-400 hover:text-white hover:bg-red-600 hover:border-red-500 transition-all active:scale-90 shadow-sm"
                   >
                     <Trash2 size={16}/>
                   </button>
                 </div>
               </div>
 
-              <div className="grid grid-cols-3 gap-4 border-t border-zinc-800/50 pt-6 mt-4">
+               <div className="grid grid-cols-3 gap-4 border-t border-slate-100 pt-6 mt-4">
                 <div>
-                  <p className="text-[9px] text-zinc-600 font-black uppercase mb-1 tracking-widest">Daily ROI</p>
-                  <p className="text-lg font-black text-blue-500">{plan.roi}%</p>
+                  <p className="text-[9px] text-slate-400 font-black uppercase mb-1 tracking-widest">Daily ROI</p>
+                  <p className="text-lg font-black text-purple-600">{plan.roi}%</p>
                 </div>
                 <div>
-                  <p className="text-[9px] text-zinc-600 font-black uppercase mb-1 tracking-widest">Min Entry</p>
-                  <p className="text-lg font-black text-white">Rs. {plan.minAmount}</p>
+                  <p className="text-[9px] text-slate-400 font-black uppercase mb-1 tracking-widest">Min Entry</p>
+                  <p className="text-lg font-black text-slate-900">Rs. {plan.minAmount}</p>
                 </div>
                 <div>
-                  <p className="text-[9px] text-zinc-600 font-black uppercase mb-1 tracking-widest">Max Entry</p>
-                  <p className="text-lg font-black text-white">Rs. {plan.maxAmount}</p>
+                  <p className="text-[9px] text-slate-400 font-black uppercase mb-1 tracking-widest">Max Entry</p>
+                  <p className="text-lg font-black text-slate-900">Rs. {plan.maxAmount}</p>
                 </div>
               </div>
             </div>

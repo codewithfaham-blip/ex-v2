@@ -23,20 +23,20 @@ export default function BrandLogo({ type = "default", size = "md", className = "
       <Logo className={`${currentSize.logo} group-hover:rotate-12 transition-transform`} />
       {!hideText && (
         <div className="flex flex-col leading-none">
-          <span className={`${currentSize.title} font-black text-blue-600 tracking-tighter italic uppercase`}>
+          <span className={`${currentSize.title} font-black text-purple-600 tracking-tighter italic uppercase`}>
             Exotic
           </span>
           <div className="flex items-center gap-2">
-            <span className={`${currentSize.subtitle} font-bold text-white uppercase ml-0.5`}>
+            <span className={`${currentSize.subtitle} font-bold text-slate-900 uppercase ml-0.5`}>
               Cash
             </span>
             {type === "admin" && (
-              <span className="text-[7px] bg-blue-600 text-white px-1.5 py-0.5 rounded-full font-black uppercase tracking-tighter shadow-[0_0_10px_rgba(37,99,235,0.3)]">
+              <span className="text-[7px] bg-purple-600 text-white px-1.5 py-0.5 rounded-full font-black uppercase tracking-tighter shadow-sm">
                 Admin
               </span>
             )}
             {type === "user" && (
-              <span className="text-[7px] bg-emerald-600 text-white px-1.5 py-0.5 rounded-full font-black uppercase tracking-tighter shadow-[0_0_10px_rgba(16,185,129,0.3)]">
+              <span className="text-[7px] bg-emerald-600 text-white px-1.5 py-0.5 rounded-full font-black uppercase tracking-tighter shadow-sm">
                 User
               </span>
             )}

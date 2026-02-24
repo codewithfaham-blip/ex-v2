@@ -64,29 +64,29 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-zinc-950 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-[#f8fafc] flex items-center justify-center p-4">
       <div className="w-full max-w-[400px] space-y-6 py-8">
         {/* Logo & Info */}
         <div className="text-center space-y-4">
           <Link href="/" className="inline-block group">
             <BrandLogo size="lg" className="flex-col !gap-5" />
           </Link>
-          <p className="text-zinc-500 text-[10px] font-black uppercase tracking-[0.2em]">Deploying New Node Connectivity</p>
+          <p className="text-slate-400 text-[10px] font-black uppercase tracking-[0.2em]">Deploying New Node Connectivity</p>
         </div>
 
         {/* Dynamic Error Box */}
         {error && (
-          <div className="bg-red-500/10 border border-red-500/20 text-red-500 text-[10px] font-bold p-4 rounded-xl text-center uppercase tracking-widest">
+          <div className="bg-red-50 border border-red-100 text-red-500 text-[10px] font-bold p-4 rounded-xl text-center uppercase tracking-widest">
             ⚠️ {error}
           </div>
         )}
 
-        <div className="bg-zinc-900/30 border border-zinc-800/50 p-6 md:p-8 rounded-[2.5rem] backdrop-blur-md shadow-2xl">
+        <div className="bg-white border border-slate-200 p-6 md:p-8 rounded-[2.5rem] shadow-xl shadow-slate-200/50">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-1">
-              <label className="text-[10px] font-black uppercase text-zinc-500 ml-1">Full Name</label>
+              <label className="text-[10px] font-black uppercase text-slate-400 ml-1">Full Name</label>
               <div className="relative group">
-                <User className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-600 group-focus-within:text-blue-500 transition" size={18} />
+                <User className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-purple-600 transition" size={18} />
                 <input 
                   type="text" 
                   required
@@ -94,15 +94,15 @@ export default function RegisterPage() {
                   onChange={(e) => setFormData({...formData, name: e.target.value})}
                   placeholder="Enter your full name"
                   autoComplete="name"
-                  className="w-full bg-zinc-950 border border-zinc-800 rounded-2xl py-4 pl-12 pr-4 text-sm text-white focus:outline-none focus:border-blue-600 transition-all placeholder:text-zinc-700"
+                  className="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 pl-12 pr-4 text-sm text-slate-900 focus:outline-none focus:border-purple-600 transition-all placeholder:text-slate-200"
                 />
               </div>
             </div>
 
             <div className="space-y-1">
-              <label className="text-[10px] font-black uppercase text-zinc-500 ml-1">Email Address</label>
+              <label className="text-[10px] font-black uppercase text-slate-400 ml-1">Email Address</label>
               <div className="relative group">
-                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-600 group-focus-within:text-blue-500 transition" size={18} />
+                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-purple-600 transition" size={18} />
                 <input 
                   type="email" 
                   required
@@ -110,15 +110,15 @@ export default function RegisterPage() {
                   onChange={(e) => setFormData({...formData, email: e.target.value})}
                   placeholder="your.email@example.com"
                   autoComplete="email"
-                  className="w-full bg-zinc-950 border border-zinc-800 rounded-2xl py-4 pl-12 pr-4 text-sm text-white focus:outline-none focus:border-blue-600 transition-all placeholder:text-zinc-700"
+                  className="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 pl-12 pr-4 text-sm text-slate-900 focus:outline-none focus:border-purple-600 transition-all placeholder:text-slate-200"
                 />
               </div>
             </div>
 
             <div className="space-y-1">
-              <label className="text-[10px] font-black uppercase text-zinc-500 ml-1">Set Password</label>
+              <label className="text-[10px] font-black uppercase text-slate-400 ml-1">Set Password</label>
               <div className="relative group">
-                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-600 group-focus-within:text-blue-500 transition" size={18} />
+                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-purple-600 transition" size={18} />
                 <input 
                   type={showPassword ? "text" : "password"} 
                   required
@@ -126,12 +126,12 @@ export default function RegisterPage() {
                   onChange={(e) => setFormData({...formData, password: e.target.value})}
                   placeholder="Create a strong password"
                   autoComplete="new-password"
-                  className="w-full bg-zinc-950 border border-zinc-800 rounded-2xl py-4 pl-12 pr-12 text-sm text-white focus:outline-none focus:border-blue-600 transition-all placeholder:text-zinc-700"
+                  className="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 pl-12 pr-12 text-sm text-slate-900 focus:outline-none focus:border-purple-600 transition-all placeholder:text-slate-200"
                 />
                 <button 
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-600 hover:text-zinc-400"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-300 hover:text-slate-500"
                 >
                   {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
@@ -139,9 +139,9 @@ export default function RegisterPage() {
             </div>
 
             <div className="space-y-1">
-              <label className="text-[10px] font-black uppercase text-zinc-500 ml-1">Confirm Password</label>
+              <label className="text-[10px] font-black uppercase text-slate-400 ml-1">Confirm Password</label>
               <div className="relative group">
-                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-600 group-focus-within:text-blue-500 transition" size={18} />
+                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-purple-600 transition" size={18} />
                 <input 
                   type="password" 
                   required
@@ -149,7 +149,7 @@ export default function RegisterPage() {
                   onChange={(e) => setFormData({...formData, confirmPassword: e.target.value})}
                   placeholder="Confirm your password"
                   autoComplete="new-password"
-                  className="w-full bg-zinc-950 border border-zinc-800 rounded-2xl py-4 pl-12 pr-4 text-sm text-white focus:outline-none focus:border-blue-600 transition-all placeholder:text-zinc-700"
+                  className="w-full bg-slate-50 border border-slate-100 rounded-2xl py-4 pl-12 pr-4 text-sm text-slate-900 focus:outline-none focus:border-purple-600 transition-all placeholder:text-slate-200"
                 />
               </div>
             </div>
@@ -157,7 +157,7 @@ export default function RegisterPage() {
             <button 
               disabled={loading}
               type="submit" 
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-black py-4 rounded-2xl transition-all active:scale-95 flex items-center justify-center gap-2 shadow-lg shadow-blue-600/10 mt-4 disabled:opacity-50"
+              className="w-full bg-purple-600 hover:bg-purple-700 text-white font-black py-4 rounded-2xl transition-all active:scale-95 flex items-center justify-center gap-2 shadow-lg shadow-purple-600/20 mt-4 disabled:opacity-50 uppercase text-[12px] tracking-widest"
             >
               {loading ? <Loader2 className="animate-spin" size={20} /> : "Start Investing Now"}
             </button>
@@ -165,10 +165,10 @@ export default function RegisterPage() {
         </div>
 
         <div className="text-center space-y-4">
-          <p className="text-zinc-500 text-xs">
-            Already a member? <Link href="/login" className="text-blue-500 font-bold hover:underline italic">Login Terminal</Link>
+          <p className="text-slate-400 text-xs">
+            Already a member? <Link href="/login" className="text-purple-600 font-bold hover:underline italic">Login Terminal</Link>
           </p>
-          <Link href="/" className="inline-block text-zinc-600 hover:text-zinc-400 text-[10px] font-black uppercase tracking-widest transition italic">
+          <Link href="/" className="inline-block text-slate-400 hover:text-slate-600 text-[10px] font-black uppercase tracking-widest transition italic">
             ← Back to Terminal
           </Link>
         </div>
