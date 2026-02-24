@@ -4,6 +4,7 @@ import {
   ChevronRight, Globe, Lock, Cpu, DollarSign, Wallet2, 
   CheckCircle2, HelpCircle, MessageSquare, TrendingUp
 } from "lucide-react";
+import { db } from "@/lib/db";
 
 // --- Helper Components ---
 
@@ -66,7 +67,11 @@ function FAQItem({ question, answer }: { question: string, answer: string }) {
 
 // --- Main Page ---
 
-export default function HomePage() {
+export default async function HomePage() {
+  const plans = await db.plan.findMany({
+    where: { active: true },
+    orderBy: { minAmount: 'asc' }
+  });
   return (
     <div className="bg-zinc-950 text-white min-h-screen selection:bg-blue-600/30">
       {/* Hero */}
@@ -204,9 +209,17 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto">
           <h3 className="text-3xl md:text-6xl font-black text-center mb-16 uppercase tracking-tighter italic">Investment <span className="text-blue-600">Tiers</span></h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <PlanCard title="Starter Pulse" percent="1.5%" days="24 Hours" min="10" max="99" />
-            <PlanCard title="Pro Matrix" percent="2.5%" days="48 Hours" min="100" max="499" featured={true} />
-            <PlanCard title="Elite Nexus" percent="5.0%" days="72 Hours" min="500" max="1,000" />
+            {plans.map((plan) => (
+              <PlanCard 
+                key={plan.id}
+                title={plan.name} 
+                percent={`${plan.roi}%`} 
+                days={plan.duration.split(' ')[0]} 
+                min={plan.minAmount} 
+                max={plan.maxAmount} 
+                featured={plan.popular} 
+              />
+            ))}
           </div>
         </div>
       </section>
