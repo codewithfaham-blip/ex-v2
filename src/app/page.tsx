@@ -214,7 +214,7 @@ export default async function HomePage() {
         <div className="max-w-7xl mx-auto">
           <h3 className="text-3xl md:text-6xl font-black text-center mb-16 uppercase tracking-tighter italic">Investment <span className="text-blue-600">Tiers</span></h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {plans.map((plan) => (
+            {plans.map((plan: any) => (
               <PlanCard 
                 key={plan.id}
                 title={plan.name} 

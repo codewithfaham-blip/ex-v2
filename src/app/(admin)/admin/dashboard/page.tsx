@@ -6,6 +6,24 @@ import { redirect } from "next/navigation";
 import YieldTrigger from "@/components/YieldTrigger";
 import NeuralGrid from "@/components/NeuralGrid";
 
+interface Investor {
+  id: string;
+  email: string;
+  balance: number;
+  role: string;
+  deposits: any[];
+  withdrawals: any[];
+}
+
+interface Transaction {
+  id: string;
+  amount: number;
+  status: string;
+  gateway: string | null;
+  user: { email: string };
+  createdAt: Date | string;
+}
+
 // Safe Currency Formatter
 const formatPKR = (val: number) => {
   return "Rs. " + val.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -20,7 +38,14 @@ export default async function AdminDashboard() {
   }
 
   // Real-time Data Fetching with error handling to prevent pool exhaustion crash
-  let statsData: any = {
+  let statsData: {
+    users: Investor[];
+    totalUsers: number;
+    completedStats: { _sum: { amount: number | null } };
+    pendingDeposits: number;
+    totalWithdrawals: { _sum: { amount: number | null } };
+    recentTransactions: Transaction[];
+  } = {
     users: [],
     totalUsers: 0,
     completedStats: { _sum: { amount: 0 } },
@@ -30,7 +55,7 @@ export default async function AdminDashboard() {
   };
 
   try {
-    const [users, totalUsers, completedStats, pendingDeposits, totalWithdrawals, recentTransactions] = await Promise.all([
+    const [users, totalUsers, completedStats, pendingDeposits, totalWithdrawals, recentTransactions]: any[] = await Promise.all([
       db.user.findMany({
         include: { deposits: { take: 1 }, withdrawals: { take: 1 } },
         orderBy: { createdAt: 'desc' },
@@ -173,7 +198,7 @@ export default async function AdminDashboard() {
            </div>
 
            <div className="flex-1 space-y-3 overflow-y-auto max-h-[350px] pr-2 custom-scrollbar">
-              {recentTransactions.map((tx: any) => (
+              {recentTransactions.map((tx: Transaction) => (
                 <div key={tx.id} className="p-4 bg-zinc-950/50 border border-zinc-900 rounded-2xl flex items-center justify-between group hover:border-zinc-700 transition-all">
                    <div className="flex items-center gap-3">
                       <div className={`p-2 rounded-lg ${tx.status === 'PENDING' ? 'bg-amber-500/10 text-amber-500' : 'bg-blue-500/10 text-blue-500'}`}>
@@ -223,7 +248,7 @@ export default async function AdminDashboard() {
               </tr>
             </thead>
             <tbody className="divide-y divide-zinc-800/30">
-              {users.filter(u => u.role !== 'ADMIN').map((user) => (
+              {users.filter((u: Investor) => u.role !== 'ADMIN').map((user: Investor) => (
                 <tr key={user.id} className="hover:bg-zinc-900/40 transition-all group">
                   <td className="py-6 px-4">
                     <div className="flex flex-col">
