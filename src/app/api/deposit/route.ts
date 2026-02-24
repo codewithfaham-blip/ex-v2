@@ -25,7 +25,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Transaction ID already used" }, { status: 400 });
     }
 
-    const deposit = await db.deposit.create({
+    const deposit = await (db.deposit as any).create({
       data: {
         userId: (session.user as any).id,
         amount: parseFloat(amount),
@@ -36,9 +36,13 @@ export async function POST(req: Request) {
       }
     });
 
+    console.log(`✅ Deposit created for user ${(session.user as any).id}:`, deposit.id);
     return NextResponse.json({ success: true, deposit });
-  } catch (error) {
-    console.error("Deposit error:", error);
-    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+  } catch (error: any) {
+    console.error("❌ Deposit error:", error);
+    return NextResponse.json({ 
+      error: "Internal Server Error", 
+      details: error.message 
+    }, { status: 500 });
   }
 }
