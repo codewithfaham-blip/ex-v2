@@ -40,11 +40,11 @@ export default async function InvestorsTerminal() {
             <div className="grid grid-cols-2 md:grid-cols-3 gap-8 w-full md:w-auto flex-1 px-4 text-center md:text-left">
               <div>
                 <p className="text-[9px] text-zinc-600 font-black uppercase tracking-tighter mb-1">Current Liquidity</p>
-                <p className="text-lg font-black text-white">${investor.balance.toFixed(2)}</p>
+                <p className="text-lg font-black text-white">Rs. {investor.balance.toFixed(2)}</p>
               </div>
               <div>
                 <p className="text-[9px] text-zinc-600 font-black uppercase tracking-tighter mb-1">Total Injected</p>
-                <p className="text-lg font-black text-zinc-400">${investor.deposits.reduce((acc, curr) => acc + curr.amount, 0).toFixed(2)}</p>
+                <p className="text-lg font-black text-zinc-400">Rs. {investor.deposits.reduce((acc, curr) => acc + curr.amount, 0).toFixed(2)}</p>
               </div>
               <div className="hidden md:block">
                 <p className="text-[9px] text-zinc-600 font-black uppercase tracking-tighter mb-1">Node Security</p>

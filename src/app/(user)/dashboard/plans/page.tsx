@@ -54,7 +54,7 @@ export default function PlansPage() {
 
   const handlePurchase = async () => {
     if (!amount || parseFloat(amount) < selectedPlan.minAmount || parseFloat(amount) > selectedPlan.maxAmount) {
-      alert(`Please enter an amount between $${selectedPlan.minAmount} and $${selectedPlan.maxAmount}`);
+      alert(`Please enter an amount between Rs. ${selectedPlan.minAmount} and Rs. ${selectedPlan.maxAmount}`);
       return;
     }
 
@@ -125,7 +125,7 @@ export default function PlansPage() {
                  </div>
                  <div className="flex flex-col gap-1 mb-4">
                     <p className="text-[9px] font-black text-blue-500 uppercase tracking-widest">{node.planName}</p>
-                    <h3 className="text-xl font-bold text-white tracking-tighter italic">${node.amount.toFixed(2)}</h3>
+                    <h3 className="text-xl font-bold text-white tracking-tighter italic">Rs. {node.amount.toFixed(2)}</h3>
                  </div>
                  <div className="flex items-center justify-between mt-auto pt-4 border-t border-zinc-800/50">
                     <div className="flex flex-col">
@@ -177,7 +177,7 @@ export default function PlansPage() {
                 <div className="space-y-4 mb-8 text-xs font-bold uppercase tracking-wider text-zinc-300">
                   <div className="flex justify-between border-b border-zinc-800/50 pb-2">
                     <span className="text-zinc-500">Min/Max:</span> 
-                    <span>${plan.minAmount} - ${plan.maxAmount}</span>
+                    <span>Rs. {plan.minAmount} - Rs. {plan.maxAmount}</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-zinc-500">Cycle:</span> 
@@ -223,15 +223,15 @@ export default function PlansPage() {
 
               <div className="space-y-6">
                 <div>
-                  <label className="text-[10px] font-black uppercase text-zinc-500 ml-1">Investment Amount ($)</label>
+                  <label className="text-[10px] font-black uppercase text-zinc-500 ml-1">Investment Amount (Rs.)</label>
                   <input 
                     type="number" 
                     value={amount}
                     onChange={(e) => setAmount(e.target.value)}
-                    placeholder={`Min $${selectedPlan.minAmount}`}
+                    placeholder={`Min Rs. ${selectedPlan.minAmount}`}
                     className="w-full bg-zinc-900 border border-zinc-800 rounded-2xl py-4 px-6 mt-2 text-white focus:outline-none focus:border-blue-600 transition-all font-bold"
                   />
-                  <p className="text-[9px] text-zinc-600 mt-2 uppercase font-bold italic">Enter amount between ${selectedPlan.minAmount} and ${selectedPlan.maxAmount}</p>
+                  <p className="text-[9px] text-zinc-600 mt-2 uppercase font-bold italic">Enter amount between Rs. ${selectedPlan.minAmount} and Rs. ${selectedPlan.maxAmount}</p>
                 </div>
 
                 <div className="bg-blue-600/5 border border-blue-600/10 p-4 rounded-2xl">

@@ -32,7 +32,7 @@ export default async function AdminWithdrawals() {
               
               <div className="text-center">
                 <p className="text-[9px] text-zinc-600 font-black uppercase mb-1">Extraction Amount</p>
-                <p className="text-2xl font-black text-white tracking-tighter">${wd.amount.toFixed(2)}</p>
+                <p className="text-2xl font-black text-white tracking-tighter">Rs. {wd.amount.toFixed(2)}</p>
               </div>
 
               <div className="flex items-center gap-6">

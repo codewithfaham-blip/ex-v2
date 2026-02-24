@@ -93,7 +93,7 @@ export default function WithdrawPage() {
                   </div>
                   <div>
                      <p className="text-zinc-500 text-[10px] font-black uppercase tracking-widest">Available Liquidity</p>
-                     <h3 className="text-4xl font-black text-white tracking-tighter">${userData?.balance?.toFixed(2) || "0.00"}</h3>
+                     <h3 className="text-4xl font-black text-white tracking-tighter">Rs. {userData?.balance?.toFixed(2) || "0.00"}</h3>
                   </div>
                </div>
                
@@ -111,14 +111,14 @@ export default function WithdrawPage() {
             <div className="space-y-6 text-white relative z-10">
               <div className="space-y-2">
                 <div className="flex justify-between items-center ml-1">
-                   <label className="text-[10px] font-black uppercase text-zinc-500">Extraction Amount (USD)</label>
+                   <label className="text-[10px] font-black uppercase text-zinc-500">Extraction Amount (PKR)</label>
                    <button onClick={() => setAmount(userData?.balance.toString())} className="text-[9px] font-black text-red-500 uppercase tracking-widest hover:underline">Max Available</button>
                 </div>
                 <input 
                   type="number" 
                   value={amount}
                   onChange={(e) => setAmount(e.target.value)}
-                  placeholder="Min $10.00"
+                  placeholder="Min Rs. 10.00"
                   className="w-full bg-zinc-950 border border-zinc-800 rounded-2xl py-5 px-6 text-xl font-black focus:outline-none focus:border-red-500/50 transition-all placeholder:text-zinc-900 text-white"
                 />
               </div>

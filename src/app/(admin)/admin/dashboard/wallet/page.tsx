@@ -90,7 +90,7 @@ export default function AdminWalletTerminal() {
           <p className="text-zinc-500 text-[9px] font-black uppercase tracking-widest mb-2 flex items-center gap-2">
             <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full" /> Total Inflow (BEP20)
           </p>
-          <h3 className="text-2xl font-black italic tracking-tighter">${stats.totalDeposited.toLocaleString()}</h3>
+          <h3 className="text-2xl font-black italic tracking-tighter">Rs. {stats.totalDeposited.toLocaleString()}</h3>
         </div>
 
         <div className="bg-zinc-900/40 border border-zinc-800/50 p-6 rounded-[2rem] relative overflow-hidden">
@@ -106,7 +106,7 @@ export default function AdminWalletTerminal() {
           <p className="text-zinc-500 text-[9px] font-black uppercase tracking-widest mb-2 flex items-center gap-2">
             <span className="w-1.5 h-1.5 bg-amber-500 rounded-full" /> Total Outflow
           </p>
-          <h3 className="text-2xl font-black italic tracking-tighter">${stats.totalWithdrawn.toLocaleString()}</h3>
+          <h3 className="text-2xl font-black italic tracking-tighter">Rs. {stats.totalWithdrawn.toLocaleString()}</h3>
         </div>
       </div>
 

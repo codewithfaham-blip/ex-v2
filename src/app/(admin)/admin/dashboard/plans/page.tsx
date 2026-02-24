@@ -231,11 +231,11 @@ export default function AdminPlans() {
                 </div>
                 <div>
                   <p className="text-[9px] text-zinc-600 font-black uppercase mb-1 tracking-widest">Min Entry</p>
-                  <p className="text-lg font-black text-white">${plan.minAmount}</p>
+                  <p className="text-lg font-black text-white">Rs. {plan.minAmount}</p>
                 </div>
                 <div>
                   <p className="text-[9px] text-zinc-600 font-black uppercase mb-1 tracking-widest">Max Entry</p>
-                  <p className="text-lg font-black text-white">${plan.maxAmount}</p>
+                  <p className="text-lg font-black text-white">Rs. {plan.maxAmount}</p>
                 </div>
               </div>
             </div>
@@ -275,7 +275,7 @@ export default function AdminPlans() {
                   />
                 </div>
                 <div>
-                  <label className="text-[10px] font-black uppercase text-zinc-500 ml-1 mb-2 block">Min Liquidity ($)</label>
+                  <label className="text-[10px] font-black uppercase text-zinc-500 ml-1 mb-2 block">Min Liquidity (Rs.)</label>
                   <input 
                     required
                     type="number" 
@@ -285,7 +285,7 @@ export default function AdminPlans() {
                   />
                 </div>
                 <div>
-                  <label className="text-[10px] font-black uppercase text-zinc-500 ml-1 mb-2 block">Max Liquidity ($)</label>
+                  <label className="text-[10px] font-black uppercase text-zinc-500 ml-1 mb-2 block">Max Liquidity (Rs.)</label>
                   <input 
                     required
                     type="number" 

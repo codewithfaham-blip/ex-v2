@@ -72,10 +72,10 @@ export default async function AdminDashboard() {
       {/* 2. CORE ANALYTICS (Compact Cards) */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
         {[
-          { label: "Total Liquidity", val: `$${(completedStats._sum.amount || 0).toLocaleString()}`, icon: <BarChart3 className="text-blue-500" />, trend: "+12.5%", color: "blue" },
+          { label: "Total Liquidity", val: `Rs. ${(completedStats._sum.amount || 0).toLocaleString()}`, icon: <BarChart3 className="text-blue-500" />, trend: "+12.5%", color: "blue" },
           { label: "Pending Synths", val: pendingDeposits, icon: <Clock className={pendingDeposits > 0 ? "text-amber-500" : "text-zinc-500"} />, trend: "Awaiting", color: pendingDeposits > 0 ? "amber" : "zinc" },
           { label: "Active Nodes", val: totalUsers, icon: <Users className="text-purple-500" />, trend: "Live", color: "purple" },
-          { label: "Platform Volume", val: `$${totalVolume.toLocaleString()}`, icon: <Wallet className="text-emerald-500" />, trend: "Global", color: "emerald" },
+          { label: "Platform Volume", val: `Rs. ${totalVolume.toLocaleString()}`, icon: <Wallet className="text-emerald-500" />, trend: "Global", color: "emerald" },
         ].map((card, i) => (
           <div key={i} className={`bg-zinc-900/30 border border-zinc-800/50 p-4 md:p-6 rounded-[1.5rem] md:rounded-[2rem] relative overflow-hidden group`}>
              <div className="flex justify-between items-start mb-2 md:mb-4">
@@ -172,7 +172,7 @@ export default async function AdminDashboard() {
                       </div>
                    </div>
                    <div className="text-right">
-                      <p className="text-xs font-black text-white tracking-widest">${tx.amount.toFixed(2)}</p>
+                      <p className="text-xs font-black text-white tracking-widest">Rs. {tx.amount.toFixed(2)}</p>
                       <p className={`text-[7px] font-black uppercase ${tx.status === 'APPROVED' ? 'text-emerald-500' : 'text-amber-500'}`}>{tx.status}</p>
                    </div>
                 </div>
@@ -222,7 +222,7 @@ export default async function AdminDashboard() {
                     </div>
                   </td>
                   <td className="py-6 px-4">
-                    <span className="text-sm font-black text-white tracking-widest leading-none">${user.balance.toFixed(2)}</span>
+                    <span className="text-sm font-black text-white tracking-widest leading-none">Rs. {user.balance.toFixed(2)}</span>
                   </td>
                   <td className="py-6 px-4">
                      <div className="flex items-center gap-3">

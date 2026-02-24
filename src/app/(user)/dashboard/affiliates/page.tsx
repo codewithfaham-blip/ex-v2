@@ -39,7 +39,7 @@ export default function AffiliatesPage() {
         <div className="bg-blue-600 p-8 rounded-[2.5rem] shadow-2xl shadow-blue-600/20 relative overflow-hidden group">
           <TrendingUp className="absolute -right-4 -bottom-4 text-white/10 w-32 h-32 group-hover:scale-110 transition-transform" />
           <p className="text-blue-100 text-[10px] font-black uppercase tracking-widest mb-2">Network Earnings</p>
-          <h3 className="text-4xl font-black text-white italic">$0.00</h3>
+          <h3 className="text-4xl font-black text-white italic">Rs. 0.00</h3>
           <div className="mt-6">
             <span className="bg-white/20 text-white text-[9px] font-black px-3 py-1 rounded-full uppercase">Level 1 Active</span>
           </div>

@@ -138,7 +138,7 @@ export default function DepositPage() {
           {/* 3. Deposit Form */}
           <form onSubmit={handleSubmit} className="space-y-4">
             <input 
-              type="number" placeholder="Enter Amount ($)" 
+              type="number" placeholder="Enter Amount (Rs.)" 
               className="w-full bg-black border border-zinc-800 p-4 rounded-2xl outline-none focus:border-blue-600 text-white"
               onChange={(e) => setAmount(e.target.value)} 
               value={amount}

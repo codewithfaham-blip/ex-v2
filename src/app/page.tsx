@@ -28,10 +28,10 @@ function PlanCard({ title, percent, days, min, max, featured = false }: any) {
       
       <div className="space-y-3 mb-8">
         <div className="flex justify-between text-xs md:text-sm text-zinc-400">
-          <span>Min:</span> <span className="font-bold text-white">${min}</span>
+          <span>Min:</span> <span className="font-bold text-white">Rs. {min}</span>
         </div>
         <div className="flex justify-between text-xs md:text-sm text-zinc-400">
-          <span>Max:</span> <span className="font-bold text-white">${max}</span>
+          <span>Max:</span> <span className="font-bold text-white">Rs. {max}</span>
         </div>
       </div>
       
@@ -101,8 +101,8 @@ export default async function HomePage() {
       <section className="px-4 py-10 max-w-7xl mx-auto">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
           <StatItem icon={<Users className="text-blue-500" size={20} />} label="Global Nodes" value="12k+" />
-          <StatItem icon={<Coins className="text-blue-500" size={20} />} label="Total Inbound" value="$4.2M" />
-          <StatItem icon={<Zap className="text-blue-500" size={20} />} label="Paid To Date" value="$1.8M" />
+          <StatItem icon={<Coins className="text-blue-500" size={20} />} label="Total Inbound" value="Rs. 4.2M" />
+          <StatItem icon={<Zap className="text-blue-500" size={20} />} label="Paid To Date" value="Rs. 1.8M" />
           <StatItem icon={<BarChart3 className="text-blue-500" size={20} />} label="Active Stream" value="High" />
         </div>
       </section>
@@ -233,7 +233,7 @@ export default async function HomePage() {
          <div className="space-y-4">
             <FAQItem 
               question="What is the minimum deposit?" 
-              answer="You can start your investment journey with as little as $10 on our Starter Pulse plan. There are no hidden fees for deployment." 
+              answer="You can start your investment journey with as little as Rs. 10 on our Starter Pulse plan. There are no hidden fees for deployment." 
             />
             <FAQItem 
               question="How often are profits credited?" 

@@ -44,7 +44,7 @@ export default async function AdminDeposits() {
                     <p className="text-[9px] text-zinc-600 font-bold mt-1 uppercase italic tracking-tighter">Gateway: {dep.gateway}</p>
                   </td>
                   <td className="p-6">
-                    <p className="text-lg font-black text-emerald-500 tracking-tighter">${dep.amount.toFixed(2)}</p>
+                    <p className="text-lg font-black text-emerald-500 tracking-tighter">Rs. {dep.amount.toFixed(2)}</p>
                   </td>
                   <td className="p-6">
                     <div className="flex items-center gap-2 text-zinc-500 hover:text-blue-500 cursor-pointer transition-colors">
