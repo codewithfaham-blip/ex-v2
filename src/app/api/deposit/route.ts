@@ -12,17 +12,19 @@ export async function POST(req: Request) {
 
     const { amount, gateway, transactionId, slipImage } = await req.json();
 
-    if (!amount || !gateway || !transactionId) {
-      return NextResponse.json({ error: "Missing fields" }, { status: 400 });
+    if (!amount || !gateway || (!transactionId && !slipImage)) {
+      return NextResponse.json({ error: "Amount and Proof (TID or Slip) required" }, { status: 400 });
     }
 
-    // Check uniqueness of Transaction ID
-    const existing = await db.deposit.findUnique({
-      where: { transactionId }
-    });
+    // Check uniqueness if TID is provided
+    if (transactionId) {
+      const existing = await db.deposit.findUnique({
+        where: { transactionId }
+      });
 
-    if (existing) {
-      return NextResponse.json({ error: "Transaction ID already used" }, { status: 400 });
+      if (existing) {
+        return NextResponse.json({ error: "Transaction ID already used" }, { status: 400 });
+      }
     }
 
     const deposit = await (db.deposit as any).create({

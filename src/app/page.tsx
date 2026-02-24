@@ -68,10 +68,15 @@ function FAQItem({ question, answer }: { question: string, answer: string }) {
 // --- Main Page ---
 
 export default async function HomePage() {
-  const plans = await db.plan.findMany({
-    where: { active: true },
-    orderBy: { minAmount: 'asc' }
-  });
+  let plans: any[] = [];
+  try {
+    plans = await db.plan.findMany({
+      where: { active: true },
+      orderBy: { minAmount: 'asc' }
+    });
+  } catch (error) {
+    console.error("⚠️ HomePage DB Error (Pool Limit?):", error);
+  }
   return (
     <div className="bg-zinc-950 text-white min-h-screen selection:bg-blue-600/30">
       {/* Hero */}

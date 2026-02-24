@@ -4,6 +4,12 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import YieldTrigger from "@/components/YieldTrigger";
+import NeuralGrid from "@/components/NeuralGrid";
+
+// Safe Currency Formatter
+const formatPKR = (val: number) => {
+  return "Rs. " + val.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+};
 
 export default async function AdminDashboard() {
   const session = await getServerSession(authOptions);
@@ -13,32 +19,48 @@ export default async function AdminDashboard() {
     redirect("/dashboard");
   }
 
-  // Real-time Data Fetching
-  const [users, totalUsers, completedStats, pendingDeposits, totalWithdrawals, recentTransactions] = await Promise.all([
-    db.user.findMany({
-      include: { deposits: true, withdrawals: true },
-      orderBy: { createdAt: 'desc' },
-      take: 6
-    }),
-    db.user.count(),
-    db.deposit.aggregate({ 
-      _sum: { amount: true }, 
-      where: { status: "APPROVED" } 
-    }),
-    db.deposit.count({ 
-      where: { status: "PENDING" } 
-    }),
-    db.withdrawal.aggregate({ 
-      _sum: { amount: true }, 
-      where: { status: "COMPLETED" } 
-    }),
-    db.deposit.findMany({
-      orderBy: { createdAt: 'desc' },
-      take: 5,
-      include: { user: { select: { email: true } } }
-    })
-  ]);
+  // Real-time Data Fetching with error handling to prevent pool exhaustion crash
+  let statsData: any = {
+    users: [],
+    totalUsers: 0,
+    completedStats: { _sum: { amount: 0 } },
+    pendingDeposits: 0,
+    totalWithdrawals: { _sum: { amount: 0 } },
+    recentTransactions: []
+  };
 
+  try {
+    const [users, totalUsers, completedStats, pendingDeposits, totalWithdrawals, recentTransactions] = await Promise.all([
+      db.user.findMany({
+        include: { deposits: { take: 1 }, withdrawals: { take: 1 } },
+        orderBy: { createdAt: 'desc' },
+        take: 6
+      }),
+      db.user.count(),
+      db.deposit.aggregate({ 
+        _sum: { amount: true }, 
+        where: { status: "APPROVED" } 
+      }),
+      db.deposit.count({ 
+        where: { status: "PENDING" } 
+      }),
+      db.withdrawal.aggregate({ 
+        _sum: { amount: true }, 
+        where: { status: "COMPLETED" } 
+      }),
+      db.deposit.findMany({
+        orderBy: { createdAt: 'desc' },
+        take: 5,
+        include: { user: { select: { email: true } } }
+      })
+    ]);
+    statsData = { users, totalUsers, completedStats, pendingDeposits, totalWithdrawals, recentTransactions };
+  } catch (error) {
+    console.error("⚠️ Dashboard Data Fetch Error (Pool Limit?):", error);
+    // Fallback values already set in statsData
+  }
+
+  const { users, totalUsers, completedStats, pendingDeposits, totalWithdrawals, recentTransactions } = statsData;
   const totalVolume = (completedStats._sum.amount || 0) + (totalWithdrawals._sum.amount || 0);
 
   return (
@@ -70,10 +92,10 @@ export default async function AdminDashboard() {
       {/* 2. CORE ANALYTICS (Compact Cards) */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
         {[
-          { label: "Total Liquidity", val: `Rs. ${(completedStats._sum.amount || 0).toLocaleString()}`, icon: <BarChart3 className="text-blue-500" />, trend: "+12.5%", color: "blue" },
+          { label: "Total Liquidity", val: formatPKR(completedStats._sum.amount || 0), icon: <BarChart3 className="text-blue-500" />, trend: "+12.5%", color: "blue" },
           { label: "Pending Synths", val: pendingDeposits, icon: <Clock className={pendingDeposits > 0 ? "text-amber-500" : "text-zinc-500"} />, trend: "Awaiting", color: pendingDeposits > 0 ? "amber" : "zinc" },
           { label: "Active Nodes", val: totalUsers, icon: <Users className="text-purple-500" />, trend: "Live", color: "purple" },
-          { label: "Platform Volume", val: `Rs. ${totalVolume.toLocaleString()}`, icon: <Wallet className="text-emerald-500" />, trend: "Global", color: "emerald" },
+          { label: "Platform Volume", val: formatPKR(totalVolume), icon: <Wallet className="text-emerald-500" />, trend: "Global", color: "emerald" },
         ].map((card, i) => (
           <div key={i} className={`bg-zinc-900/30 border border-zinc-800/50 p-4 md:p-6 rounded-[1.5rem] md:rounded-[2rem] relative overflow-hidden group`}>
              <div className="flex justify-between items-start mb-2 md:mb-4">
@@ -112,14 +134,7 @@ export default async function AdminDashboard() {
                 </div>
               </div>
 
-              <div className="flex-1 grid grid-cols-12 grid-rows-8 gap-1.5 overflow-hidden">
-                {Array.from({ length: 96 }).map((_, i) => (
-                  <div key={i} className={`h-full rounded-[2px] transition-all duration-[2000ms] ${
-                    Math.random() > 0.95 ? 'bg-blue-600 shadow-[0_0_15px_#3b82f6] scale-110' : 
-                    Math.random() > 0.8 ? 'bg-zinc-700/50' : 'bg-zinc-900'
-                  }`} />
-                ))}
-              </div>
+              <NeuralGrid />
 
               <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
                  <div className="bg-zinc-950/50 border border-zinc-900 p-4 rounded-2xl relative overflow-hidden group">
