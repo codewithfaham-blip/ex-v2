@@ -9,11 +9,16 @@ export default function DepositPage() {
   const [slipImage, setSlipImage] = useState("");
   const [loading, setLoading] = useState(false);
   const [settings, setSettings] = useState<any>(null);
+  const [profile, setProfile] = useState<any>(null);
 
   useEffect(() => {
     fetch("/api/settings")
       .then(res => res.json())
       .then(data => setSettings(data));
+    
+    fetch("/api/user/profile")
+      .then(res => res.json())
+      .then(data => setProfile(data));
   }, []);
 
   const methods = settings ? [
@@ -153,6 +158,32 @@ export default function DepositPage() {
         <p className="text-zinc-500 text-[10px] font-black uppercase tracking-[0.4em] ml-5">
           Secure Capital Injection Terminal • Gateway: <span className="text-blue-500 italic">Verified</span>
         </p>
+      </div>
+
+      {/* 0. User Stats */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="bg-zinc-900/40 border border-zinc-800/50 p-6 rounded-[2rem] flex items-center justify-between">
+           <div>
+              <p className="text-[10px] font-black text-zinc-500 uppercase tracking-widest mb-1">Total Injected Liquidity</p>
+              <h3 className="text-3xl font-black text-white tracking-tighter italic">
+                Rs. {profile?.totalDeposited?.toLocaleString() || "0.00"}
+              </h3>
+           </div>
+           <div className="bg-blue-600/10 p-3 rounded-2xl border border-blue-600/10">
+              <Zap className="text-blue-500" size={24} />
+           </div>
+        </div>
+        <div className="bg-zinc-900/40 border border-zinc-800/50 p-6 rounded-[2rem] flex items-center justify-between">
+           <div>
+              <p className="text-[10px] font-black text-zinc-500 uppercase tracking-widest mb-1">Available Balance</p>
+              <h3 className="text-3xl font-black text-blue-600 tracking-tighter italic">
+                Rs. {profile?.balance?.toLocaleString() || "0.00"}
+              </h3>
+           </div>
+           <div className="bg-blue-600/10 p-3 rounded-2xl border border-blue-600/10">
+              <Wallet className="text-blue-500" size={24} />
+           </div>
+        </div>
       </div>
 
       {/* 1. Select Method */}

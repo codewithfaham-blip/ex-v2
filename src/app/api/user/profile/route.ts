@@ -27,7 +27,18 @@ export async function GET() {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    return NextResponse.json(user);
+    const totalDeposited = await db.deposit.aggregate({
+      where: { 
+        userId: user.id,
+        status: { in: ["APPROVED", "ACTIVE"] }
+      },
+      _sum: { amount: true }
+    });
+
+    return NextResponse.json({
+      ...user,
+      totalDeposited: totalDeposited._sum.amount || 0
+    });
   } catch (error) {
     console.error("Profile API error:", error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
