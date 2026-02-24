@@ -92,12 +92,9 @@ export default async function HomePage() {
         <p className="text-slate-500 text-sm md:text-2xl mb-12 max-w-2xl mx-auto leading-relaxed px-2 font-medium">
           Deploy your assets into the world&apos;s most advanced high-yield intelligence network. Secure, Instant, and Infinite.
         </p>
-        <div className="flex flex-col gap-4 px-2 sm:flex-row sm:justify-center">
-          <Link href="/register" className="bg-purple-600 px-10 py-5 rounded-2xl font-black text-sm uppercase tracking-[0.2em] shadow-xl shadow-purple-600/20 hover:bg-purple-700 transition-all flex items-center justify-center gap-2 group text-white">
-            Get Started Now <ChevronRight size={20} className="group-hover:translate-x-1 transition-transform" />
-          </Link>
-          <Link href="/login" className="bg-white border border-slate-200 px-10 py-5 rounded-2xl font-black text-sm uppercase tracking-[0.2em] hover:bg-slate-50 transition-all text-slate-900 shadow-sm">
-            Access Terminal
+        <div className="flex justify-center">
+          <Link href="/login" className="bg-purple-600 px-16 py-6 rounded-2xl font-black text-lg uppercase tracking-[0.2em] shadow-xl shadow-purple-600/20 hover:bg-purple-700 transition-all flex items-center justify-center gap-3 group text-white">
+            Login <ChevronRight size={24} className="group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
       </header>
@@ -260,8 +257,8 @@ export default async function HomePage() {
          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[400px] bg-purple-600/5 blur-[120px] -z-10 rounded-full" />
          <h3 className="text-4xl md:text-8xl font-black mb-10 tracking-tighter italic uppercase text-slate-900">Ready to <br /> <span className="text-purple-600">Initialize?</span></h3>
          <div className="flex flex-col sm:flex-row justify-center gap-6">
-            <Link href="/register" className="bg-purple-600 px-12 py-5 rounded-2xl font-black text-sm uppercase tracking-widest shadow-2xl hover:bg-purple-700 transition-all flex items-center justify-center gap-3 text-white">
-               Register Account <ArrowRight size={20} />
+            <Link href="/login" className="bg-purple-600 px-12 py-5 rounded-2xl font-black text-sm uppercase tracking-widest shadow-2xl hover:bg-purple-700 transition-all flex items-center justify-center gap-3 text-white">
+               Login <ArrowRight size={20} />
             </Link>
             <Link href="/support" className="bg-white border border-slate-200 px-12 py-5 rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-slate-50 transition-all flex items-center justify-center gap-3 text-slate-900 shadow-sm">
                <MessageSquare size={20} className="text-purple-600" /> Live Support
@@ -269,12 +266,6 @@ export default async function HomePage() {
          </div>
       </section>
 
-      {/* Final Footer */}
-      <footer className="py-16 border-t border-slate-100 text-center opacity-60">
-        <p className="text-[10px] md:text-xs text-slate-400 font-bold uppercase tracking-[0.4em]">
-          © 2026 Exotic Cash Digital Assets • Decentralized Yield Intelligence Protocol
-        </p>
-      </footer>
     </div>
   );
 }

@@ -49,9 +49,8 @@ export default function Navbar() {
             </div>
           ) : (
             <>
-              <Link href="/login" className="text-slate-400 hover:text-slate-900 transition">Login</Link>
-              <Link href="/register" className="bg-purple-600 px-6 py-2.5 rounded-lg text-white hover:bg-purple-700 transition">
-                Join Now
+              <Link href="/login" className="bg-purple-600 px-6 py-2.5 rounded-lg text-white hover:bg-purple-700 transition">
+                Login
               </Link>
             </>
           )}
@@ -59,14 +58,7 @@ export default function Navbar() {
 
         {/* Mobile Toggle & Quick Actions */}
         <div className="flex md:hidden items-center gap-3">
-          {status === "unauthenticated" && (
-            <Link 
-              href="/login" 
-              className="px-3 py-1.5 bg-purple-600/10 text-purple-600 rounded-lg border border-purple-600/20 text-[10px] font-black uppercase tracking-tighter active:scale-95 transition-all"
-            >
-              Login
-            </Link>
-          )}
+          {/* Unauthenticated Quick Action Removed */}
           {status === "authenticated" && (
             <Link 
               href={dashboardHref} 
@@ -110,9 +102,8 @@ export default function Navbar() {
             </div>
           ) : (
             <>
-              <Link href="/login" onClick={() => setIsOpen(false)} className="text-slate-600 text-base">Login</Link>
-              <Link href="/register" onClick={() => setIsOpen(false)} className="bg-purple-600 text-center py-4 rounded-xl font-black uppercase tracking-widest text-xs text-white">
-                Get Started
+              <Link href="/login" onClick={() => setIsOpen(false)} className="bg-purple-600 text-center py-4 rounded-xl font-black uppercase tracking-widest text-xs text-white">
+                Login
               </Link>
             </>
           )}

@@ -24,6 +24,7 @@ export const metadata: Metadata = {
 import AuthProvider from "@/components/SessionProvider";
 import TonProvider from "@/components/TonProvider";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import { Toaster } from "sonner";
 
 export default function RootLayout({
@@ -40,7 +41,10 @@ export default function RootLayout({
           <TonProvider>
             <Navbar />
             <Toaster position="top-center" richColors theme="dark" />
-            {children}
+            <main className="min-h-[70vh]">
+              {children}
+            </main>
+            <Footer />
           </TonProvider>
         </AuthProvider>
       </body>
