@@ -1,5 +1,6 @@
 import { db } from "@/lib/db";
 import { ArrowUpRight, Clock, ShieldCheck } from "lucide-react";
+import ClientWithdrawalActions from "@/components/ClientWithdrawalActions";
 
 export default async function AdminWithdrawals() {
   const withdrawals = await db.withdrawal.findMany({
@@ -40,7 +41,7 @@ export default async function AdminWithdrawals() {
                     <p className="text-[9px] text-zinc-600 font-black uppercase">Status</p>
                     <span className={`text-[10px] font-black uppercase italic ${wd.status === 'PENDING' ? 'text-amber-500' : 'text-emerald-500'}`}>{wd.status}</span>
                  </div>
-                 <button className="bg-white text-black px-8 py-3 rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-red-500 hover:text-white transition-all active:scale-95">Mark as Paid</button>
+                 <ClientWithdrawalActions withdrawalId={wd.id} status={wd.status} />
               </div>
             </div>
           ))

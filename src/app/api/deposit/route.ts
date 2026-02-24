@@ -10,7 +10,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const { amount, gateway, transactionId } = await req.json();
+    const { amount, gateway, transactionId, slipImage } = await req.json();
 
     if (!amount || !gateway || !transactionId) {
       return NextResponse.json({ error: "Missing fields" }, { status: 400 });
@@ -31,6 +31,7 @@ export async function POST(req: Request) {
         amount: parseFloat(amount),
         gateway,
         transactionId,
+        slipImage,
         status: "PENDING",
       }
     });

@@ -29,7 +29,7 @@ export default async function AdminDeposits() {
             <tr className="text-[10px] font-black uppercase text-zinc-500 tracking-widest">
               <th className="p-6">Investor</th>
               <th className="p-6">Asset Amount</th>
-              <th className="p-6">Transaction Hash</th>
+              <th className="p-6">Transaction Hash / Slip</th>
               <th className="p-6 text-right">Action Terminal</th>
             </tr>
           </thead>
@@ -47,10 +47,37 @@ export default async function AdminDeposits() {
                     <p className="text-lg font-black text-emerald-500 tracking-tighter">Rs. {dep.amount.toFixed(2)}</p>
                   </td>
                   <td className="p-6">
-                    <div className="flex items-center gap-2 text-zinc-500 hover:text-blue-500 cursor-pointer transition-colors">
-                      <Hash size={12} />
-                      <span className="text-[10px] font-mono">{dep.transactionId}</span>
-                      <ExternalLink size={12} />
+                    <div className="flex flex-col gap-2">
+                      <div className="flex items-center gap-2 text-zinc-500 hover:text-blue-500 cursor-pointer transition-colors">
+                        <Hash size={12} />
+                        <span className="text-[10px] font-mono">{dep.transactionId}</span>
+                        <ExternalLink size={12} />
+                      </div>
+                      {(dep as any).slipImage && (
+                        <div className="mt-2 group/slip">
+                          <p className="text-[7px] font-black uppercase text-zinc-600 mb-1 tracking-widest">Verification Slip</p>
+                          <div className="relative w-24 h-16 bg-zinc-950 border border-zinc-800 rounded-lg overflow-hidden cursor-pointer shadow-lg">
+                            <img src={(dep as any).slipImage} alt="Payment Slip" className="w-full h-full object-cover grayscale group-hover/slip:grayscale-0 transition-all duration-500" />
+                            <div 
+                              onClick={() => {
+                                const win = window.open("", "_blank");
+                                if (win) {
+                                  win.document.write(`
+                                    <html>
+                                      <body style="margin:0; background:#000; display:flex; items-center; justify-content:center; height:100vh;">
+                                        <img src="${(dep as any).slipImage}" style="max-width:90%; max-height:90%; border-radius:10px; box-shadow:0 0 50px rgba(0,0,0,0.5);" />
+                                      </body>
+                                    </html>
+                                  `);
+                                }
+                              }}
+                              className="absolute inset-0 bg-blue-600/40 opacity-0 group-hover/slip:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[2px]"
+                            >
+                              <span className="text-[8px] font-black uppercase text-white tracking-tighter">View Full</span>
+                            </div>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </td>
                   <td className="p-6 text-right space-x-3">

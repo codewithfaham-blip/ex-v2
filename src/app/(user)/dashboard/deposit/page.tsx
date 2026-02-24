@@ -6,6 +6,7 @@ export default function DepositPage() {
   const [selectedMethod, setSelectedMethod] = useState<any>(null);
   const [tid, setTid] = useState("");
   const [amount, setAmount] = useState("");
+  const [slipImage, setSlipImage] = useState("");
   const [loading, setLoading] = useState(false);
   const [settings, setSettings] = useState<any>(null);
 
@@ -58,6 +59,17 @@ export default function DepositPage() {
     alert("Copied to clipboard!");
   };
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setSlipImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -66,12 +78,18 @@ export default function DepositPage() {
       const res = await fetch("/api/deposit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount: parseFloat(amount), gateway: selectedMethod.name, transactionId: tid }),
+        body: JSON.stringify({ 
+          amount: parseFloat(amount), 
+          gateway: selectedMethod.name, 
+          transactionId: tid,
+          slipImage: slipImage 
+        }),
       });
       if(res.ok) {
         alert("Request Sent! Wait for Admin Approval.");
         setAmount("");
         setTid("");
+        setSlipImage("");
         setSelectedMethod(null);
       } else {
         const error = await res.json();
@@ -151,6 +169,40 @@ export default function DepositPage() {
               value={tid}
               required
             />
+            
+            <div className="space-y-2">
+              <label className="text-[10px] font-black uppercase text-zinc-500 ml-1">Upload Cash Slip / Payment Proof</label>
+              <div className="relative">
+                <input 
+                  type="file" 
+                  accept="image/*"
+                  onChange={handleFileChange}
+                  className="hidden"
+                  id="slip-upload"
+                  required
+                />
+                <label 
+                  htmlFor="slip-upload"
+                  className="w-full bg-black border-2 border-dashed border-zinc-800 p-8 rounded-2xl flex flex-col items-center justify-center gap-3 cursor-pointer hover:border-blue-600/50 transition-all group"
+                >
+                  {slipImage ? (
+                    <div className="w-full h-40 relative">
+                      <img src={slipImage} alt="Slip Preview" className="w-full h-full object-contain rounded-xl" />
+                      <div className="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity rounded-xl">
+                        <p className="text-[10px] font-black uppercase tracking-widest">Change Image</p>
+                      </div>
+                    </div>
+                  ) : (
+                    <>
+                      <div className="p-3 bg-zinc-900 rounded-xl text-zinc-500 group-hover:text-blue-500 transition-colors">
+                        <Zap size={24} />
+                      </div>
+                      <p className="text-[10px] font-black uppercase tracking-widest text-zinc-500 group-hover:text-zinc-300">Tap to browse or drop slip</p>
+                    </>
+                  )}
+                </label>
+              </div>
+            </div>
             <button 
               disabled={loading}
               className="w-full bg-blue-600 py-4 rounded-2xl font-black uppercase tracking-tighter flex items-center justify-center gap-2 text-white hover:bg-blue-700 transition"

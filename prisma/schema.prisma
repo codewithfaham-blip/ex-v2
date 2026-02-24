@@ -42,6 +42,7 @@ model Deposit {
   planName        String?  @default("Manual Deposit")
   transactionId   String?  @unique // User jo TID dalay ga (Manual)
   transactionHash String?  @unique // User jo hash dalay ga (Crypto/Plan)
+  slipImage       String?  // Base64 or URL of the cash slip image
   status          DepositStatus @default(PENDING)
   createdAt       DateTime @default(now())
   user            User     @relation(fields: [userId], references: [id])

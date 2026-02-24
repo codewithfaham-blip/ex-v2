@@ -21,7 +21,7 @@ export default function ClientDepositActions({ depositId }: { depositId: string 
 
     toast.promise(promise, {
       loading: 'Authorizing liquidity injection...',
-      success: async (res) => {
+      success: async (res: Response) => {
         if (!res.ok) {
            const err = await res.json();
            throw new Error(err.error || "Authorization failed");
@@ -29,7 +29,7 @@ export default function ClientDepositActions({ depositId }: { depositId: string 
         router.refresh();
         return 'Node successfully activated and synchronized';
       },
-      error: (err) => err.message || 'Injection failed. Check system logs.',
+      error: (err: any) => err.message || 'Injection failed. Check system logs.',
     });
 
     try {

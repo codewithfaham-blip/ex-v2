@@ -3,6 +3,7 @@ import { Users, Wallet, ArrowUpRight, Clock, Activity, ShieldAlert, BarChart3, Z
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
+import YieldTrigger from "@/components/YieldTrigger";
 
 export default async function AdminDashboard() {
   const session = await getServerSession(authOptions);
@@ -62,10 +63,7 @@ export default async function AdminDashboard() {
             <Server size={14} className="text-zinc-500" />
             <div className="text-[8px] font-black uppercase text-zinc-500 tracking-widest">Latency: <span className="text-emerald-500">24ms</span></div>
           </div>
-          <div className="bg-blue-600 hover:bg-blue-700 px-5 py-2.5 rounded-xl flex items-center gap-2 transition-all cursor-pointer shadow-lg shadow-blue-600/20 active:scale-95 group">
-            <Zap size={14} className="text-white group-hover:animate-pulse" />
-            <span className="text-[10px] font-black uppercase tracking-widest">Re-calculate Yields</span>
-          </div>
+          <YieldTrigger />
         </div>
       </div>
 
