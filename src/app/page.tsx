@@ -24,7 +24,7 @@ function PlanCard({ title, percent, days, min, max, featured = false }: any) {
       {featured && <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-blue-600 px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest text-white">Popular</span>}
       <h4 className="text-lg md:text-xl font-bold mb-1">{title} Plan</h4>
       <div className="text-3xl md:text-4xl font-black text-white mb-1">{percent} <span className="text-xs md:text-sm font-medium text-zinc-500 italic">Daily</span></div>
-      <p className="text-xs text-zinc-400 mb-6 underline decoration-blue-500/50">Period: {days} Days</p>
+      <p className="text-xs text-zinc-400 mb-6 underline decoration-blue-500/50">Period: {days}</p>
       
       <div className="space-y-3 mb-8">
         <div className="flex justify-between text-xs md:text-sm text-zinc-400">
@@ -214,7 +214,7 @@ export default async function HomePage() {
                 key={plan.id}
                 title={plan.name} 
                 percent={`${plan.roi}%`} 
-                days={plan.duration.split(' ')[0]} 
+                days={plan.duration} 
                 min={plan.minAmount} 
                 max={plan.maxAmount} 
                 featured={plan.popular} 
@@ -241,7 +241,7 @@ export default async function HomePage() {
             />
             <FAQItem 
               question="Can I withdraw my capital at any time?" 
-              answer="Yes. After your selected plan period (24h, 48h, or 72h) concludes, your principal capital is released and available for instant withdrawal along with your profits." 
+              answer="Yes. After your selected plan period concludes, your principal capital is released and available for instant withdrawal along with your profits." 
             />
             <FAQItem 
               question="Is my account secure?" 

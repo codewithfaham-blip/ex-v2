@@ -19,7 +19,7 @@ export default function AdminPlans() {
     minAmount: "",
     maxAmount: "",
     roi: "",
-    duration: "24 Hours",
+    duration: "1 Month",
     icon: "Zap",
     popular: false,
     active: true,
@@ -52,7 +52,7 @@ export default function AdminPlans() {
       minAmount: "",
       maxAmount: "",
       roi: "",
-      duration: "24 Hours",
+      duration: "1 Month",
       icon: "Zap",
       popular: false,
       active: true,
@@ -312,11 +312,12 @@ export default function AdminPlans() {
                     onChange={(e) => setFormData({...formData, duration: e.target.value})}
                     className="w-full bg-zinc-900 border border-zinc-800 rounded-2xl py-4 px-6 text-white focus:outline-none focus:border-blue-600 transition-all font-bold appearance-none bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%234b5563%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C/polyline%3E%3C/svg%3E')] bg-[length:1.2em_1.2em] bg-[right_1.2rem_center] bg-no-repeat"
                   >
-                    <option value="24 Hours">24 Hours</option>
-                    <option value="48 Hours">48 Hours</option>
-                    <option value="72 Hours">72 Hours</option>
-                    <option value="7 Days">7 Days</option>
-                    <option value="30 Days">30 Days</option>
+                    <option value="1 Month">1 Month</option>
+                    <option value="2 Months">2 Months</option>
+                    <option value="3 Months">3 Months</option>
+                    <option value="6 Months">6 Months</option>
+                    <option value="12 Months">12 Months</option>
+                    <option value="15 Months">15 Months</option>
                   </select>
                 </div>
                 <div>
