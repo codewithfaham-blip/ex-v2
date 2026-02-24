@@ -33,16 +33,20 @@ async function main() {
 
   // Initialize Default Investment Plans
   const plans = [
-    { name: "Starter Pulse", roi: 1.5, duration: "30 Days", minAmount: 10, maxAmount: 1000, popular: false },
-    { name: "Elite Stream", roi: 2.5, duration: "60 Days", minAmount: 1001, maxAmount: 5000, popular: true },
-    { name: "Global Master", roi: 4.0, duration: "90 Days", minAmount: 5001, maxAmount: 50000, popular: false }
+    { name: "Basic", roi: 1.5, duration: "1 Month", minAmount: 5000, maxAmount: 10000, popular: false, icon: "Zap" },
+    { name: "Basic Pro", roi: 2.5, duration: "2 Months", minAmount: 11000, maxAmount: 20000, popular: false, icon: "Zap" },
+    { name: "Supreme Basic", roi: 3.5, duration: "4 Months", minAmount: 25000, maxAmount: 50000, popular: false, icon: "Trophy" },
+    { name: "Supreme Edge", roi: 5.0, duration: "6 Months", minAmount: 55000, maxAmount: 100000, popular: true, icon: "Trophy" },
+    { name: "Supreme Pro", roi: 7.5, duration: "12 Months", minAmount: 110000, maxAmount: 500000, popular: false, icon: "Crown" },
+    { name: "Supreme", roi: 10.0, duration: "15 Months", minAmount: 550000, maxAmount: 2000000, popular: false, icon: "Crown" }
   ]
 
+  // Clear existing plans first to avoid name conflicts with old unique names
+  await prisma.plan.deleteMany({});
+
   for (const plane of plans) {
-    await prisma.plan.upsert({
-      where: { name: plane.name },
-      update: plane,
-      create: { ...plane, active: true }
+    await prisma.plan.create({
+      data: { ...plane, active: true }
     })
   }
 

@@ -15,13 +15,12 @@ export default function AdminSidebar() {
 
   const menuItems = [
     { icon: <LayoutDashboard size={18} />, label: "Overview", href: "/admin/dashboard" },
-    { icon: <Users size={18} />, label: "Investors", href: "/admin/dashboard/investors" },
+    { icon: <Users size={18} />, label: "Users", href: "/admin/dashboard/investors" },
     { icon: <ArrowDownCircle size={18} />, label: "Deposits", href: "/admin/dashboard/deposits" },
     { icon: <ArrowUpCircle size={18} />, label: "Withdrawals", href: "/admin/dashboard/withdrawals" },
     { icon: <CreditCard size={18} />, label: "Plans", href: "/admin/dashboard/plans" },
     { icon: <Wallet size={18} />, label: "Admin Wallet", href: "/admin/dashboard/wallet" },
     { icon: <Settings size={18} />, label: "Settings", href: "/admin/dashboard/settings" },
-    { icon: <Database size={18} />, label: "Railway DB", href: "/admin/dashboard/railway" },
   ];
 
   return (
@@ -33,10 +32,6 @@ export default function AdminSidebar() {
           <BrandLogo size="sm" type="admin" />
         </Link>
         <div className="flex items-center gap-3">
-           <div className="flex items-center gap-2 border-r border-zinc-800 pr-4">
-              <div className="w-2 h-2 bg-blue-600 rounded-full animate-pulse shadow-[0_0_10px_#2563eb]" />
-              <span className="text-[10px] font-black uppercase tracking-widest text-zinc-500">Secure</span>
-           </div>
            <button 
              onClick={() => setIsOpen(!isOpen)}
              className="flex items-center gap-2 px-3 py-1.5 bg-blue-600/10 text-blue-500 rounded-lg border border-blue-600/20 active:scale-90 transition-all shadow-[0_0_15px_rgba(59,130,246,0.1)]"

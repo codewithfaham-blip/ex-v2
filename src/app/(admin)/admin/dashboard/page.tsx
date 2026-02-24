@@ -97,19 +97,15 @@ export default async function AdminDashboard() {
           <div className="flex items-center gap-3 mb-2">
             <div className="bg-blue-600 h-8 w-1.5 rounded-full shadow-[0_0_15px_rgba(37,99,235,0.5)]" />
             <h1 className="text-3xl font-black tracking-tighter uppercase italic leading-none">
-              Intelligence <span className="text-blue-600">Terminal</span>
+              Admin <span className="text-blue-600">Dashboard</span>
             </h1>
           </div>
           <p className="text-zinc-500 text-[9px] font-black uppercase tracking-[0.4em] ml-5">
-            Admin Crypt-Node v2.0.4 • Status: <span className="text-emerald-500 italic">Synchronized</span>
+            Admin System v2.0.4 • Status: <span className="text-emerald-500 italic">Connected</span>
           </p>
         </div>
 
         <div className="flex flex-wrap gap-3">
-          <div className="bg-zinc-900/40 border border-zinc-800/50 px-4 py-2.5 rounded-xl flex items-center gap-3">
-            <Server size={14} className="text-zinc-500" />
-            <div className="text-[8px] font-black uppercase text-zinc-500 tracking-widest">Latency: <span className="text-emerald-500">24ms</span></div>
-          </div>
           <YieldTrigger />
         </div>
       </div>
@@ -117,10 +113,10 @@ export default async function AdminDashboard() {
       {/* 2. CORE ANALYTICS (Compact Cards) */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
         {[
-          { label: "Total Liquidity", val: formatPKR(completedStats._sum.amount || 0), icon: <BarChart3 className="text-blue-500" />, trend: "+12.5%", color: "blue" },
-          { label: "Pending Synths", val: pendingDeposits, icon: <Clock className={pendingDeposits > 0 ? "text-amber-500" : "text-zinc-500"} />, trend: "Awaiting", color: pendingDeposits > 0 ? "amber" : "zinc" },
-          { label: "Active Nodes", val: totalUsers, icon: <Users className="text-purple-500" />, trend: "Live", color: "purple" },
-          { label: "Platform Volume", val: formatPKR(totalVolume), icon: <Wallet className="text-emerald-500" />, trend: "Global", color: "emerald" },
+          { label: "Total Deposits", val: formatPKR(completedStats._sum.amount || 0), icon: <BarChart3 className="text-blue-500" />, trend: "+12.5%", color: "blue" },
+          { label: "Pending Deposits", val: pendingDeposits, icon: <Clock className={pendingDeposits > 0 ? "text-amber-500" : "text-zinc-500"} />, trend: "Awaiting", color: pendingDeposits > 0 ? "amber" : "zinc" },
+          { label: "Active Users", val: totalUsers, icon: <Users className="text-purple-500" />, trend: "Live", color: "purple" },
+          { label: "Total Withdrawals", val: formatPKR(totalVolume), icon: <Wallet className="text-emerald-500" />, trend: "Global", color: "emerald" },
         ].map((card, i) => (
           <div key={i} className={`bg-zinc-900/30 border border-zinc-800/50 p-4 md:p-6 rounded-[1.5rem] md:rounded-[2rem] relative overflow-hidden group`}>
              <div className="flex justify-between items-start mb-2 md:mb-4">
@@ -147,12 +143,12 @@ export default async function AdminDashboard() {
                   <div className="p-2 bg-blue-600/10 rounded-lg border border-blue-600/20">
                     <Cpu size={18} className="text-blue-500 animate-pulse" />
                   </div>
-                  <h2 className="text-sm font-black uppercase tracking-[0.2em] italic">Infrastructure Neural Grid</h2>
+                  <h2 className="text-sm font-black uppercase tracking-[0.2em] italic">Platform Activity Overview</h2>
                 </div>
                 <div className="flex items-center gap-4">
                    <div className="flex items-center gap-2">
                       <div className="h-1.5 w-1.5 rounded-full bg-blue-500 animate-ping" />
-                      <span className="text-[8px] font-black uppercase text-blue-500">Processing Loop</span>
+                      <span className="text-[8px] font-black uppercase text-blue-500">Live Updates</span>
                    </div>
                    <div className="w-px h-3 bg-zinc-800" />
                    <span className="text-[8px] font-black uppercase text-zinc-500">Uptime: 99.99%</span>
@@ -164,7 +160,7 @@ export default async function AdminDashboard() {
               <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
                  <div className="bg-zinc-950/50 border border-zinc-900 p-4 rounded-2xl relative overflow-hidden group">
                     <div className="absolute top-0 right-0 p-1 opacity-20"><TrendingUp size={30} className="text-blue-500" /></div>
-                    <p className="text-[8px] font-black text-zinc-600 uppercase mb-1">Inflow Velocity</p>
+                    <p className="text-[8px] font-black text-zinc-600 uppercase mb-1">Deposit Velocity</p>
                     <div className="flex items-center justify-between relative z-10">
                        <span className="text-xs font-bold text-white uppercase italic">7.2k req/s</span>
                        <TrendingUpBar percentage={75} color="blue" />
@@ -172,7 +168,7 @@ export default async function AdminDashboard() {
                  </div>
                  <div className="bg-zinc-950/50 border border-zinc-900 p-4 rounded-2xl relative overflow-hidden group">
                     <div className="absolute top-0 right-0 p-1 opacity-20"><Zap size={30} className="text-emerald-500" /></div>
-                    <p className="text-[8px] font-black text-zinc-600 uppercase mb-1">Node Stability</p>
+                    <p className="text-[8px] font-black text-zinc-600 uppercase mb-1">Platform Stability</p>
                     <div className="flex items-center justify-between relative z-10">
                        <span className="text-xs font-bold text-white uppercase italic">99% Secure</span>
                        <TrendingUpBar percentage={92} color="emerald" />
@@ -230,7 +226,7 @@ export default async function AdminDashboard() {
               <div className="p-2.5 bg-blue-600/10 rounded-xl border border-blue-600/20">
                  <ShieldAlert className="text-blue-500" size={18} />
               </div>
-              <h2 className="text-lg font-black uppercase italic tracking-tighter">Investor <span className="text-blue-600">Database</span></h2>
+              <h2 className="text-lg font-black uppercase italic tracking-tighter">User <span className="text-blue-600">Management</span></h2>
            </div>
            <div className="hidden md:flex gap-2">
               <input type="text" placeholder="Search Node ID..." className="bg-zinc-950 border border-zinc-900 px-4 py-2 rounded-lg text-[9px] font-black uppercase tracking-widest focus:outline-none focus:border-blue-600 transition-all text-white" />
@@ -241,10 +237,10 @@ export default async function AdminDashboard() {
           <table className="w-full text-left">
             <thead>
               <tr className="border-b border-zinc-800/50 text-[8px] font-black uppercase text-zinc-600 tracking-[0.3em] italic">
-                <th className="pb-4 px-4">Entity Identity</th>
-                <th className="pb-4 px-4">Core Balance</th>
-                <th className="pb-4 px-4">Portfolio Intensity</th>
-                <th className="pb-4 px-4 text-right">Access Controls</th>
+                <th className="pb-4 px-4">User Email</th>
+                <th className="pb-4 px-4">Balance</th>
+                <th className="pb-4 px-4">Purchased Plans</th>
+                <th className="pb-4 px-4 text-right">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-zinc-800/30">
@@ -267,12 +263,12 @@ export default async function AdminDashboard() {
                         <div className="flex-1 max-w-[100px] h-1 bg-zinc-950 rounded-full overflow-hidden">
                            <div className="h-full bg-blue-600 shadow-[0_0_8px_#3b82f6] transition-all duration-1000" style={{ width: `${Math.min(user.deposits.length * 15, 100)}%` }} />
                         </div>
-                        <span className="text-[8px] font-black text-zinc-500">{user.deposits.length} Nodes</span>
+                        <span className="text-[8px] font-black text-zinc-500">{user.deposits.length} Plans</span>
                      </div>
                   </td>
                   <td className="py-6 px-4 text-right">
                     <button className="bg-zinc-950 border border-zinc-900 text-zinc-500 px-4 py-2 rounded-lg text-[8px] font-black uppercase hover:bg-blue-600 hover:text-white hover:border-blue-500 transition-all italic active:scale-95 group/btn">
-                      <span className="group-hover/btn:translate-x-1 transition-transform inline-block">Investigate Terminal</span>
+                      <span className="group-hover/btn:translate-x-1 transition-transform inline-block">User Details</span>
                     </button>
                   </td>
                 </tr>

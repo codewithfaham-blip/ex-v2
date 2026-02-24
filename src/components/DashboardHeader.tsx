@@ -28,11 +28,6 @@ export default function DashboardHeader({ type = "user" }: { type?: "user" | "ad
 
   return (
     <header className="hidden lg:flex flex-col border-b border-zinc-900 bg-zinc-950/50 backdrop-blur-xl sticky top-0 z-40">
-      {/* Top Bar with Ticker */}
-      <div className="px-10 py-2 border-b border-zinc-900/50 bg-black/20 overflow-hidden">
-         <CyberTicker />
-      </div>
-
       {/* Main Header Row */}
       <div className="flex items-center justify-between px-10 py-6">
         <div className="flex items-center gap-6">
@@ -50,20 +45,7 @@ export default function DashboardHeader({ type = "user" }: { type?: "user" | "ad
           </div>
         </div>
 
-        <div className="flex items-center gap-8">
-          <div className="flex items-center gap-4 bg-zinc-900/50 border border-zinc-800 px-4 py-2 rounded-xl">
-             <div className="flex items-center gap-2">
-                <Activity size={12} className="text-emerald-500" />
-                <span className="text-[9px] font-black text-zinc-400 uppercase tracking-widest">Latency: 12ms</span>
-             </div>
-             <div className="w-px h-3 bg-zinc-800" />
-             <div className="flex items-center gap-2">
-                <ShieldCheck size={12} className="text-blue-500" />
-                <span className="text-[9px] font-black text-zinc-400 uppercase tracking-widest">SSL: Active</span>
-             </div>
-          </div>
-
-          <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3">
              <button className="p-2.5 bg-zinc-900 border border-zinc-800 rounded-xl text-zinc-500 hover:text-white hover:border-zinc-700 transition-all">
                 <Bell size={16} />
              </button>
@@ -71,7 +53,6 @@ export default function DashboardHeader({ type = "user" }: { type?: "user" | "ad
                 <Search size={16} />
              </button>
           </div>
-        </div>
       </div>
     </header>
   );

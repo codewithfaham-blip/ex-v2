@@ -1,6 +1,7 @@
 import { db } from "@/lib/db";
 import { Check, X, ExternalLink, Hash } from "lucide-react";
 import ClientDepositActions from "@/components/ClientDepositActions";
+import SlipImage from "@/components/SlipImage";
 
 export default async function AdminDeposits() {
   const pendingDeposits = await db.deposit.findMany({
@@ -15,11 +16,11 @@ export default async function AdminDeposits() {
         <div className="flex items-center gap-3 mb-2">
           <div className="bg-blue-600 h-8 w-1.5 rounded-full shadow-[0_0_15px_rgba(37,99,235,0.5)]" />
           <h1 className="text-3xl font-black uppercase tracking-tighter italic text-white leading-none">
-            Inbound <span className="text-emerald-500">Validation</span>
+            Pending <span className="text-emerald-500">Deposits</span>
           </h1>
         </div>
         <p className="text-zinc-500 text-[10px] font-black uppercase tracking-[0.4em] ml-5 italic">
-          Verify blockchain hashes and update user liquidity • Status: <span className="text-emerald-500 italic">Live Tracking</span>
+          Verify payments and update user balance • Status: <span className="text-emerald-500 italic">Live Tracking</span>
         </p>
       </div>
 
@@ -27,15 +28,15 @@ export default async function AdminDeposits() {
         <table className="w-full text-left">
           <thead className="bg-zinc-900/50 border-b border-zinc-800">
             <tr className="text-[10px] font-black uppercase text-zinc-500 tracking-widest">
-              <th className="p-6">Investor</th>
-              <th className="p-6">Asset Amount</th>
-              <th className="p-6">Transaction Hash / Slip</th>
-              <th className="p-6 text-right">Action Terminal</th>
+              <th className="p-6">User Details</th>
+              <th className="p-6">Amount</th>
+              <th className="p-6">Transaction ID / Slip</th>
+              <th className="p-6 text-right">System Actions</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-zinc-800/50">
             {pendingDeposits.length === 0 ? (
-              <tr><td colSpan={4} className="p-20 text-center text-zinc-600 text-xs font-black uppercase tracking-[0.3em]">No Pending Injections</td></tr>
+              <tr><td colSpan={4} className="p-20 text-center text-zinc-600 text-xs font-black uppercase tracking-[0.3em]">No Pending Deposits</td></tr>
             ) : (
               pendingDeposits.map((dep) => (
                 <tr key={dep.id} className="hover:bg-zinc-800/20 transition-all group">
@@ -54,29 +55,7 @@ export default async function AdminDeposits() {
                         <ExternalLink size={12} />
                       </div>
                       {(dep as any).slipImage && (
-                        <div className="mt-2 group/slip">
-                          <p className="text-[7px] font-black uppercase text-zinc-600 mb-1 tracking-widest">Verification Slip</p>
-                          <div className="relative w-24 h-16 bg-zinc-950 border border-zinc-800 rounded-lg overflow-hidden cursor-pointer shadow-lg">
-                            <img src={(dep as any).slipImage} alt="Payment Slip" className="w-full h-full object-cover grayscale group-hover/slip:grayscale-0 transition-all duration-500" />
-                            <div 
-                              onClick={() => {
-                                const win = window.open("", "_blank");
-                                if (win) {
-                                  win.document.write(`
-                                    <html>
-                                      <body style="margin:0; background:#000; display:flex; items-center; justify-content:center; height:100vh;">
-                                        <img src="${(dep as any).slipImage}" style="max-width:90%; max-height:90%; border-radius:10px; box-shadow:0 0 50px rgba(0,0,0,0.5);" />
-                                      </body>
-                                    </html>
-                                  `);
-                                }
-                              }}
-                              className="absolute inset-0 bg-blue-600/40 opacity-0 group-hover/slip:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[2px]"
-                            >
-                              <span className="text-[8px] font-black uppercase text-white tracking-tighter">View Full</span>
-                            </div>
-                          </div>
-                        </div>
+                        <SlipImage src={(dep as any).slipImage} />
                       )}
                     </div>
                   </td>
