@@ -4,9 +4,9 @@ import { Zap, ShieldCheck, Trophy, Crown, ArrowRight, X, Loader2, CheckCircle2, 
 import { useState, useEffect } from "react";
 
 const plans = [
-  { name: "Starter Pulse", min: 10, max: 99, roi: "1.5%", duration: "24 Hours", icon: <Zap className="text-blue-500" />, popular: false },
-  { name: "Pro Matrix", min: 100, max: 499, roi: "2.5%", duration: "48 Hours", icon: <Trophy className="text-yellow-500" />, popular: true },
-  { name: "Elite Nexus", min: 500, max: 1000, roi: "5.0%", duration: "72 Hours", icon: <Crown className="text-purple-500" />, popular: false }
+  { name: "Basic Starter", min: 10, max: 99, roi: "1.5%", duration: "24 Hours", icon: <Zap className="text-blue-500" />, popular: false },
+  { name: "Basic", min: 100, max: 499, roi: "2.5%", duration: "48 Hours", icon: <Trophy className="text-yellow-500" />, popular: true },
+  { name: "Standard", min: 500, max: 1000, roi: "5.0%", duration: "72 Hours", icon: <Crown className="text-purple-500" />, popular: false }
 ];
 
 export default function PlansPage() {

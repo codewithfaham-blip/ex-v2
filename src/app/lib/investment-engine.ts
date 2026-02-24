@@ -8,10 +8,10 @@ export async function distributeDailyProfits() {
 
   for (const deposit of activeDeposits) {
     // Plan-based Profit Rates
-    let rate = 0.02; // Default 2%
-    if (deposit.planName === "Infrastructure Node") rate = 0.03;
-    if (deposit.planName === "Intelligence Terminal") rate = 0.04;
-    if (deposit.planName === "Quantum Access") rate = 0.05;
+    let rate = 0.01; // Default 1%
+    if (deposit.planName === "Basic Starter") rate = 0.015;
+    if (deposit.planName === "Basic") rate = 0.025;
+    if (deposit.planName === "Standard") rate = 0.05;
 
     const profit = deposit.amount * rate;
 

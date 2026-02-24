@@ -13,16 +13,16 @@ export async function POST(req: Request) {
     const { planName, amount: rawAmount } = await req.json();
     const amount = parseFloat(rawAmount);
 
-    // 1. Strict Plan Validation (Hardcoded for security)
-    const VALID_PLANS = {
-      "Premium Node": 50,
-      "Infrastructure Node": 100,
-      "Intelligence Terminal": 250,
-      "Quantum Access": 500
+    // 1. Strict Plan Validation
+    const VALID_PLANS: Record<string, { min: number; max: number }> = {
+      "Basic Starter": { min: 10, max: 99 },
+      "Basic": { min: 100, max: 499 },
+      "Standard": { min: 500, max: 1000 }
     };
 
-    if (!VALID_PLANS[planName as keyof typeof VALID_PLANS] || amount !== VALID_PLANS[planName as keyof typeof VALID_PLANS]) {
-      return NextResponse.json({ error: "Invalid plan or amount mismatch" }, { status: 400 });
+    const plan = VALID_PLANS[planName];
+    if (!plan || amount < plan.min || amount > plan.max) {
+      return NextResponse.json({ error: "Invalid plan or amount out of range" }, { status: 400 });
     }
 
     const user = await db.user.findUnique({

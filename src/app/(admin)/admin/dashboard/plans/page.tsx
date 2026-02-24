@@ -3,9 +3,9 @@ import { Layers, Edit3, Plus, Power } from "lucide-react";
 
 export default function AdminPlans() {
   const dummyPlans = [
-    { name: "Starter Pulse", daily: "1.5%", min: 10, max: 99, status: "ACTIVE" },
-    { name: "Pro Matrix", daily: "2.5%", min: 100, max: 499, status: "ACTIVE" },
-    { name: "Elite Nexus", daily: "5.0%", min: 500, max: 1000, status: "ACTIVE" },
+    { name: "Basic Starter", daily: "1.5%", min: 10, max: 99, status: "ACTIVE" },
+    { name: "Basic", daily: "2.5%", min: 100, max: 499, status: "ACTIVE" },
+    { name: "Standard", daily: "5.0%", min: 500, max: 1000, status: "ACTIVE" },
   ];
 
   return (
