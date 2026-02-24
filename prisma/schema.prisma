@@ -16,6 +16,8 @@ model User {
   createdAt     DateTime     @default(now())
   name          String?
   walletAddress String?
+  twoFactorSecret String?
+  isTwoFactorEnabled Boolean @default(false)
   deposits      Deposit[]
   withdrawals   Withdrawal[]
 }
@@ -24,19 +26,24 @@ model SystemSetting {
   id                 String   @id @default("global")
   adminWalletAddress String?  @default("0x742d35Cc6634C0532925a3b844Bc454e4438f44e")
   tonWalletAddress   String?
+  jazzCashNumber     String?  @default("03001234567")
+  jazzCashName       String?  @default("Faham Khan")
+  easyPaisaNumber    String?  @default("03459876543")
+  easyPaisaName      String?  @default("Faham Khan")
   maintenanceMode    Boolean  @default(false)
   updatedAt          DateTime @default(now()) @updatedAt
 }
 
 model Deposit {
   id              String   @id @default(cuid())
-  amount          Float
-  planName        String
-  status          Status   @default(PENDING)
   userId          String
+  amount          Float
+  gateway         String?  // "JazzCash", "EasyPaisa", "USDT"
+  planName        String?  @default("Manual Deposit")
+  transactionId   String?  @unique // User jo TID dalay ga (Manual)
+  transactionHash String?  @unique // User jo hash dalay ga (Crypto/Plan)
+  status          DepositStatus @default(PENDING)
   createdAt       DateTime @default(now())
-  proofImage      String?
-  transactionHash String?
   user            User     @relation(fields: [userId], references: [id])
 }
 
@@ -58,6 +65,13 @@ enum Role {
 enum Status {
   PENDING
   COMPLETED
+  REJECTED
+  ACTIVE
+}
+
+enum DepositStatus {
+  PENDING
+  APPROVED
   REJECTED
   ACTIVE
 }

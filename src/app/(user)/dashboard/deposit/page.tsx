@@ -1,239 +1,165 @@
 "use client";
 import { useState, useEffect } from "react";
-import { Wallet, Copy, ShieldCheck, Info, Loader2, CheckCircle2, Zap } from "lucide-react";
-import { useTonConnectUI } from "@tonconnect/ui-react";
-import { useSession } from "next-auth/react";
+import { Copy, CheckCircle2, Wallet, Zap } from "lucide-react";
 
 export default function DepositPage() {
-  const { data: session } = useSession();
-  const [tonConnectUI] = useTonConnectUI();
+  const [selectedMethod, setSelectedMethod] = useState<any>(null);
+  const [tid, setTid] = useState("");
   const [amount, setAmount] = useState("");
-  const [hash, setHash] = useState("");
-  const [loading, setLoading] = useState(true);
-  const [submitting, setSubmitting] = useState(false);
-  const [tonLoading, setTonLoading] = useState(false);
-  const [tonPrice, setTonPrice] = useState(0);
-  const [config, setConfig] = useState({
-    adminWalletAddress: "",
-    tonWalletAddress: "",
-  });
+  const [loading, setLoading] = useState(false);
+  const [settings, setSettings] = useState<any>(null);
 
   useEffect(() => {
-    // Fetch Settings
     fetch("/api/settings")
       .then(res => res.json())
-      .then(data => {
-        setConfig({
-          adminWalletAddress: data.adminWalletAddress || "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
-          tonWalletAddress: data.tonWalletAddress || "",
-        });
-        setLoading(false);
-      });
-
-    // Fetch TON Price
-    fetch("https://api.coingecko.com/api/v3/simple/price?ids=the-open-network&vs_currencies=usd")
-      .then(res => res.json())
-      .then(data => {
-        setTonPrice(data['the-open-network']?.usd || 0);
-      })
-      .catch(() => setTonPrice(7.5)); // Fallback price
+      .then(data => setSettings(data));
   }, []);
 
-  const handleManualSubmit = async () => {
-    if (!amount || !hash) return alert("Please fill all fields");
-    setSubmitting(true);
-    try {
-      const res = await fetch("/api/deposits", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ 
-          amount: parseFloat(amount), 
-          transactionHash: hash, 
-          planName: "Manual Deposit" 
-        }),
-      });
-      if (res.ok) {
-        alert("Deposit request submitted for verification!");
-        setAmount("");
-        setHash("");
-      }
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setSubmitting(false);
+  const methods = settings ? [
+    { 
+      id: 'jazzcash', 
+      name: 'JazzCash', 
+      holder: settings.jazzCashName, 
+      account: settings.jazzCashNumber, 
+      type: 'local',
+      logo: (
+        <div className="w-12 h-12 flex items-center justify-center overflow-hidden rounded-xl bg-white p-1">
+          <img src="https://crystalpng.com/wp-content/uploads/2024/12/new-Jazzcash-logo.png" alt="JazzCash" className="w-full h-full object-contain" />
+        </div>
+      )
+    },
+    { 
+      id: 'easypaisa', 
+      name: 'EasyPaisa', 
+      holder: settings.easyPaisaName, 
+      account: settings.easyPaisaNumber, 
+      type: 'local',
+      logo: (
+        <div className="w-12 h-12 flex items-center justify-center overflow-hidden rounded-xl bg-white p-1">
+          <img src="https://crystalpng.com/wp-content/uploads/2024/10/Easypaisa-logo.png" alt="EasyPaisa" className="w-full h-full object-contain" />
+        </div>
+      )
+    },
+    { 
+      id: 'usdt', 
+      name: 'USDT (TRC20)', 
+      address: settings.adminWalletAddress, 
+      type: 'crypto',
+      logo: (
+        <div className="w-12 h-12 flex items-center justify-center overflow-hidden rounded-xl bg-white p-1">
+          <img src="https://cdn.worldvectorlogo.com/logos/tether.svg" alt="USDT" className="w-full h-full object-contain" />
+        </div>
+      )
     }
-  };
+  ] : [];
 
-  const handleTonOneTap = async () => {
-    if (!amount || parseFloat(amount) <= 0) return alert("Please enter a valid amount");
-    if (!config.tonWalletAddress) return alert("TON Gateway is not configured");
-    if (!tonConnectUI.connected) return tonConnectUI.openModal();
-
-    setTonLoading(true);
-    try {
-      // Calculate nanoTons (Amount / Price * 1e9)
-      const tonNeeded = parseFloat(amount) / tonPrice;
-      const nanoTons = Math.floor(tonNeeded * 1000000000).toString();
-
-      const transaction = {
-        validUntil: Math.floor(Date.now() / 1000) + 600, // 10 minutes
-        messages: [
-          {
-            address: config.tonWalletAddress,
-            amount: nanoTons,
-            // You can add a comment/payload here to identify the user
-            payload: "" 
-          },
-        ],
-      };
-
-      const result = await tonConnectUI.sendTransaction(transaction);
-      
-      // Auto-submit to backend after success
-      const res = await fetch("/api/deposits", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ 
-          amount: parseFloat(amount), 
-          transactionHash: result.boc, // Use BOC or hash depending on verification logic
-          planName: "One-Tap TON Deposit" 
-        }),
-      });
-
-      if (res.ok) {
-        alert("One-Tap Payment Successful! Balance will update shortly.");
-        setAmount("");
-      }
-    } catch (err) {
-      console.error("TON Transaction failed", err);
-      alert("Payment cancelled or failed");
-    } finally {
-      setTonLoading(false);
-    }
-  };
-
-  const copyToClipboard = (text: string) => {
+  const handleCopy = (text: string) => {
     navigator.clipboard.writeText(text);
+    alert("Copied to clipboard!");
   };
 
-  if (loading) {
-    return (
-      <div className="min-h-[60vh] flex items-center justify-center">
-        <Loader2 className="animate-spin text-blue-500" size={40} />
-      </div>
-    );
-  }
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    // API call yahan aye gi jo Deposit request create karegi
+    try {
+      const res = await fetch("/api/deposit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ amount: parseFloat(amount), gateway: selectedMethod.name, transactionId: tid }),
+      });
+      if(res.ok) {
+        alert("Request Sent! Wait for Admin Approval.");
+        setAmount("");
+        setTid("");
+        setSelectedMethod(null);
+      } else {
+        const error = await res.json();
+        alert(error.error || "Something went wrong");
+      }
+    } catch (err) {
+      alert("Failed to submit deposit request");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <div className="p-4 md:p-8 pt-24 lg:pt-10 max-w-5xl mx-auto">
-      <div className="mb-10">
-        <h1 className="text-3xl font-black tracking-tighter uppercase italic">Inject <span className="text-blue-600">Capital</span></h1>
-        <p className="text-zinc-500 text-[10px] font-bold uppercase tracking-[0.3em] mt-1">Automatic verification via blockchain terminal</p>
+    <div className="p-4 md:p-10 pt-24 lg:pt-10 max-w-4xl mx-auto space-y-8 text-white">
+      <div className="lg:hidden">
+        <div className="flex items-center gap-3 mb-2">
+          <div className="bg-blue-600 h-8 w-1.5 rounded-full shadow-[0_0_15px_rgba(37,99,235,0.5)]" />
+          <h1 className="text-3xl font-black uppercase tracking-tighter italic text-white leading-none">
+            Initialize <span className="text-blue-600">Deposit</span>
+          </h1>
+        </div>
+        <p className="text-zinc-500 text-[10px] font-black uppercase tracking-[0.4em] ml-5">
+          Secure Capital Injection Terminal • Gateway: <span className="text-blue-500 italic">Verified</span>
+        </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Input Side */}
-        <div className="bg-zinc-900/30 border border-zinc-800/50 p-8 rounded-[2.5rem] space-y-6">
-          <div className="space-y-2">
-            <label className="text-[10px] font-black uppercase text-zinc-500 ml-1">Deposit Amount (USD)</label>
-            <div className="relative">
-              <input 
-                type="number" 
-                placeholder="Min $10.00"
-                value={amount}
-                onChange={(e) => setAmount(e.target.value)}
-                className="w-full bg-zinc-950 border border-zinc-800 rounded-2xl py-5 px-6 text-xl font-black text-white focus:outline-none focus:border-blue-600 transition-all placeholder:text-zinc-800"
-              />
-              {amount && tonPrice > 0 && (
-                <div className="absolute right-6 top-1/2 -translate-y-1/2 text-[10px] font-black text-blue-500 uppercase italic">
-                  ≈ {(parseFloat(amount) / tonPrice).toFixed(2)} TON
-                </div>
-              )}
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 gap-4">
-            {/* One-Tap TON Button */}
-            <button 
-              onClick={handleTonOneTap}
-              disabled={tonLoading || !amount}
-              className={`w-full py-5 rounded-2xl font-black uppercase tracking-widest transition shadow-lg flex items-center justify-center gap-2 active:scale-95 ${tonLoading ? 'bg-zinc-800' : 'bg-blue-600 hover:bg-blue-700 shadow-blue-600/20 text-white'}`}
+      {/* 1. Select Method */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {!settings ? (
+          [1, 2, 3].map(i => (
+            <div key={i} className="h-24 bg-zinc-900/50 border border-zinc-800 rounded-2xl animate-pulse" />
+          ))
+        ) : (
+          methods.map((m) => (
+            <div 
+              key={m.id} 
+              onClick={() => setSelectedMethod(m)}
+              className={`p-6 rounded-[2rem] border cursor-pointer transition-all flex flex-col items-center text-center gap-4 ${selectedMethod?.id === m.id ? 'border-blue-600 bg-blue-600/10 scale-105 shadow-xl shadow-blue-600/10' : 'border-zinc-800 bg-zinc-900/50 hover:border-zinc-700'}`}
             >
-              {tonLoading ? <Loader2 className="animate-spin" size={20} /> : <><Zap size={18} /> One-Tap Pay (TON)</>}
-            </button>
-
-            <div className="relative py-2">
-               <div className="absolute inset-0 flex items-center"><span className="w-full border-t border-zinc-800" /></div>
-               <div className="relative flex justify-center text-[8px] uppercase font-black"><span className="bg-zinc-950 px-4 text-zinc-600">OR MANUAL SUBMIT</span></div>
+              {m.logo}
+              <div>
+                <p className="font-bold uppercase text-[8px] tracking-[0.3em] text-zinc-500 mb-1">{m.type}</p>
+                <h3 className="text-sm font-black italic tracking-tighter">{m.name}</h3>
+              </div>
             </div>
-
-            <div className="space-y-4">
-              <input 
-                type="text" 
-                placeholder="Paste Transaction Hash / BOC"
-                value={hash}
-                onChange={(e) => setHash(e.target.value)}
-                className="w-full bg-zinc-950/50 border border-zinc-900 rounded-xl py-4 px-6 text-xs text-white focus:outline-none focus:border-zinc-700 placeholder:text-zinc-800"
-              />
-              <button 
-                onClick={handleManualSubmit}
-                disabled={submitting || !hash}
-                className="w-full bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 disabled:opacity-50 py-4 rounded-xl font-bold uppercase tracking-widest transition text-[10px] text-zinc-400"
-              >
-                {submitting ? <Loader2 className="animate-spin" size={16} /> : "Submit Manual Proof"}
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Wallet Side */}
-        <div className="space-y-6">
-          {/* BEP20 Wallet */}
-          <div className="bg-zinc-900/40 border border-zinc-800/50 p-8 rounded-[2.5rem]">
-            <p className="text-zinc-500 text-[10px] font-black uppercase tracking-widest mb-4 flex items-center gap-2">
-               <span className="w-1 h-1 bg-zinc-500 rounded-full" /> USDT (BEP20) Address
-            </p>
-            <div className="bg-zinc-950 border border-zinc-900 p-4 rounded-xl flex items-center justify-between gap-4">
-              <span className="text-[10px] font-mono text-zinc-400 break-all">{config.adminWalletAddress}</span>
-              <button 
-                onClick={() => copyToClipboard(config.adminWalletAddress)} 
-                className="bg-zinc-900 p-2 rounded-lg text-zinc-500 hover:text-white transition"
-              >
-                <Copy size={16} />
-              </button>
-            </div>
-          </div>
-
-          {/* TON Wallet */}
-          {config.tonWalletAddress && (
-            <div className="bg-blue-600/5 border border-blue-600/20 p-8 rounded-[2.5rem] relative overflow-hidden">
-               <div className="absolute -right-4 -bottom-4 text-blue-600/10 rotate-12"><Zap size={120} /></div>
-               <div className="flex items-center gap-2 mb-4">
-                  <p className="text-blue-500 text-[10px] font-black uppercase tracking-widest">TON Gateway Address</p>
-                  <span className="bg-blue-600/10 text-blue-500 text-[8px] font-black px-2 py-0.5 rounded-full border border-blue-600/20">AUTO</span>
-               </div>
-               <div className="bg-zinc-950 border border-zinc-900 p-4 rounded-xl flex items-center justify-between gap-4 relative z-10">
-                 <span className="text-[10px] font-mono text-blue-500/80 break-all">{config.tonWalletAddress}</span>
-                 <button 
-                   onClick={() => copyToClipboard(config.tonWalletAddress)} 
-                   className="bg-blue-600/10 p-2 rounded-lg text-blue-500 hover:bg-blue-600 hover:text-white transition"
-                 >
-                   <Copy size={16} />
-                 </button>
-               </div>
-            </div>
-          )}
-
-          <div className="bg-zinc-900/20 p-6 rounded-[2rem] border border-zinc-800/50">
-             <div className="flex items-start gap-3 text-zinc-500">
-                <Info size={16} className="text-blue-500 shrink-0" />
-                <p className="text-[9px] font-bold leading-relaxed uppercase">
-                   For "One-Tap" payments, ensure your TON wallet is connected. The system will automatically calculate the TON equivalent based on live market rates.
-                </p>
-             </div>
-          </div>
-        </div>
+          ))
+        )}
       </div>
+
+      {/* 2. Payment Details */}
+      {selectedMethod && (
+        <div className="bg-zinc-900 border border-zinc-800 p-6 rounded-[2.5rem] space-y-4 animate-in fade-in slide-in-from-bottom-4">
+          <div className="flex justify-between items-center p-4 bg-black rounded-2xl border border-zinc-800">
+            <div>
+              <p className="text-[10px] text-zinc-500 uppercase font-bold">Account / Address</p>
+              <p className="font-mono text-blue-400">{selectedMethod.account || selectedMethod.address}</p>
+              {selectedMethod.holder && <p className="text-xs text-zinc-400">Name: {selectedMethod.holder}</p>}
+            </div>
+            <button onClick={() => handleCopy(selectedMethod.account || selectedMethod.address)} className="p-2 bg-zinc-800 rounded-lg hover:text-blue-500">
+              <Copy size={18} />
+            </button>
+          </div>
+
+          {/* 3. Deposit Form */}
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <input 
+              type="number" placeholder="Enter Amount ($)" 
+              className="w-full bg-black border border-zinc-800 p-4 rounded-2xl outline-none focus:border-blue-600 text-white"
+              onChange={(e) => setAmount(e.target.value)} 
+              value={amount}
+              required
+            />
+            <input 
+              type="text" placeholder="Transaction ID (TID)" 
+              className="w-full bg-black border border-zinc-800 p-4 rounded-2xl outline-none focus:border-blue-600 text-white"
+              onChange={(e) => setTid(e.target.value)} 
+              value={tid}
+              required
+            />
+            <button 
+              disabled={loading}
+              className="w-full bg-blue-600 py-4 rounded-2xl font-black uppercase tracking-tighter flex items-center justify-center gap-2 text-white hover:bg-blue-700 transition"
+            >
+              {loading ? "Transmitting..." : <><Zap size={18} /> Confirm Deposit Slip</>}
+            </button>
+          </form>
+        </div>
+      )}
     </div>
   );
 }

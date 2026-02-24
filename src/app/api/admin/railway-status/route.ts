@@ -20,7 +20,7 @@ export async function GET() {
     }
 
     // Mask database URL for safety
-    const rawUrl = process.env.DATABASE_URL || "";
+    const rawUrl = process.env.DATABASE_PUBLIC_URL || process.env.DATABASE_URL || "";
     let maskedUrl = "";
     if (rawUrl) {
       try {

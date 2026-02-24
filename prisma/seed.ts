@@ -10,7 +10,7 @@ async function main() {
   const admin = await prisma.user.upsert({
     where: { email: 'admin@admin.com' },
     update: {
-      password: hashedPassword // Agar account hai to password update ho jaye
+      password: hashedPassword
     },
     create: {
       email: 'admin@admin.com',
@@ -20,7 +20,18 @@ async function main() {
     },
   })
 
-  console.log('✅ Admin Seeded Successfully with Hashed Password')
+  // Initialize System Settings
+  await prisma.systemSetting.upsert({
+    where: { id: 'global' },
+    update: {},
+    create: {
+      id: 'global',
+      adminWalletAddress: "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
+      maintenanceMode: false,
+    },
+  })
+
+  console.log('✅ Admin and System Settings Seeded Successfully')
 }
 
 main()

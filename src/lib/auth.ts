@@ -2,6 +2,7 @@ import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { db } from "@/lib/db";
 import bcrypt from "bcryptjs";
+import { authenticator } from "otplib";
 
 
 export const authOptions: NextAuthOptions = {
@@ -10,32 +11,74 @@ export const authOptions: NextAuthOptions = {
       name: "credentials",
       credentials: {
         email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" }
+        password: { label: "Password", type: "password" },
+        code: { label: "2FA Code", type: "text" }
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) {
-          throw new Error("Email and password are required");
+        try {
+          console.log('🔐 Login attempt for:', credentials?.email);
+          
+          if (!credentials?.email || !credentials?.password) {
+            console.error('❌ Missing credentials');
+            throw new Error("Email and password are required");
+          }
+
+          // Test database connection
+          try {
+            await db.$connect();
+            console.log('✅ Database connected');
+          } catch (dbError: any) {
+            console.error('❌ Database connection failed:', dbError.message);
+            throw new Error("Database connection failed. Please try again later.");
+          }
+
+          const user = await db.user.findUnique({ 
+            where: { email: credentials.email } 
+          });
+
+          if (!user) {
+            console.error('❌ No user found with email:', credentials.email);
+            throw new Error("No user found with this email");
+          }
+
+          console.log('✅ User found:', user.email, 'Role:', user.role);
+
+          const isValid = await bcrypt.compare(credentials.password, user.password);
+          if (!isValid) {
+            console.error('❌ Invalid password for:', credentials.email);
+            throw new Error("Incorrect password");
+          }
+
+          // 2FA Logic
+          if (user.isTwoFactorEnabled) {
+            if (!credentials.code) {
+               console.log('⚠️ 2FA Required for:', user.email);
+               throw new Error("2FA_REQUIRED");
+            }
+
+            const isValidToken = authenticator.verify({
+              token: credentials.code,
+              secret: user.twoFactorSecret || ""
+            });
+
+            if (!isValidToken) {
+              console.error('❌ Invalid 2FA code for:', user.email);
+              throw new Error("Invalid 2FA Code");
+            }
+          }
+
+          console.log('✅ Login successful for:', user.email);
+
+          return { 
+            id: user.id, 
+            email: user.email, 
+            role: user.role,
+            name: (user as any).name 
+          };
+        } catch (error: any) {
+          console.error('❌ Authorization error:', error.message);
+          throw error;
         }
-
-        const user = await db.user.findUnique({ 
-          where: { email: credentials.email } 
-        });
-
-        if (!user) {
-          throw new Error("No user found with this email");
-        }
-
-        const isValid = await bcrypt.compare(credentials.password, user.password);
-        if (!isValid) {
-          throw new Error("Incorrect password");
-        }
-
-        return { 
-          id: user.id, 
-          email: user.email, 
-          role: user.role,
-          name: (user as any).name 
-        };
       }
     })
   ],

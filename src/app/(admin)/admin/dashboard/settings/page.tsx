@@ -1,6 +1,7 @@
 "use client";
 import { ShieldAlert, Wallet, Save, Loader2, CheckCircle2 } from "lucide-react";
 import { useState, useEffect } from "react";
+import TwoFactorSetup from "@/components/TwoFactorSetup";
 
 export default function AdminSettings() {
   const [loading, setLoading] = useState(true);
@@ -9,6 +10,10 @@ export default function AdminSettings() {
   const [settings, setSettings] = useState({
     adminWalletAddress: "",
     tonWalletAddress: "",
+    jazzCashNumber: "",
+    jazzCashName: "",
+    easyPaisaNumber: "",
+    easyPaisaName: "",
     maintenanceMode: false,
   });
 
@@ -24,6 +29,10 @@ export default function AdminSettings() {
       setSettings({
         adminWalletAddress: data.adminWalletAddress || "",
         tonWalletAddress: data.tonWalletAddress || "",
+        jazzCashNumber: data.jazzCashNumber || "",
+        jazzCashName: data.jazzCashName || "",
+        easyPaisaNumber: data.easyPaisaNumber || "",
+        easyPaisaName: data.easyPaisaName || "",
         maintenanceMode: data.maintenanceMode || false,
       });
     } catch (err) {
@@ -64,16 +73,28 @@ export default function AdminSettings() {
   return (
     <div className="p-4 md:p-10 pt-24 lg:pt-10 max-w-[1000px] mx-auto text-white">
       <div className="mb-10">
-        <h1 className="text-3xl font-black uppercase tracking-tighter italic">Core <span className="text-blue-600 text-5xl">Parameters</span></h1>
-        <p className="text-zinc-500 text-[10px] font-bold uppercase tracking-[0.3em] mt-2">Global system security and wallet configuration</p>
+        <div className="flex items-center gap-3 mb-2">
+          <div className="bg-blue-600 h-8 w-1.5 rounded-full shadow-[0_0_15px_rgba(37,99,235,0.5)]" />
+          <h1 className="text-3xl font-black uppercase tracking-tighter italic text-white leading-none">
+            Core <span className="text-blue-600">Parameters</span>
+          </h1>
+        </div>
+        <p className="text-zinc-500 text-[10px] font-black uppercase tracking-[0.4em] ml-5">
+          Global System Security and Wallet Configuration • Authorization: <span className="text-blue-500 italic">Root Level</span>
+        </p>
       </div>
 
       <div className="space-y-8">
         {/* BEP20 Wallet */}
         <div className="bg-zinc-900/40 border border-zinc-800/50 p-8 rounded-[3rem]">
-          <div className="flex items-center gap-4 mb-8">
-            <Wallet className="text-blue-600" size={24} />
-            <h2 className="text-sm font-black uppercase tracking-widest italic">Master Deposit Wallet (BEP20)</h2>
+          <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center gap-4">
+              <div className="w-10 h-10 flex items-center justify-center overflow-hidden rounded-lg bg-white p-1">
+                <img src="https://cdn.worldvectorlogo.com/logos/tether.svg" alt="USDT" className="w-full h-full object-contain" />
+              </div>
+              <h2 className="text-sm font-black uppercase tracking-widest italic">Master USDT Wallet (BEP20)</h2>
+            </div>
+            <Wallet className="text-zinc-700" size={20} />
           </div>
           <input 
             type="text" 
@@ -103,6 +124,61 @@ export default function AdminSettings() {
           <p className="text-[9px] text-zinc-400 mt-4 uppercase font-bold italic tracking-tighter">Enter your TON wallet address for Telegram Mini App integrations.</p>
         </div>
 
+        {/* Local Gateway Section */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* JazzCash */}
+          <div className="bg-zinc-900/40 border border-zinc-800/50 p-8 rounded-[3rem]">
+            <div className="flex items-center gap-4 mb-6">
+              <div className="w-10 h-10 flex items-center justify-center overflow-hidden rounded-lg bg-white p-1 shadow-lg shadow-red-600/10">
+                <img src="https://crystalpng.com/wp-content/uploads/2024/12/new-Jazzcash-logo.png" alt="JazzCash" className="w-full h-full object-contain" />
+              </div>
+              <h2 className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-300 italic">JazzCash Configuration</h2>
+            </div>
+            <div className="space-y-4">
+              <input 
+                type="text" 
+                placeholder="Account Number"
+                value={settings.jazzCashNumber}
+                onChange={(e) => setSettings({...settings, jazzCashNumber: e.target.value})}
+                className="w-full bg-zinc-950 border border-zinc-800 rounded-2xl py-4 px-5 text-xs text-white outline-none focus:border-amber-500 transition-all"
+              />
+              <input 
+                type="text" 
+                placeholder="Account Holder Name"
+                value={settings.jazzCashName}
+                onChange={(e) => setSettings({...settings, jazzCashName: e.target.value})}
+                className="w-full bg-zinc-950 border border-zinc-800 rounded-2xl py-4 px-5 text-xs text-white outline-none focus:border-amber-500 transition-all"
+              />
+            </div>
+          </div>
+
+          {/* EasyPaisa */}
+          <div className="bg-zinc-900/40 border border-zinc-800/50 p-8 rounded-[3rem]">
+            <div className="flex items-center gap-4 mb-6">
+              <div className="w-10 h-10 flex items-center justify-center overflow-hidden rounded-lg bg-white p-1 shadow-lg shadow-emerald-600/10">
+                <img src="https://crystalpng.com/wp-content/uploads/2024/10/Easypaisa-logo.png" alt="EasyPaisa" className="w-full h-full object-contain" />
+              </div>
+              <h2 className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-300 italic">EasyPaisa Configuration</h2>
+            </div>
+            <div className="space-y-4">
+              <input 
+                type="text" 
+                placeholder="Account Number"
+                value={settings.easyPaisaNumber}
+                onChange={(e) => setSettings({...settings, easyPaisaNumber: e.target.value})}
+                className="w-full bg-zinc-950 border border-zinc-800 rounded-2xl py-4 px-5 text-xs text-white outline-none focus:border-emerald-500 transition-all"
+              />
+              <input 
+                type="text" 
+                placeholder="Account Holder Name"
+                value={settings.easyPaisaName}
+                onChange={(e) => setSettings({...settings, easyPaisaName: e.target.value})}
+                className="w-full bg-zinc-950 border border-zinc-800 rounded-2xl py-4 px-5 text-xs text-white outline-none focus:border-emerald-500 transition-all"
+              />
+            </div>
+          </div>
+        </div>
+
         {/* Maintenance Mode */}
         <div className="bg-red-600/5 border border-red-600/10 p-8 rounded-[3rem]">
           <div className="flex items-center gap-4 mb-8">
@@ -122,6 +198,9 @@ export default function AdminSettings() {
              </div>
           </div>
         </div>
+
+        {/* 2FA Section */}
+        <TwoFactorSetup />
 
         <button 
           onClick={handleSave}

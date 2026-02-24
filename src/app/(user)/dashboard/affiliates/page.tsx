@@ -6,9 +6,16 @@ export default function AffiliatesPage() {
 
   return (
     <div className="p-4 md:p-8 pt-24 lg:pt-10 max-w-7xl mx-auto">
-      <div className="mb-10">
-        <h1 className="text-3xl font-black tracking-tighter uppercase italic">Network <span className="text-blue-600">Terminal</span></h1>
-        <p className="text-zinc-500 text-[10px] font-bold uppercase tracking-[0.3em] mt-1">Earn 10% instant commission from your network</p>
+      <div className="mb-10 text-white lg:hidden">
+        <div className="flex items-center gap-3 mb-2">
+          <div className="bg-blue-600 h-8 w-1.5 rounded-full shadow-[0_0_15px_rgba(37,99,235,0.5)]" />
+          <h1 className="text-3xl font-black uppercase tracking-tighter italic text-white leading-none">
+            Network <span className="text-blue-600">Terminal</span>
+          </h1>
+        </div>
+        <p className="text-zinc-500 text-[10px] font-black uppercase tracking-[0.4em] ml-5">
+           Earn 10% Instant Commission • Expansion: <span className="text-blue-500 italic uppercase">Global</span>
+        </p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10">

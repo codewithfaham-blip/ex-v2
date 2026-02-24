@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { signIn, getSession } from "next-auth/react";
 import { LogIn, Mail, Lock, Eye, EyeOff, Loader2, ShieldCheck, AlertCircle } from "lucide-react";
+import BrandLogo from "@/components/BrandLogo";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -54,16 +55,11 @@ export default function LoginPage() {
       <div className="w-full max-w-[380px] space-y-6">
         
         {/* Logo & Info */}
-        <div className="text-center space-y-2">
-          <div className="flex justify-center mb-4">
-            <div className="bg-blue-600/10 p-3 rounded-2xl border border-blue-600/20">
-              <ShieldCheck className="text-blue-500" size={32} />
-            </div>
-          </div>
-          <h1 className="text-3xl font-black tracking-tighter text-white uppercase italic">
-            Secure <span className="text-blue-600">Login</span>
-          </h1>
-          <p className="text-zinc-500 text-xs font-bold uppercase tracking-[0.2em]">User & Admin Portal</p>
+        <div className="text-center space-y-4">
+          <Link href="/" className="inline-block group">
+            <BrandLogo size="lg" className="flex-col !gap-5" />
+          </Link>
+          <p className="text-zinc-500 text-[10px] font-black uppercase tracking-[0.3em]">Accessing Secure Intelligence Node</p>
         </div>
 
         {/* Error Box */}

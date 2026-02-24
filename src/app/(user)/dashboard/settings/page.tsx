@@ -4,12 +4,15 @@ import { Shield, Lock, Bell, Smartphone } from "lucide-react";
 export default function SettingsPage() {
   return (
     <div className="p-4 md:p-8 lg:p-12 pt-28 lg:pt-10 max-w-4xl mx-auto w-full">
-      <div className="mb-10">
-        <h1 className="text-3xl font-black uppercase tracking-tighter italic text-white">
-          System <span className="text-blue-600">Parameters</span>
-        </h1>
-        <p className="text-zinc-500 text-[10px] font-bold uppercase tracking-[0.3em] mt-2 italic">
-          Configure your secure node and encryption keys
+      <div className="mb-10 text-white lg:hidden">
+        <div className="flex items-center gap-3 mb-2">
+          <div className="bg-blue-600 h-8 w-1.5 rounded-full shadow-[0_0_15px_rgba(37,99,235,0.5)]" />
+          <h1 className="text-3xl font-black uppercase tracking-tighter italic text-white leading-none">
+            System <span className="text-blue-600">Parameters</span>
+          </h1>
+        </div>
+        <p className="text-zinc-500 text-[10px] font-black uppercase tracking-[0.4em] ml-5">
+           Configure Your Secure Node and Encryption Keys • Secure: <span className="text-blue-500 italic uppercase">Operational</span>
         </p>
       </div>
 

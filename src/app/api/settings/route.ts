@@ -8,6 +8,10 @@ export async function GET() {
       select: {
         adminWalletAddress: true,
         tonWalletAddress: true,
+        jazzCashNumber: true,
+        jazzCashName: true,
+        easyPaisaNumber: true,
+        easyPaisaName: true,
         maintenanceMode: true,
       }
     });

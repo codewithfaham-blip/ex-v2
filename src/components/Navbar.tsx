@@ -3,23 +3,27 @@ import { useState } from "react";
 import Link from "next/link";
 import { Menu, X, LayoutDashboard, LogOut, Loader2 } from "lucide-react";
 import { useSession, signOut } from "next-auth/react";
-import Logo from "./Logo";
+import { usePathname } from "next/navigation";
+import BrandLogo from "./BrandLogo";
 
 export default function Navbar() {
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const { data: session, status } = useSession();
   const isLoading = status === "loading";
+
+  // Hide Navbar in Dashboard routes to prevent "Double Header" confusion
+  if (pathname.startsWith("/dashboard") || pathname.startsWith("/admin")) {
+    return null;
+  }
 
   const dashboardHref = (session?.user as any)?.role === "ADMIN" ? "/admin/dashboard" : "/dashboard";
 
   return (
     <nav className="sticky top-0 z-50 w-full bg-zinc-950/90 backdrop-blur-md border-b border-zinc-900">
       <div className="flex items-center justify-between px-4 py-4 md:px-8 max-w-7xl mx-auto">
-        <Link href="/" className="flex items-center gap-2 group">
-          <Logo className="w-8 h-8 md:w-10 md:h-10 group-hover:scale-110 transition-transform" />
-          <span className="text-xl md:text-2xl font-black tracking-tighter text-blue-600">
-            EXOTIC<span className="text-white">CASH</span>
-          </span>
+        <Link href="/" className="group">
+          <BrandLogo size="md" />
         </Link>
 
         {/* Desktop Links */}
@@ -53,10 +57,28 @@ export default function Navbar() {
           )}
         </div>
 
-        {/* Mobile Toggle */}
-        <button className="md:hidden text-white p-1" onClick={() => setIsOpen(!isOpen)}>
-          {isOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
+        {/* Mobile Toggle & Quick Actions */}
+        <div className="flex md:hidden items-center gap-3">
+          {status === "unauthenticated" && (
+            <Link 
+              href="/login" 
+              className="px-3 py-1.5 bg-blue-600/10 text-blue-500 rounded-lg border border-blue-600/20 text-[10px] font-black uppercase tracking-tighter active:scale-95 transition-all"
+            >
+              Login
+            </Link>
+          )}
+          {status === "authenticated" && (
+            <Link 
+              href={dashboardHref} 
+              className="px-3 py-1.5 bg-blue-600 text-white rounded-lg text-[10px] font-black uppercase tracking-tighter active:scale-95 transition-all shadow-lg shadow-blue-600/20"
+            >
+              Portal
+            </Link>
+          )}
+          <button className="text-white p-2 bg-zinc-900 border border-zinc-800 rounded-lg active:scale-90 transition-all" onClick={() => setIsOpen(!isOpen)}>
+            {isOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Menu */}

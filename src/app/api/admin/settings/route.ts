@@ -35,7 +35,15 @@ export async function POST(req: Request) {
     }
 
     const body = await req.json();
-    const { adminWalletAddress, tonWalletAddress, maintenanceMode } = body;
+    const { 
+      adminWalletAddress, 
+      tonWalletAddress, 
+      maintenanceMode,
+      jazzCashNumber,
+      jazzCashName,
+      easyPaisaNumber,
+      easyPaisaName 
+    } = body;
 
     const updatedSettings = await db.systemSetting.upsert({
       where: { id: "global" },
@@ -43,12 +51,20 @@ export async function POST(req: Request) {
         adminWalletAddress,
         tonWalletAddress,
         maintenanceMode,
+        jazzCashNumber,
+        jazzCashName,
+        easyPaisaNumber,
+        easyPaisaName
       },
       create: {
         id: "global",
         adminWalletAddress,
         tonWalletAddress,
         maintenanceMode: maintenanceMode || false,
+        jazzCashNumber,
+        jazzCashName,
+        easyPaisaNumber,
+        easyPaisaName
       },
     });
 
