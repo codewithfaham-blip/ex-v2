@@ -10,7 +10,7 @@ export default function ClientWithdrawalActions({ withdrawalId, status }: { with
 
   const handleApprove = async () => {
     if (status !== 'PENDING') return;
-    if (!confirm("Confirm payment transmission? This will mark the withdrawal as approved in the ledger.")) return;
+    if (!confirm("Confirm this withdrawal? This will mark the withdrawal as paid.")) return;
     
     setLoading(true);
     const promise = fetch("/api/admin/withdrawals/approve", {
@@ -20,16 +20,16 @@ export default function ClientWithdrawalActions({ withdrawalId, status }: { with
     });
 
     toast.promise(promise, {
-      loading: 'Updating payout ledger...',
+      loading: 'Updating status...',
       success: async (res: Response) => {
         if (!res.ok) {
            const err = await res.json();
            throw new Error(err.error || "Update failed");
         }
         router.refresh();
-        return 'Payout successfully marked as approved';
+        return 'Withdrawal marked as paid';
       },
-      error: (err: any) => err.message || 'Ledger update failed',
+      error: (err: any) => err.message || 'Status update failed',
     });
 
     try {

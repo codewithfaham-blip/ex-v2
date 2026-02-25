@@ -40,8 +40,8 @@ export default function RailwayAdminPage() {
   return (
     <div className="p-4 md:p-10 pt-24 lg:pt-10 max-w-[1000px] mx-auto text-white">
       <div className="mb-10">
-        <h1 className="text-3xl font-black uppercase tracking-tighter italic">Railway <span className="text-blue-600 text-5xl">Database</span></h1>
-        <p className="text-zinc-500 text-[10px] font-bold uppercase tracking-[0.3em] mt-2">Backend infrastructure and cloud connectivity status</p>
+        <h1 className="text-3xl font-black uppercase tracking-tighter italic">Cloud <span className="text-blue-600 text-5xl">Database</span></h1>
+        <p className="text-zinc-500 text-[10px] font-bold uppercase tracking-[0.3em] mt-2">Database and Server Status</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
@@ -78,7 +78,7 @@ export default function RailwayAdminPage() {
           <div className="flex items-center justify-between mb-8">
             <div className="flex items-center gap-4">
               <ShieldCheck className="text-blue-600" size={24} />
-              <h2 className="text-sm font-black uppercase tracking-widest italic text-blue-400">Database Credentials</h2>
+              <h2 className="text-sm font-black uppercase tracking-widest italic text-blue-400">Database Connection</h2>
             </div>
             <a 
               href="https://railway.app" 
@@ -107,7 +107,7 @@ export default function RailwayAdminPage() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 font-bold">
            <div className="bg-zinc-900/40 border border-zinc-800/50 p-5 rounded-2xl flex flex-col items-center">
               <Globe className="text-zinc-700 mb-2" size={20} />
-              <p className="text-zinc-500 text-[8px] uppercase">Node Version</p>
+              <p className="text-zinc-500 text-[8px] uppercase">System Version</p>
               <p className="text-xs">{data?.nodeVersion || 'v20.x'}</p>
            </div>
            <div className="bg-zinc-900/40 border border-zinc-800/50 p-5 rounded-2xl flex flex-col items-center">
@@ -117,7 +117,7 @@ export default function RailwayAdminPage() {
            </div>
            <div className="bg-zinc-900/40 border border-zinc-800/50 p-5 rounded-2xl flex flex-col items-center">
               <Server className="text-zinc-700 mb-2" size={20} />
-              <p className="text-zinc-500 text-[8px] uppercase">DB Dialect</p>
+              <p className="text-zinc-500 text-[8px] uppercase">Database Type</p>
               <p className="text-xs uppercase">PostgreSQL</p>
            </div>
         </div>

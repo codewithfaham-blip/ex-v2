@@ -31,14 +31,14 @@ export default function UserSidebar() {
         <div className="flex items-center gap-3">
             <div className="flex items-center gap-2 border-r border-white/10 pr-4">
               <div className="w-2 h-2 bg-purple-500 rounded-full animate-pulse shadow-[0_0_10px_#a855f7]" />
-              <span className="text-[10px] font-black uppercase tracking-widest text-slate-500">Status: Active</span>
+              <span className="text-[10px] font-black uppercase tracking-widest text-slate-500">Status: Online</span>
             </div>
            <button 
              onClick={() => setIsOpen(!isOpen)}
              className="flex items-center gap-2 px-3 py-1.5 bg-purple-600/10 text-purple-400 rounded-lg border border-purple-500/20 active:scale-90 transition-all shadow-sm"
            >
               {isOpen ? <X size={16} /> : <Menu size={16} />}
-              <span className="text-[10px] font-black uppercase tracking-tighter text-purple-200">System</span>
+              <span className="text-[10px] font-black uppercase tracking-tighter text-purple-200">Menu</span>
            </button>
         </div>
       </div>
@@ -67,7 +67,7 @@ export default function UserSidebar() {
 
         <nav className="mt-4 px-4 space-y-2 relative z-10">
           <div className="px-4 mb-4">
-             <p className="text-[8px] font-black text-slate-600 uppercase tracking-[0.4em] italic leading-none">Main Menu</p>
+             <p className="text-[8px] font-black text-slate-600 uppercase tracking-[0.4em] italic leading-none">Menu</p>
           </div>
           {menuItems.map((item) => {
             const isActive = pathname === item.href;
@@ -94,8 +94,8 @@ export default function UserSidebar() {
         {/* Support Section */}
         <div className="mt-8 px-8 relative z-10">
             <div className="p-4 rounded-2xl bg-gradient-to-br from-purple-600/10 to-transparent border border-purple-500/10">
-               <p className="text-[9px] font-black text-purple-400 uppercase tracking-widest mb-1">System Help</p>
-               <p className="text-[8px] text-slate-500 font-medium">Need assistance? Contact our support team.</p>
+               <p className="text-[9px] font-black text-purple-400 uppercase tracking-widest mb-1">Support</p>
+               <p className="text-[8px] text-slate-500 font-medium">Need assistance? Contact our team.</p>
             </div>
         </div>
 

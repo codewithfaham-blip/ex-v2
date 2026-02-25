@@ -31,7 +31,7 @@ export default async function ReferralsPage() {
         <div className="flex items-center gap-3 mb-2">
           <div className="bg-purple-600 h-8 w-1.5 rounded-full shadow-[0_0_15px_rgba(147,51,234,0.5)]" />
           <h1 className="text-3xl font-black uppercase tracking-tighter italic text-slate-900 leading-none">
-            Referral <span className="text-purple-600">Center</span>
+            Referral <span className="text-purple-600">Program</span>
           </h1>
         </div>
         <p className="text-slate-500 text-[10px] font-black uppercase tracking-[0.4em] ml-5">
@@ -69,7 +69,7 @@ export default async function ReferralsPage() {
             <div className="w-full">
                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 bg-white/5 border border-white/10 p-2 rounded-2xl backdrop-blur-sm group-hover:border-purple-500/30 transition-all">
                   <div className="flex-1 px-4 py-3 sm:py-0 overflow-hidden">
-                     <p className="text-slate-500 text-[9px] uppercase font-black mb-1 tracking-widest">Network Secure Link</p>
+                     <p className="text-slate-500 text-[9px] uppercase font-black mb-1 tracking-widest">Your Referral Link</p>
                      <p className="text-white text-xs md:text-sm font-bold truncate opacity-80">{referralLink}</p>
                   </div>
                   <CopyButton text={referralLink} className="py-4 px-8" />
@@ -93,7 +93,7 @@ export default async function ReferralsPage() {
               
               <div className="space-y-6">
                 <div>
-                   <p className="text-slate-500 text-[9px] font-black uppercase tracking-widest mb-1">Total Active Referrals</p>
+                   <p className="text-slate-500 text-[9px] font-black uppercase tracking-widest mb-1">Total Referrals</p>
                    <h4 className="text-3xl font-black text-white italic">{user.referredUsers?.length || 0} Users</h4>
                 </div>
                 
@@ -127,7 +127,7 @@ export default async function ReferralsPage() {
           {user.referredUsers?.length === 0 ? (
             <div className="text-center py-20 bg-slate-50 rounded-[2rem] border-2 border-dashed border-slate-100">
               <Users size={40} className="mx-auto text-slate-200 mb-4" />
-              <p className="text-slate-400 text-[10px] font-black uppercase tracking-[0.2em]">Zero network partners detected</p>
+              <p className="text-slate-400 text-[10px] font-black uppercase tracking-[0.2em]">No referrals detected yet</p>
             </div>
           ) : (
             <div className="overflow-x-auto">

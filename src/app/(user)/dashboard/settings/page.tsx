@@ -8,11 +8,11 @@ export default function SettingsPage() {
         <div className="flex items-center gap-3 mb-2">
           <div className="bg-blue-600 h-8 w-1.5 rounded-full shadow-[0_0_15px_rgba(37,99,235,0.5)]" />
           <h1 className="text-3xl font-black uppercase tracking-tighter italic text-white leading-none">
-            System <span className="text-blue-600">Parameters</span>
+            Account <span className="text-blue-600">Settings</span>
           </h1>
         </div>
         <p className="text-zinc-500 text-[10px] font-black uppercase tracking-[0.4em] ml-5">
-           Configure Your Secure Node and Encryption Keys • Secure: <span className="text-blue-500 italic uppercase">Operational</span>
+           Manage your account security and preferences • Status: <span className="text-blue-500 italic uppercase">Online</span>
         </p>
       </div>
 
@@ -23,7 +23,7 @@ export default function SettingsPage() {
             <div className="bg-blue-600/10 p-3 rounded-2xl text-blue-500">
               <Lock size={20} />
             </div>
-            <h2 className="text-sm font-black uppercase tracking-widest italic text-white">Authentication Keys</h2>
+            <h2 className="text-sm font-black uppercase tracking-widest italic text-white">Security</h2>
           </div>
 
           <form className="space-y-6">
@@ -37,7 +37,7 @@ export default function SettingsPage() {
                 />
               </div>
               <div className="space-y-2">
-                <label className="text-[10px] font-black uppercase text-zinc-500 ml-1">New Cyber Key</label>
+                <label className="text-[10px] font-black uppercase text-zinc-500 ml-1">New Password</label>
                 <input 
                   type="password" 
                   className="w-full bg-zinc-950 border border-zinc-800 rounded-2xl py-4 px-6 text-sm text-white focus:outline-none focus:border-blue-600 transition-all"
@@ -47,7 +47,7 @@ export default function SettingsPage() {
             </div>
 
             <button type="submit" className="w-full md:w-auto bg-blue-600 text-white px-10 py-4 rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] hover:bg-blue-700 transition-all shadow-xl shadow-blue-600/10">
-              Update Security Protocol
+              Save Changes
             </button>
           </form>
         </div>
@@ -58,7 +58,7 @@ export default function SettingsPage() {
             <div className="bg-emerald-600/10 p-3 rounded-2xl text-emerald-500">
               <Bell size={20} />
             </div>
-            <h2 className="text-sm font-black uppercase tracking-widest italic text-white">System Notifications</h2>
+            <h2 className="text-sm font-black uppercase tracking-widest italic text-white">Notifications</h2>
           </div>
           
           <div className="space-y-4">

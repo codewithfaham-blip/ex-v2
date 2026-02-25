@@ -71,7 +71,7 @@ export default function RegisterPage() {
           <Link href="/" className="inline-block group">
             <BrandLogo size="lg" className="flex-col !gap-5" />
           </Link>
-          <p className="text-slate-400 text-[10px] font-black uppercase tracking-[0.2em]">Deploying New Node Connectivity</p>
+          <p className="text-slate-400 text-[10px] font-black uppercase tracking-[0.2em]">Create Your New Account</p>
         </div>
 
         {/* Dynamic Error Box */}
@@ -159,17 +159,17 @@ export default function RegisterPage() {
               type="submit" 
               className="w-full bg-purple-600 hover:bg-purple-700 text-white font-black py-4 rounded-2xl transition-all active:scale-95 flex items-center justify-center gap-2 shadow-lg shadow-purple-600/20 mt-4 disabled:opacity-50 uppercase text-[12px] tracking-widest"
             >
-              {loading ? <Loader2 className="animate-spin" size={20} /> : "Start Investing Now"}
+              {loading ? <Loader2 className="animate-spin" size={20} /> : "Create Account"}
             </button>
           </form>
         </div>
 
         <div className="text-center space-y-4">
           <p className="text-slate-400 text-xs">
-            Already a member? <Link href="/login" className="text-purple-600 font-bold hover:underline italic">Login Terminal</Link>
+            Already a member? <Link href="/login" className="text-purple-600 font-bold hover:underline italic">Login Here</Link>
           </p>
           <Link href="/" className="inline-block text-slate-400 hover:text-slate-600 text-[10px] font-black uppercase tracking-widest transition italic">
-            ← Back to Terminal
+            ← Back to Home
           </Link>
         </div>
       </div>

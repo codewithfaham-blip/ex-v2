@@ -10,7 +10,7 @@ export default function ClientDepositActions({ depositId }: { depositId: string 
   const router = useRouter();
 
   const handleApprove = async () => {
-    if (!confirm("Are you sure you want to approve this investment injection? This will activate the node for the user.")) return;
+    if (!confirm("Are you sure you want to approve this deposit? This will add the balance to the user's account.")) return;
     
     setLoading(true);
     const promise = fetch("/api/admin/deposit/approve", {
@@ -20,16 +20,16 @@ export default function ClientDepositActions({ depositId }: { depositId: string 
     });
 
     toast.promise(promise, {
-      loading: 'Authorizing liquidity injection...',
+      loading: 'Approving deposit...',
       success: async (res: Response) => {
         if (!res.ok) {
            const err = await res.json();
            throw new Error(err.error || "Authorization failed");
         }
         router.refresh();
-        return 'Node successfully activated and synchronized';
+        return 'Deposit approved successfully';
       },
-      error: (err: any) => err.message || 'Injection failed. Check system logs.',
+      error: (err: any) => err.message || 'Approval failed. Check logs.',
     });
 
     try {

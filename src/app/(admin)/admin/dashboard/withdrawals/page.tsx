@@ -14,7 +14,7 @@ export default async function AdminWithdrawals() {
         <h1 className="text-3xl font-black uppercase tracking-tighter italic text-slate-900 flex items-baseline gap-2">
           Payout <span className="text-red-600 text-5xl">Queue</span>
         </h1>
-        <p className="text-slate-500 text-[10px] font-bold uppercase tracking-[0.3em] mt-2">Process outgoing liquidity requests</p>
+        <p className="text-slate-500 text-[10px] font-bold uppercase tracking-[0.3em] mt-2">Process user withdrawal requests</p>
       </div>
 
       <div className="grid grid-cols-1 gap-4">
@@ -34,7 +34,7 @@ export default async function AdminWithdrawals() {
               </div>
               
               <div className="text-center">
-                <p className="text-[9px] text-slate-400 font-black uppercase mb-1">Extraction Amount</p>
+                <p className="text-[9px] text-slate-400 font-black uppercase mb-1">Withdrawal Amount</p>
                 <p className="text-2xl font-black text-slate-900 tracking-tighter">Rs. {wd.amount.toFixed(2)}</p>
               </div>
 

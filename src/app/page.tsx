@@ -102,10 +102,10 @@ export default async function HomePage() {
       {/* Stats */}
       <section className="px-4 py-10 max-w-7xl mx-auto">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
-          <StatItem icon={<Users className="text-purple-600" size={20} />} label="Global Nodes" value="12k+" />
-          <StatItem icon={<Coins className="text-purple-600" size={20} />} label="Total Inbound" value="Rs. 4.2M" />
-          <StatItem icon={<Zap className="text-purple-600" size={20} />} label="Paid To Date" value="Rs. 1.8M" />
-          <StatItem icon={<BarChart3 className="text-purple-600" size={20} />} label="Active Stream" value="High" />
+          <StatItem icon={<Users className="text-purple-600" size={20} />} label="Global Investors" value="12k+" />
+          <StatItem icon={<Coins className="text-purple-600" size={20} />} label="Total Deposits" value="Rs. 4.2M" />
+          <StatItem icon={<Zap className="text-purple-600" size={20} />} label="Total Payouts" value="Rs. 1.8M" />
+          <StatItem icon={<BarChart3 className="text-purple-600" size={20} />} label="System Status" value="Online" />
         </div>
       </section>
 
@@ -113,27 +113,27 @@ export default async function HomePage() {
       <section id="process" className="px-4 py-24 max-w-7xl mx-auto relative overflow-hidden">
         <div className="text-center mb-20">
           <h3 className="text-3xl md:text-6xl font-black uppercase tracking-tighter italic mb-4 text-slate-900">
-             Our <span className="text-purple-600">Protocol</span>
+             Simple <span className="text-purple-600">Steps</span>
           </h3>
-          <p className="text-slate-400 max-w-md mx-auto text-sm font-bold uppercase tracking-widest underline decoration-purple-500/30">Three steps to initial liquidity</p>
+          <p className="text-slate-400 max-w-md mx-auto text-sm font-bold uppercase tracking-widest underline decoration-purple-500/30">Start earning in minutes</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <StepCard 
             number="01" 
-            title="Register Node" 
-            desc="Initialize your account on the secure network. Identity verification is processed in real-time." 
+            title="Create Account" 
+            desc="Sign up on our secure platform. Registration is fast, easy, and completely free." 
             icon={<Globe size={32} className="text-purple-600" />} 
           />
           <StepCard 
             number="02" 
-            title="Deploy Capital" 
-            desc="Allocate assets to your chosen intelligence plan. We support multiple crypto-asset streams." 
+            title="Choose a Plan" 
+            desc="Select an investment plan that fits your goals and make your first deposit." 
             icon={<Wallet2 size={32} className="text-purple-600" />} 
           />
           <StepCard 
             number="03" 
-            title="Extract Profit" 
-            desc="Monitor your daily yield generation. Withdraw your liquidity instantly at any time 24/7." 
+            title="Withdraw Earnings" 
+            desc="Watch your daily profits grow and withdraw them to your wallet at any time." 
             icon={<TrendingUp size={32} className="text-purple-600" />} 
           />
         </div>
@@ -147,12 +147,12 @@ export default async function HomePage() {
                 <Cpu size={48} className="text-purple-600" />
              </div>
              <h3 className="text-4xl md:text-6xl font-black mb-8 leading-tight tracking-tighter uppercase italic text-slate-900">
-                Advanced <br /> <span className="text-purple-600">Intelligence</span> Engine
+                Advanced <br /> <span className="text-purple-600">Investment</span> System
              </h3>
              <ul className="space-y-6">
                 {[
                   "Proprietary AI-driven yield optimization",
-                  "Deep-Liquidity mining protocols",
+                  "Deep-Liquidity investment methods",
                   "Cross-Chain asset synchronization",
                   "Automated security layer auditing"
                 ].map((item, i) => (
@@ -195,7 +195,7 @@ export default async function HomePage() {
                <div className="absolute -right-4 -top-4 w-32 h-32 bg-purple-600/5 rounded-full blur-2xl group-hover:bg-purple-600/10 transition-colors" />
               <Zap className="text-purple-600 mb-8 group-hover:scale-110 transition-transform" size={48} />
               <h4 className="text-2xl font-bold mb-4 italic text-slate-900">Hyper-Fast Exit</h4>
-              <p className="text-slate-500 text-sm leading-relaxed">Automated extraction corridors process your withdrawals in seconds, not hours. Access your assets anytime.</p>
+              <p className="text-slate-500 text-sm leading-relaxed">Automated systems process your withdrawals in seconds, not hours. Access your assets anytime.</p>
             </div>
             <div className="p-10 rounded-[3rem] border border-slate-200 bg-white hover:border-purple-600/50 transition-all group relative overflow-hidden shadow-sm">
                <div className="absolute -right-4 -top-4 w-32 h-32 bg-purple-600/5 rounded-full blur-2xl group-hover:bg-purple-600/10 transition-colors" />
@@ -255,7 +255,7 @@ export default async function HomePage() {
       {/* Footer CTA */}
       <section className="px-4 py-32 text-center relative overflow-hidden border-t border-slate-200">
          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[400px] bg-purple-600/5 blur-[120px] -z-10 rounded-full" />
-         <h3 className="text-4xl md:text-8xl font-black mb-10 tracking-tighter italic uppercase text-slate-900">Ready to <br /> <span className="text-purple-600">Initialize?</span></h3>
+         <h3 className="text-4xl md:text-8xl font-black mb-10 tracking-tighter italic uppercase text-slate-900">Ready to <br /> <span className="text-purple-600">Get Started?</span></h3>
          <div className="flex flex-col sm:flex-row justify-center gap-6">
             <Link href="/login" className="bg-purple-600 px-12 py-5 rounded-2xl font-black text-sm uppercase tracking-widest shadow-2xl hover:bg-purple-700 transition-all flex items-center justify-center gap-3 text-white">
                Login <ArrowRight size={20} />

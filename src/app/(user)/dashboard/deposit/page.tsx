@@ -154,11 +154,11 @@ export default function DepositPage() {
         <div className="flex items-center gap-3 mb-2">
           <div className="bg-purple-600 h-8 w-1.5 rounded-full shadow-[0_0_15px_rgba(147,51,234,0.3)]" />
           <h1 className="text-3xl font-black uppercase tracking-tighter italic text-slate-900 leading-none">
-            Initialize <span className="text-purple-600">Deposit</span>
+            Deposit <span className="text-purple-600">Funds</span>
           </h1>
         </div>
         <p className="text-slate-500 text-[10px] font-black uppercase tracking-[0.4em] ml-5">
-          Secure Capital Injection Terminal • Gateway: <span className="text-purple-600 italic">Verified</span>
+          Secure Deposit Panel • Gateway: <span className="text-purple-600 italic">Verified</span>
         </p>
       </div>
 
@@ -166,7 +166,7 @@ export default function DepositPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="bg-white border border-slate-200 p-6 rounded-[2rem] flex items-center justify-between shadow-sm">
            <div>
-              <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Total Injected Liquidity</p>
+              <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Total Deposited Amount</p>
               <h3 className="text-3xl font-black text-slate-900 tracking-tighter italic">
                 Rs. {profile ? formatPKR(profile.totalDeposited) : "0.00"}
               </h3>
@@ -222,11 +222,11 @@ export default function DepositPage() {
               {/* Account Intel */}
                <div className="space-y-6">
                   <div>
-                     <h4 className="text-[10px] font-black uppercase text-slate-400 tracking-[0.3em] mb-4 italic">Injection Destination</h4>
+                     <h4 className="text-[10px] font-black uppercase text-slate-400 tracking-[0.3em] mb-4 italic">Payment Details</h4>
                      <div className="bg-slate-50 border border-slate-100 p-6 rounded-2xl flex justify-between items-center group/addr">
                         <div>
                            <p className="text-xl font-mono text-purple-600 break-all leading-tight">{selectedMethod.account || selectedMethod.address}</p>
-                           {selectedMethod.holder && <p className="text-[10px] font-black uppercase text-slate-500 mt-2">Verified: {selectedMethod.holder}</p>}
+                           {selectedMethod.holder && <p className="text-[10px] font-black uppercase text-slate-500 mt-2">Account Name: {selectedMethod.holder}</p>}
                         </div>
                         <button 
                           onClick={() => handleCopy(selectedMethod.account || selectedMethod.address)}
@@ -239,7 +239,7 @@ export default function DepositPage() {
                   
                   <div className="p-4 bg-purple-600/5 border border-purple-600/10 rounded-2xl">
                      <p className="text-[9px] font-bold text-purple-600 uppercase tracking-widest leading-relaxed">
-                        Transfer the exact amount to the account shown above, then upload your digital receipt below to synchronize your node.
+                        Transfer the exact amount to the account shown above, then upload your receipt below to verify your deposit.
                      </p>
                   </div>
                </div>
@@ -247,7 +247,7 @@ export default function DepositPage() {
                {/* Deployment Form */}
                <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="space-y-2">
-                     <label className="text-[10px] font-black uppercase text-slate-400 ml-1">Assets to Inject (Rs.)</label>
+                     <label className="text-[10px] font-black uppercase text-slate-400 ml-1">Amount to Deposit (Rs.)</label>
                      <input 
                        type="number" 
                        placeholder="0.00" 
@@ -294,7 +294,7 @@ export default function DepositPage() {
                     disabled={loading}
                     className="w-full bg-purple-600 py-5 rounded-2xl font-black uppercase tracking-[0.2em] flex items-center justify-center gap-3 text-white hover:bg-purple-700 transition shadow-2xl shadow-purple-600/40 active:scale-[0.98] text-[11px]"
                   >
-                    {loading ? "Synchronizing..." : <><Zap size={18} /> Initiate Node Activation</>}
+                    {loading ? "Processing..." : <><Zap size={18} /> Deposit Now</>}
                   </button>
               </form>
            </div>

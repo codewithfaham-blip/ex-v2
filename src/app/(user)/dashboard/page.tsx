@@ -36,12 +36,12 @@ export default async function UserDashboard() {
             <div className="flex items-center gap-3 mb-3">
               <div className="bg-purple-600 h-10 w-1.5 rounded-full shadow-[0_0_20px_rgba(147,51,234,0.6)]" />
               <h1 className="text-3xl font-black uppercase tracking-tighter italic text-white leading-none">
-                Simple <span className="text-purple-500">Access</span>
+                Account <span className="text-purple-500">Overview</span>
               </h1>
             </div>
             <p className="text-slate-400 text-[10px] font-black uppercase tracking-[0.4em] ml-5 flex items-center gap-2">
               <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_8px_#10b981]" />
-              {user.email?.split('@')[0]} • Active
+              {user.email?.split('@')[0]} • Online
             </p>
           </div>
         </div>
@@ -123,7 +123,7 @@ export default async function UserDashboard() {
             </div>
             <div className="mt-2 sm:mt-0">
               <p className="text-white/60 text-[9px] md:text-[10px] font-black uppercase tracking-widest mb-1">Active Plans</p>
-              <h3 className="text-xl md:text-3xl font-black text-white tracking-tight">{user.deposits.filter(d => d.status === 'ACTIVE' || d.status === 'APPROVED').length} U</h3>
+              <h3 className="text-xl md:text-3xl font-black text-white tracking-tight">{user.deposits.filter(d => d.status === 'ACTIVE' || d.status === 'APPROVED').length}</h3>
             </div>
           </div>
 
@@ -160,7 +160,7 @@ export default async function UserDashboard() {
                 <div className="p-4 bg-slate-200/50 rounded-full text-slate-300">
                    <Activity size={32} />
                 </div>
-                <p className="text-slate-300 text-[10px] font-black uppercase tracking-[0.4em]">Zero Activity Traces Found</p>
+                <p className="text-slate-300 text-[10px] font-black uppercase tracking-[0.4em]">No Recent Activity</p>
               </div>
             ) : (
               <div className="space-y-4 relative z-10">
@@ -185,8 +185,8 @@ export default async function UserDashboard() {
                           )}
                        </div>
                        <div>
-                          <p className="text-xs font-black uppercase tracking-tight text-slate-900">{dep.gateway || 'External Deposit'}</p>
-                          <p className="text-[9px] text-slate-400 font-bold uppercase tracking-[0.2em] mt-0.5">TRX: {dep.transactionId?.substring(0, 12) || 'N/A'}...</p>
+                          <p className="text-xs font-black uppercase tracking-tight text-slate-900">{dep.gateway || 'Deposit'}</p>
+                          <p className="text-[9px] text-slate-400 font-bold uppercase tracking-[0.2em] mt-0.5">ID: {dep.transactionId?.substring(0, 12) || 'N/A'}</p>
                        </div>
                     </div>
                     <div className="text-right">

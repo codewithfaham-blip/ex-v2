@@ -31,7 +31,7 @@ export default function CyberTicker() {
     <div className="flex items-center gap-8 overflow-hidden whitespace-nowrap">
       <div className="flex items-center gap-2 border-r border-slate-200 pr-6 mr-2 shrink-0">
          <div className="w-1.5 h-1.5 bg-purple-600 rounded-full animate-pulse shadow-[0_0_8px_rgba(147,51,234,0.3)]" />
-         <span className="text-[9px] font-black text-purple-600 uppercase tracking-[0.2em] italic">Telemetry Live</span>
+         <span className="text-[9px] font-black text-purple-600 uppercase tracking-[0.2em] italic">Market Rates</span>
       </div>
       <div className="flex items-center gap-8">
         {prices.map((p, i) => (

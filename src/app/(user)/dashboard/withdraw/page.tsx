@@ -42,7 +42,7 @@ export default function WithdrawPage() {
         body: JSON.stringify({ amount: parseFloat(amount), address }),
       });
       if (res.ok) {
-        alert("Extraction request logged in terminal. Processing...");
+        alert("Withdrawal request submitted. Processing...");
         setAmount("");
         fetchUserData();
       }
@@ -73,11 +73,11 @@ export default function WithdrawPage() {
         <div className="flex items-center gap-3 mb-2">
           <div className="bg-purple-600 h-8 w-1.5 rounded-full shadow-[0_0_15px_rgba(147,51,234,0.3)]" />
           <h1 className="text-3xl font-black uppercase tracking-tighter italic leading-none text-slate-900">
-            Funds <span className="text-purple-600">Extraction</span>
+            Withdraw <span className="text-purple-600">Funds</span>
           </h1>
         </div>
         <p className="text-slate-500 text-[10px] font-black uppercase tracking-[0.4em] ml-5">
-           Request Profit Settlement • Terminal: <span className="text-red-500 italic uppercase">Active</span>
+           Request Earnings Withdrawal • Status: <span className="text-emerald-500 italic uppercase">Active</span>
         </p>
       </div>
 
@@ -92,7 +92,7 @@ export default function WithdrawPage() {
                      <Coins className="text-emerald-500" size={24} />
                   </div>
                   <div>
-                     <p className="text-zinc-500 text-[10px] font-black uppercase tracking-widest">Available Liquidity</p>
+                     <p className="text-zinc-500 text-[10px] font-black uppercase tracking-widest">Available Balance</p>
                      <h3 className="text-4xl font-black text-slate-900 tracking-tighter">Rs. {userData?.balance?.toFixed(2) || "0.00"}</h3>
                   </div>
                </div>
@@ -111,7 +111,7 @@ export default function WithdrawPage() {
             <div className="space-y-6 text-slate-900 relative z-10">
               <div className="space-y-2">
                 <div className="flex justify-between items-center ml-1">
-                   <label className="text-[10px] font-black uppercase text-slate-400">Extraction Amount (PKR)</label>
+                   <label className="text-[10px] font-black uppercase text-slate-400">Withdrawal Amount (Rs.)</label>
                    <button onClick={() => setAmount(userData?.balance.toString())} className="text-[9px] font-black text-red-500 uppercase tracking-widest hover:underline">Max Available</button>
                 </div>
                 <input 
@@ -148,7 +148,7 @@ export default function WithdrawPage() {
                 className="w-full bg-slate-100 text-slate-900 hover:bg-slate-200 disabled:opacity-50 py-5 rounded-2xl font-black uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-3 shadow-sm active:scale-95 text-[11px] mt-4"
               >
                 {executing ? <Loader2 className="animate-spin" size={18} /> : <ArrowUpLeft size={18} />}
-                {executing ? "Processing..." : "Execute Payout Request"}
+                {executing ? "Processing..." : "Withdraw Now"}
               </button>
             </div>
           </div>
@@ -163,11 +163,11 @@ export default function WithdrawPage() {
             <ul className="space-y-5">
               <li className="flex gap-3 items-start">
                 <div className="w-1.5 h-1.5 bg-red-500 rounded-full mt-1.5 shrink-0" />
-                <p className="text-[10px] font-bold text-slate-500 uppercase leading-relaxed tracking-wider italic">Settlement window: 02 - 24 hours.</p>
+                <p className="text-[10px] font-bold text-slate-500 uppercase leading-relaxed tracking-wider italic">Processing time: 02 - 24 hours.</p>
               </li>
               <li className="flex gap-3 items-start">
                 <div className="w-1.5 h-1.5 bg-red-500 rounded-full mt-1.5 shrink-0" />
-                <p className="text-[10px] font-bold text-slate-500 uppercase leading-relaxed tracking-wider italic">Extraction fee: 2.5% system tax.</p>
+                <p className="text-[10px] font-bold text-slate-500 uppercase leading-relaxed tracking-wider italic">Withdrawal fee: 2.5% system tax.</p>
               </li>
               <li className="flex gap-3 items-start">
                 <div className="w-1.5 h-1.5 bg-red-500 rounded-full mt-1.5 shrink-0" />

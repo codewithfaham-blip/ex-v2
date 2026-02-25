@@ -95,11 +95,11 @@ export default function PlansPage() {
         <div className="flex items-center gap-3 mb-2">
           <div className="bg-purple-600 h-8 w-1.5 rounded-full shadow-[0_0_15px_rgba(147,51,234,0.3)]" />
           <h1 className="text-3xl font-black uppercase tracking-tighter italic text-slate-900 leading-none">
-            Investment <span className="text-purple-600">Terminals</span>
+            Investment <span className="text-purple-600">Plans</span>
           </h1>
         </div>
         <p className="text-slate-500 text-[10px] font-black uppercase tracking-[0.4em] ml-5">
-           Deploy Assets to Liquidity Pools • Platform Health: <span className="text-emerald-600 italic uppercase">Optimal</span>
+           Active Investment Plans • Platform Status: <span className="text-emerald-600 italic uppercase">Online</span>
         </p>
       </div>
 
@@ -251,7 +251,7 @@ export default function PlansPage() {
                   className={`w-full py-5 rounded-2xl font-black uppercase tracking-[0.2em] text-[11px] transition-all flex items-center justify-center gap-3 ${success ? 'bg-emerald-600' : 'bg-purple-600 hover:bg-purple-700 shadow-xl shadow-purple-600/20'} disabled:opacity-50 text-white`}
                 >
                   {loading ? <Loader2 className="animate-spin" size={18} /> : success ? <CheckCircle2 size={18} /> : <Zap size={18} />}
-                  {loading ? "Activating..." : success ? "Plan Active" : "Confirm Investment"}
+                  {loading ? "Processing..." : success ? "Plan Active" : "Confirm Investment"}
                 </button>
               </div>
             </div>

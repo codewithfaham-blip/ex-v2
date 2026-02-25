@@ -20,7 +20,7 @@ export default function Footer() {
       title: "Platform",
       links: [
         { name: "Investment Plans", href: "#plans" },
-        { name: "Global Nodes", href: "#features" },
+        { name: "Global Investors", href: "#features" },
         { name: "Platform Security", href: "#security" },
         { name: "System Status", href: "#status" },
       ]
@@ -29,7 +29,7 @@ export default function Footer() {
       title: "Company",
       links: [
         { name: "About Intelligence", href: "/about" },
-        { name: "Privacy Protocol", href: "/privacy" },
+        { name: "Privacy Policy", href: "/privacy" },
         { name: "Terms of Access", href: "/terms" },
         { name: "Compliance", href: "/compliance" },
       ]
@@ -56,7 +56,7 @@ export default function Footer() {
               <BrandLogo size="lg" />
             </Link>
             <p className="text-slate-500 text-sm max-w-sm leading-relaxed font-medium">
-              The world&apos;s most advanced high-yield asset intelligence node. Redefining digital earning through secure, decentralized infrastructure.
+              The world&apos;s most advanced investment platform. Redefining digital earning through secure and stable infrastructure.
             </p>
             <div className="flex items-center gap-4">
               <a href="#" className="w-10 h-10 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center text-slate-400 hover:text-purple-600 hover:border-purple-200 transition-all shadow-sm">
@@ -108,7 +108,7 @@ export default function Footer() {
           <div className="flex items-center gap-4 text-[10px] font-black uppercase tracking-widest text-slate-400">
             <div className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-50 rounded-lg border border-slate-100">
               <Shield size={12} className="text-purple-600" />
-              <span>SSL Secure Protocol</span>
+              <span>SSL Secure Connection</span>
             </div>
             <div className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-50 rounded-lg border border-slate-100">
               <Globe size={12} className="text-purple-600" />

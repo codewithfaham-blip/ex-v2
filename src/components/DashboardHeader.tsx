@@ -23,7 +23,7 @@ export default function DashboardHeader({ type = "user" }: { type?: "user" | "ad
      if (pathname.includes("/withdraw")) return "Withdraw money to your wallet";
      if (pathname.includes("/affiliates")) return "View your referral network";
      if (pathname.includes("/settings")) return "Manage your account";
-     return "System Operational • Status: Optimized";
+     return "Platform Online • Status: Active";
     };
 
   return (

@@ -41,7 +41,7 @@ export async function POST(req: Request) {
       ]);
       return NextResponse.json(withdrawal);
     } catch (error) {
-       return NextResponse.json({ error: "Extraction failed. Possible balance mismatch." }, { status: 400 });
+       return NextResponse.json({ error: "Withdrawal failed. Possible balance mismatch." }, { status: 400 });
     }
   } catch (error) {
     console.error("Withdrawal API error:", error);

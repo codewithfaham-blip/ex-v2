@@ -59,7 +59,7 @@ export default function LoginPage() {
           <Link href="/" className="inline-block group">
             <BrandLogo size="lg" className="flex-col !gap-5" />
           </Link>
-          <p className="text-slate-400 text-[10px] font-black uppercase tracking-[0.3em]">Accessing Secure Intelligence Node</p>
+          <p className="text-slate-400 text-[10px] font-black uppercase tracking-[0.3em]">Accessing Your Secure Account</p>
         </div>
 
         {/* Error Box */}

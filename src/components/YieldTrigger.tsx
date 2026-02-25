@@ -10,7 +10,7 @@ export default function YieldTrigger() {
   const router = useRouter();
 
   const handleCalculate = async () => {
-    if (!confirm("Initiate global yield distribution? This will calculate and credit daily profits to all active nodes currently in the system.")) return;
+    if (!confirm("Send daily profits? This will calculate and add daily profits to all active plans.")) return;
     
     setLoading(true);
     const promise = fetch("/api/admin/yields/calculate", {
@@ -18,14 +18,14 @@ export default function YieldTrigger() {
     });
 
     toast.promise(promise, {
-      loading: 'Executing neural yield distribution...',
+      loading: 'Processing daily profits...',
       success: async (res: Response) => {
         if (!res.ok) {
            const err = await res.json();
            throw new Error(err.error || "Distribution failed");
         }
         router.refresh();
-        return 'Global yields successfully synchronized across all active nodes';
+        return 'Daily profits added to all active plans.';
       },
       error: (err: any) => err.message || 'Processing execution failed',
     });

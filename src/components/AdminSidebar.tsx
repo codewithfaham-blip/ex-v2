@@ -36,7 +36,7 @@ export default function AdminSidebar() {
              className="flex items-center gap-2 px-3 py-1.5 bg-purple-600/10 text-purple-400 rounded-lg border border-purple-500/20 active:scale-90 transition-all shadow-[0_0_15px_rgba(147,51,234,0.3)]"
            >
               {isOpen ? <X size={16} /> : <Menu size={16} />}
-              <span className="text-[10px] font-black uppercase tracking-tighter text-purple-200">System</span>
+              <span className="text-[10px] font-black uppercase tracking-tighter text-purple-200">Menu</span>
            </button>
         </div>
       </div>
@@ -65,7 +65,7 @@ export default function AdminSidebar() {
 
         <nav className="mt-4 px-4 space-y-2 relative z-10">
           <div className="px-4 mb-4">
-             <p className="text-[8px] font-black text-slate-600 uppercase tracking-[0.4em] italic leading-none">Authority Control</p>
+             <p className="text-[8px] font-black text-slate-600 uppercase tracking-[0.4em] italic leading-none">Management</p>
           </div>
           {menuItems.map((item) => {
             const isActive = pathname === item.href;
@@ -93,7 +93,7 @@ export default function AdminSidebar() {
         <div className="mt-10 px-8 relative z-10">
             <div className="p-5 rounded-2xl bg-[#0f1115] border border-white/5 shadow-inner">
                <div className="flex items-center justify-between mb-4">
-                  <span className="text-[8px] font-black text-slate-500 uppercase tracking-widest">Global Status</span>
+                  <span className="text-[8px] font-black text-slate-500 uppercase tracking-widest">System Status</span>
                   <div className="flex items-center gap-1.5">
                      <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_8px_#10b981]" />
                      <span className="text-[7px] font-bold text-emerald-500 uppercase">Live</span>
@@ -113,7 +113,7 @@ export default function AdminSidebar() {
             onClick={() => signOut({ callbackUrl: "/login" })}
             className="flex items-center justify-center gap-3 w-full px-4 py-4 rounded-2xl text-slate-400 bg-white/5 border border-white/5 hover:bg-red-500/10 hover:text-red-500 hover:border-red-500/20 transition-all font-black text-[11px] uppercase tracking-widest"
           >
-            <LogOut size={16} /> Decommission Session
+            <LogOut size={16} /> Logout
           </button>
         </div>
       </aside>

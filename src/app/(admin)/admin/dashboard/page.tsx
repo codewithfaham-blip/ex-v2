@@ -97,7 +97,7 @@ export default async function AdminDashboard() {
           <div className="flex items-center gap-3 mb-2">
             <div className="bg-blue-600 h-8 w-1.5 rounded-full shadow-[0_0_15px_rgba(37,99,235,0.5)]" />
             <h1 className="text-3xl font-black tracking-tighter uppercase italic leading-none">
-              Admin <span className="text-purple-600">Dashboard</span>
+              Control <span className="text-purple-600">Panel</span>
             </h1>
           </div>
           <p className="text-slate-500 text-[9px] font-black uppercase tracking-[0.4em] ml-5">
@@ -143,7 +143,7 @@ export default async function AdminDashboard() {
                   <div className="p-2 bg-purple-600/10 rounded-lg border border-purple-600/20">
                     <Cpu size={18} className="text-purple-500 animate-pulse" />
                   </div>
-                  <h2 className="text-sm font-black uppercase tracking-[0.2em] italic">Platform Activity Overview</h2>
+                  <h2 className="text-sm font-black uppercase tracking-[0.2em] italic">System Activity</h2>
                 </div>
                  <div className="flex items-center gap-4">
                     <div className="flex items-center gap-2">
@@ -214,7 +214,7 @@ export default async function AdminDashboard() {
            </div>
 
             <button className="mt-6 w-full py-4 rounded-xl bg-slate-50 border border-slate-200 text-[8px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-900 hover:border-slate-300 transition-all">
-              Initialize Data Export
+              Export Data
            </button>
         </div>
       </div>
@@ -229,7 +229,7 @@ export default async function AdminDashboard() {
                <h2 className="text-lg font-black uppercase italic tracking-tighter text-slate-900">User <span className="text-purple-600">Management</span></h2>
             </div>
             <div className="hidden md:flex gap-2">
-               <input type="text" placeholder="Search Node ID..." className="bg-slate-50 border border-slate-200 px-4 py-2 rounded-lg text-[9px] font-black uppercase tracking-widest focus:outline-none focus:border-purple-600 transition-all text-slate-900" />
+               <input type="text" placeholder="Search User..." className="bg-slate-50 border border-slate-200 px-4 py-2 rounded-lg text-[9px] font-black uppercase tracking-widest focus:outline-none focus:border-purple-600 transition-all text-slate-900" />
             </div>
         </div>
 

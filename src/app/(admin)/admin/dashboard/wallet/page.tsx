@@ -79,8 +79,8 @@ export default function AdminWalletTerminal() {
   return (
     <div className="p-4 md:p-10 pt-24 lg:pt-10 max-w-[1200px] mx-auto text-white">
       <div className="mb-10">
-        <h1 className="text-3xl font-black uppercase tracking-tighter italic">Wallet <span className="text-blue-600 text-5xl">Terminal</span></h1>
-        <p className="text-zinc-500 text-[10px] font-bold uppercase tracking-[0.3em] mt-2">Manage inflow/outflow gateway addresses</p>
+        <h1 className="text-3xl font-black uppercase tracking-tighter italic">Wallet <span className="text-blue-600 text-5xl">Settings</span></h1>
+        <p className="text-zinc-500 text-[10px] font-bold uppercase tracking-[0.3em] mt-2">Manage deposit and withdrawal addresses</p>
       </div>
 
       {/* STATS ROW */}
@@ -88,7 +88,7 @@ export default function AdminWalletTerminal() {
         <div className="bg-zinc-900/40 border border-zinc-800/50 p-6 rounded-[2rem] relative overflow-hidden">
           <TrendingUp className="absolute -right-2 -bottom-2 text-emerald-500/5 w-24 h-24" />
           <p className="text-zinc-500 text-[9px] font-black uppercase tracking-widest mb-2 flex items-center gap-2">
-            <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full" /> Total Inflow (BEP20)
+            <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full" /> Total Deposits (BEP20)
           </p>
           <h3 className="text-2xl font-black italic tracking-tighter">Rs. {stats.totalDeposited.toLocaleString()}</h3>
         </div>
@@ -96,7 +96,7 @@ export default function AdminWalletTerminal() {
         <div className="bg-zinc-900/40 border border-zinc-800/50 p-6 rounded-[2rem] relative overflow-hidden">
           <ArrowUpRight className="absolute -right-2 -bottom-2 text-blue-500/5 w-24 h-24" />
           <p className="text-zinc-500 text-[9px] font-black uppercase tracking-widest mb-2 flex items-center gap-2">
-            <span className="w-1.5 h-1.5 bg-blue-500 rounded-full" /> Pending Verification
+            <span className="w-1.5 h-1.5 bg-blue-500 rounded-full" /> Pending Deposits
           </p>
           <h3 className="text-2xl font-black italic tracking-tighter">{stats.pendingPayments} txn</h3>
         </div>
@@ -104,7 +104,7 @@ export default function AdminWalletTerminal() {
         <div className="bg-zinc-900/40 border border-zinc-800/50 p-6 rounded-[2rem] relative overflow-hidden border-l-4 border-l-amber-500">
           <ArrowDownLeft className="absolute -right-2 -bottom-2 text-amber-500/5 w-24 h-24" />
           <p className="text-zinc-500 text-[9px] font-black uppercase tracking-widest mb-2 flex items-center gap-2">
-            <span className="w-1.5 h-1.5 bg-amber-500 rounded-full" /> Total Outflow
+            <span className="w-1.5 h-1.5 bg-amber-500 rounded-full" /> Total Withdrawals
           </p>
           <h3 className="text-2xl font-black italic tracking-tighter">Rs. {stats.totalWithdrawn.toLocaleString()}</h3>
         </div>
@@ -119,9 +119,9 @@ export default function AdminWalletTerminal() {
              </div>
              <div>
                 <h2 className="text-sm font-black uppercase tracking-widest italic text-white flex items-center gap-2">
-                  USDT Deployment (BEP20)
+                  USDT Deposit Address (BEP20)
                 </h2>
-                <p className="text-[8px] text-zinc-500 uppercase font-bold tracking-widest">Main liquidity bridge</p>
+                <p className="text-[8px] text-zinc-500 uppercase font-bold tracking-widest">Used for USDT deposits</p>
              </div>
           </div>
 
@@ -145,7 +145,7 @@ export default function AdminWalletTerminal() {
                <ShieldCheck className="text-blue-600 shrink-0" size={14} />
                <p className="text-[9px] text-zinc-400 font-bold uppercase leading-relaxed">
                   Ensure this address belongs to the Binance Smart Chain (BSC). 
-                  Mismatching networks will result in permanent capital deletion.
+                  Mismatching networks will result in permanent loss of funds.
                </p>
             </div>
           </div>
@@ -159,9 +159,9 @@ export default function AdminWalletTerminal() {
              </div>
              <div>
                 <h2 className="text-sm font-black uppercase tracking-widest italic text-blue-400 flex items-center gap-2">
-                  TON Gateway (Mainnet)
+                  TON Deposit Address (Mainnet)
                 </h2>
-                <p className="text-[8px] text-zinc-500 uppercase font-bold tracking-widest text-blue-400/50">Telegram Mini App protocol</p>
+                <p className="text-[8px] text-zinc-500 uppercase font-bold tracking-widest text-blue-400/50">Used for TON deposits</p>
              </div>
           </div>
 
@@ -183,7 +183,7 @@ export default function AdminWalletTerminal() {
             </div>
             <div className="bg-zinc-950/50 p-5 rounded-2xl border border-zinc-900 flex justify-between items-center group cursor-pointer hover:border-blue-500/30 transition-all">
                <div>
-                  <p className="text-[9px] font-black uppercase text-zinc-400">Gateway Status</p>
+                  <p className="text-[9px] font-black uppercase text-zinc-400">Payment Status</p>
                   <p className="text-[10px] font-black uppercase text-emerald-500 italic">Operational</p>
                </div>
                <div className="w-12 h-6 bg-emerald-500/20 rounded-full flex items-center justify-center border border-emerald-500/30">
@@ -201,13 +201,13 @@ export default function AdminWalletTerminal() {
           className={`w-full py-6 rounded-2xl font-black uppercase tracking-[0.4em] text-xs transition-all shadow-2xl flex items-center justify-center gap-3 active:scale-[0.98] ${success ? 'bg-emerald-600 shadow-emerald-500/20' : 'bg-blue-600 hover:bg-blue-700 shadow-blue-600/20'} disabled:opacity-50`}
         >
           {saving ? <Loader2 className="animate-spin" size={20} /> : success ? <CheckCircle2 size={20} /> : <Save size={20} />}
-          {saving ? "Updating Blockchain Nodes..." : success ? "Wallet Synchronized" : "Synchronize Wallets"}
+          {saving ? "Saving Status..." : success ? "Settings Saved" : "Save Wallet Settings"}
         </button>
       </div>
 
       <div className="mt-12 p-8 bg-zinc-950/50 rounded-[2rem] border border-zinc-900 italic">
          <p className="text-[9px] text-zinc-600 font-bold uppercase tracking-widest text-center leading-loose">
-            Terminal Access Secured via SHA-256 Encryption • Active Session: Admin Protocol • Do not share master keys
+            Changes are saved securely through encrypted protocols. Do not share admin credentials.
          </p>
       </div>
     </div>

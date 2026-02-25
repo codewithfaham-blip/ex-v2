@@ -40,7 +40,7 @@ export default function AdminPlans() {
       }
     } catch (err) {
       console.error("Failed to fetch plans:", err);
-      toast.error("Failed to sync plans with network");
+      toast.error("Failed to load plans");
     } finally {
       setLoading(false);
     }
@@ -82,13 +82,13 @@ export default function AdminPlans() {
     const promise = fetch(`/api/admin/plans/${id}`, { method: "DELETE" });
     
     toast.promise(promise, {
-      loading: 'Executing decommissioning protocol...',
+      loading: 'Deleting plan...',
       success: (res) => {
         if (!res.ok) throw new Error("Deletion failed");
         fetchPlans();
-        return 'Protocol successfully removed from network';
+        return 'Plan deleted successfully';
       },
-      error: 'Decommissioning failed. Check logs.',
+      error: 'Delete failed. Check logs.',
     });
 
     try {
@@ -124,7 +124,7 @@ export default function AdminPlans() {
 
       if (res.ok) {
         setSuccess(true);
-        toast.success(isEditing ? 'Protocol updated successfully' : 'New protocol deployed');
+        toast.success(isEditing ? 'Plan updated' : 'New plan created');
         setTimeout(() => {
           setIsModalOpen(false);
           setSuccess(false);
