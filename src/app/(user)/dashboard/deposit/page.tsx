@@ -206,100 +206,194 @@ export default function DepositPage() {
                 <p className="font-bold uppercase text-[8px] tracking-[0.3em] text-zinc-500 mb-1">{m.type}</p>
                 <h3 className="text-sm font-black italic tracking-tighter">{m.name}</h3>
               </div>
+
+              {/* Mobile-only Deployment Console - Appears immediately below the selected method on small screens */}
+              {selectedMethod?.id === m.id && (
+                <div className="col-span-full space-y-8 mt-4 lg:hidden w-full">
+                  <div className="bg-white border border-purple-600/30 p-8 rounded-[2.5rem] shadow-2xl relative overflow-hidden">
+                    <div className="absolute -top-10 -right-10 opacity-[0.03] scale-150 rotate-12 pointer-events-none">
+                      <selectedMethod.logo.type {...selectedMethod.logo.props} className="w-64 h-64" />
+                    </div>
+
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 relative z-10">
+                      {/* Account Intel */}
+                      <div className="space-y-6">
+                        <div>
+                          <h4 className="text-[10px] font-black uppercase text-slate-400 tracking-[0.3em] mb-4 italic">Payment Details</h4>
+                          <div className="bg-slate-50 border border-slate-100 p-6 rounded-2xl flex justify-between items-center group/addr">
+                            <div>
+                              <p className="text-xl font-mono text-purple-600 break-all leading-tight">{selectedMethod.account || selectedMethod.address}</p>
+                              {selectedMethod.holder && <p className="text-[10px] font-black uppercase text-slate-500 mt-2">Account Name: {selectedMethod.holder}</p>}
+                            </div>
+                            <button 
+                              onClick={() => handleCopy(selectedMethod.account || selectedMethod.address)}
+                              className="p-3 bg-white border border-slate-200 rounded-xl hover:bg-purple-600 hover:text-white transition-all active:scale-90 shadow-sm"
+                            >
+                              <Copy size={18} />
+                            </button>
+                          </div>
+                        </div>
+                        
+                        <div className="p-4 bg-purple-600/5 border border-purple-600/10 rounded-2xl">
+                          <p className="text-[9px] font-bold text-purple-600 uppercase tracking-widest leading-relaxed">
+                            Transfer the exact amount to the account shown above, then upload your receipt below to verify your deposit.
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Deployment Form */}
+                      <form onSubmit={handleSubmit} className="space-y-6">
+                        <div className="space-y-2">
+                          <label className="text-[10px] font-black uppercase text-slate-400 ml-1">Amount to Deposit (Rs.)</label>
+                          <input 
+                            type="number" 
+                            placeholder="0.00" 
+                            className="w-full bg-slate-50 border border-slate-100 p-5 rounded-2xl outline-none focus:border-purple-600 text-3xl font-black text-slate-900 transition-all placeholder:text-slate-200"
+                            onChange={(e) => setAmount(e.target.value)} 
+                            value={amount}
+                            required
+                          />
+                        </div>
+
+                        <div className="space-y-2">
+                          <label className="text-[10px] font-black uppercase text-slate-400 ml-1">Digital Receipt / Cash Slip</label>
+                          <input 
+                            type="file" 
+                            accept="image/*"
+                            onChange={handleFileChange}
+                            className="hidden"
+                            id="slip-upload"
+                            required
+                          />
+                          <label 
+                            htmlFor="slip-upload"
+                            className="w-full bg-slate-50 border border-slate-100 p-5 rounded-2xl flex items-center justify-between cursor-pointer hover:border-purple-600/50 transition-all group"
+                          >
+                            {slipImage ? (
+                              <div className="flex items-center gap-3">
+                                <CheckCircle2 size={20} className="text-emerald-500" />
+                                <span className="text-[10px] font-black uppercase text-slate-600">Proof Attached</span>
+                              </div>
+                            ) : (
+                              <div className="flex items-center gap-3">
+                                <Zap size={20} className="text-slate-300 group-hover:text-purple-600 transition-colors" />
+                                <span className="text-[10px] font-black uppercase text-slate-400 group-hover:text-slate-600">Browse Slip</span>
+                              </div>
+                            )}
+                          
+                            {slipImage && (
+                              <img src={slipImage} alt="Preview" className="w-10 h-10 object-cover rounded-lg border border-zinc-800 shadow-xl" />
+                            )}
+                          </label>
+                        </div>
+
+                        <button 
+                          disabled={loading}
+                          className="w-full bg-purple-600 py-5 rounded-2xl font-black uppercase tracking-[0.2em] flex items-center justify-center gap-3 text-white hover:bg-purple-700 transition shadow-2xl shadow-purple-600/40 active:scale-[0.98] text-[11px]"
+                        >
+                          {loading ? "Processing..." : <><Zap size={18} /> Deposit Now</>}
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           ))
         )}
       </div>
 
-      {/* 2. Deployment Console */}
+      {/* Laptop-only Deployment Console - Appears at the bottom for large screens */}
       {selectedMethod && (
-        <div className="bg-white border border-purple-600/30 p-8 rounded-[2.5rem] space-y-8 animate-in fade-in slide-in-from-bottom-4 shadow-2xl relative overflow-hidden">
-           <div className="absolute -top-10 -right-10 opacity-[0.03] scale-150 rotate-12 pointer-events-none">
+        <div className="hidden lg:block space-y-8 animate-in fade-in slide-in-from-bottom-4">
+          <div className="bg-white border border-purple-600/30 p-8 rounded-[2.5rem] space-y-8 shadow-2xl relative overflow-hidden">
+            <div className="absolute -top-10 -right-10 opacity-[0.03] scale-150 rotate-12 pointer-events-none">
               <selectedMethod.logo.type {...selectedMethod.logo.props} className="w-64 h-64" />
-           </div>
+            </div>
 
-           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 relative z-10">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 relative z-10">
               {/* Account Intel */}
-               <div className="space-y-6">
-                  <div>
-                     <h4 className="text-[10px] font-black uppercase text-slate-400 tracking-[0.3em] mb-4 italic">Payment Details</h4>
-                     <div className="bg-slate-50 border border-slate-100 p-6 rounded-2xl flex justify-between items-center group/addr">
-                        <div>
-                           <p className="text-xl font-mono text-purple-600 break-all leading-tight">{selectedMethod.account || selectedMethod.address}</p>
-                           {selectedMethod.holder && <p className="text-[10px] font-black uppercase text-slate-500 mt-2">Account Name: {selectedMethod.holder}</p>}
-                        </div>
-                        <button 
-                          onClick={() => handleCopy(selectedMethod.account || selectedMethod.address)}
-                          className="p-3 bg-white border border-slate-200 rounded-xl hover:bg-purple-600 hover:text-white transition-all active:scale-90 shadow-sm"
-                        >
-                          <Copy size={18} />
-                        </button>
-                     </div>
+              <div className="space-y-6">
+                <div>
+                  <h4 className="text-[10px] font-black uppercase text-slate-400 tracking-[0.3em] mb-4 italic">Payment Details</h4>
+                  <div className="bg-slate-50 border border-slate-100 p-6 rounded-2xl flex justify-between items-center group/addr">
+                    <div>
+                      <p className="text-xl font-mono text-purple-600 break-all leading-tight">{selectedMethod.account || selectedMethod.address}</p>
+                      {selectedMethod.holder && <p className="text-[10px] font-black uppercase text-slate-500 mt-2">Account Name: {selectedMethod.holder}</p>}
+                    </div>
+                    <button 
+                      onClick={() => handleCopy(selectedMethod.account || selectedMethod.address)}
+                      className="p-3 bg-white border border-slate-200 rounded-xl hover:bg-purple-600 hover:text-white transition-all active:scale-90 shadow-sm"
+                    >
+                      <Copy size={18} />
+                    </button>
                   </div>
-                  
-                  <div className="p-4 bg-purple-600/5 border border-purple-600/10 rounded-2xl">
-                     <p className="text-[9px] font-bold text-purple-600 uppercase tracking-widest leading-relaxed">
-                        Transfer the exact amount to the account shown above, then upload your receipt below to verify your deposit.
-                     </p>
-                  </div>
-               </div>
+                </div>
+                
+                <div className="p-4 bg-purple-600/5 border border-purple-600/10 rounded-2xl">
+                  <p className="text-[9px] font-bold text-purple-600 uppercase tracking-widest leading-relaxed">
+                    Transfer the exact amount to the account shown above, then upload your receipt below to verify your deposit.
+                  </p>
+                </div>
+              </div>
 
-               {/* Deployment Form */}
-               <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="space-y-2">
-                     <label className="text-[10px] font-black uppercase text-slate-400 ml-1">Amount to Deposit (Rs.)</label>
-                     <input 
-                       type="number" 
-                       placeholder="0.00" 
-                       className="w-full bg-slate-50 border border-slate-100 p-5 rounded-2xl outline-none focus:border-purple-600 text-3xl font-black text-slate-900 transition-all placeholder:text-slate-200"
-                       onChange={(e) => setAmount(e.target.value)} 
-                       value={amount}
-                       required
-                     />
-                  </div>
+              {/* Deployment Form */}
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black uppercase text-slate-400 ml-1">Amount to Deposit (Rs.)</label>
+                  <input 
+                    type="number" 
+                    placeholder="0.00" 
+                    className="w-full bg-slate-50 border border-slate-100 p-5 rounded-2xl outline-none focus:border-purple-600 text-3xl font-black text-slate-900 transition-all placeholder:text-slate-200"
+                    onChange={(e) => setAmount(e.target.value)} 
+                    value={amount}
+                    required
+                  />
+                </div>
 
-                  <div className="space-y-2">
-                     <label className="text-[10px] font-black uppercase text-slate-400 ml-1">Digital Receipt / Cash Slip</label>
-                     <input 
-                       type="file" 
-                       accept="image/*"
-                       onChange={handleFileChange}
-                       className="hidden"
-                       id="slip-upload"
-                       required
-                     />
-                     <label 
-                       htmlFor="slip-upload"
-                       className="w-full bg-slate-50 border border-slate-100 p-5 rounded-2xl flex items-center justify-between cursor-pointer hover:border-purple-600/50 transition-all group"
-                     >
-                       {slipImage ? (
-                         <div className="flex items-center gap-3">
-                           <CheckCircle2 size={20} className="text-emerald-500" />
-                           <span className="text-[10px] font-black uppercase text-slate-600">Proof Attached</span>
-                         </div>
-                       ) : (
-                         <div className="flex items-center gap-3">
-                           <Zap size={20} className="text-slate-300 group-hover:text-purple-600 transition-colors" />
-                           <span className="text-[10px] font-black uppercase text-slate-400 group-hover:text-slate-600">Browse Slip</span>
-                         </div>
-                       )}
-                      
-                      {slipImage && (
-                        <img src={slipImage} alt="Preview" className="w-10 h-10 object-cover rounded-lg border border-zinc-800 shadow-xl" />
-                      )}
-                    </label>
-                 </div>
-
-                  <button 
-                    disabled={loading}
-                    className="w-full bg-purple-600 py-5 rounded-2xl font-black uppercase tracking-[0.2em] flex items-center justify-center gap-3 text-white hover:bg-purple-700 transition shadow-2xl shadow-purple-600/40 active:scale-[0.98] text-[11px]"
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black uppercase text-slate-400 ml-1">Digital Receipt / Cash Slip</label>
+                  <input 
+                    type="file" 
+                    accept="image/*"
+                    onChange={handleFileChange}
+                    className="hidden"
+                    id="slip-upload"
+                    required
+                  />
+                  <label 
+                    htmlFor="slip-upload"
+                    className="w-full bg-slate-50 border border-slate-100 p-5 rounded-2xl flex items-center justify-between cursor-pointer hover:border-purple-600/50 transition-all group"
                   >
-                    {loading ? "Processing..." : <><Zap size={18} /> Deposit Now</>}
-                  </button>
+                    {slipImage ? (
+                      <div className="flex items-center gap-3">
+                        <CheckCircle2 size={20} className="text-emerald-500" />
+                        <span className="text-[10px] font-black uppercase text-slate-600">Proof Attached</span>
+                      </div>
+                    ) : (
+                      <div className="flex items-center gap-3">
+                        <Zap size={20} className="text-slate-300 group-hover:text-purple-600 transition-colors" />
+                        <span className="text-[10px] font-black uppercase text-slate-400 group-hover:text-slate-600">Browse Slip</span>
+                      </div>
+                    )}
+                  
+                    {slipImage && (
+                      <img src={slipImage} alt="Preview" className="w-10 h-10 object-cover rounded-lg border border-zinc-800 shadow-xl" />
+                    )}
+                  </label>
+                </div>
+
+                <button 
+                  disabled={loading}
+                  className="w-full bg-purple-600 py-5 rounded-2xl font-black uppercase tracking-[0.2em] flex items-center justify-center gap-3 text-white hover:bg-purple-700 transition shadow-2xl shadow-purple-600/40 active:scale-[0.98] text-[11px]"
+                >
+                  {loading ? "Processing..." : <><Zap size={18} /> Deposit Now</>}
+                </button>
               </form>
-           </div>
+            </div>
+          </div>
         </div>
       )}
     </div>
   );
-}
+} 

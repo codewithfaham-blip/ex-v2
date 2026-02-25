@@ -30,16 +30,16 @@ export default async function UserDashboard() {
       
       {/* 1. Header Section - Mobile Only (Integrated with Premium Feel) */}
       <div className="mb-10 lg:hidden flex flex-col gap-6">
-        <div className="relative p-8 rounded-[2rem] bg-slate-900 overflow-hidden shadow-2xl">
+        <div className="relative p-8 rounded-[2rem] bg-purple-900 overflow-hidden shadow-2xl">
           <div className="absolute top-0 right-0 w-32 h-32 bg-purple-600/20 blur-3xl rounded-full" />
           <div className="relative z-10">
             <div className="flex items-center gap-3 mb-3">
               <div className="bg-purple-600 h-10 w-1.5 rounded-full shadow-[0_0_20px_rgba(147,51,234,0.6)]" />
-              <h1 className="text-3xl font-black uppercase tracking-tighter italic text-white leading-none">
+              <h1 className="text-3xl font-black uppercase tracking-tighter italic text-purple-100 leading-none">
                 Account <span className="text-purple-500">Overview</span>
               </h1>
             </div>
-            <p className="text-slate-400 text-[10px] font-black uppercase tracking-[0.4em] ml-5 flex items-center gap-2">
+            <p className="text-purple-300 text-[10px] font-black uppercase tracking-[0.4em] ml-5 flex items-center gap-2">
               <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_8px_#10b981]" />
               {user.email?.split('@')[0]} • Online
             </p>
@@ -51,21 +51,21 @@ export default async function UserDashboard() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-12">
         
         {/* Main Balance Terminal */}
-        <div className="bg-slate-900 border border-slate-800 p-5 sm:p-8 rounded-[2rem] md:rounded-[2.5rem] relative overflow-hidden group shadow-2xl col-span-1 md:col-span-2">
+        <div className="bg-purple-900 border border-purple-800 p-5 sm:p-8 rounded-[2rem] md:rounded-[2.5rem] relative overflow-hidden group shadow-2xl col-span-1 md:col-span-2">
           <div className="absolute -top-24 -right-24 w-80 h-80 bg-purple-600/20 rounded-full blur-[100px] group-hover:bg-purple-600/30 transition-all duration-700" />
           <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-purple-600 to-transparent opacity-30" />
           
           <div className="relative z-10">
             <div className="flex items-center justify-between mb-6 md:mb-8">
-              <p className="text-slate-400 text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] md:tracking-[0.3em] italic">Total Balance</p>
+              <p className="text-purple-300 text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] md:tracking-[0.3em] italic">Total Balance</p>
               <div className="p-2 md:p-3 bg-purple-500 bg-opacity-20 rounded-xl md:rounded-2xl border border-purple-500/30 text-purple-400 shadow-[0_0_20px_rgba(147,51,234,0.2)]">
                 <Wallet size={20} className="md:size-6" />
               </div>
             </div>
             
             <div className="flex flex-col gap-1">
-              <span className="text-[9px] md:text-[10px] font-bold text-slate-500 uppercase tracking-widest text-center sm:text-left">Available Balance</span>
-              <h3 className="text-3xl sm:text-5xl md:text-7xl font-black text-white tracking-tighter flex items-center justify-center sm:justify-start gap-2 md:gap-3">
+              <span className="text-[9px] md:text-[10px] font-bold text-purple-400 uppercase tracking-widest text-center sm:text-left">Available Balance</span>
+              <h3 className="text-3xl sm:text-5xl md:text-7xl font-black text-purple-100 tracking-tighter flex items-center justify-center sm:justify-start gap-2 md:gap-3">
                 <span className="text-purple-500 italic opacity-80 text-xl sm:text-3xl md:text-4xl">Rs.</span>
                 {user.balance.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </h3>
@@ -148,7 +148,7 @@ export default async function UserDashboard() {
         {/* Recent Ledger */}
         <div className="space-y-6">
           <div className="flex items-center justify-between px-2">
-            <h2 className="text-xl font-black uppercase italic tracking-tighter text-slate-900">
+            <h2 className="text-xl font-black uppercase italic tracking-tighter text-purple-950">
               Activity <span className="text-purple-600">History</span>
             </h2>
             <Link href="/dashboard/deposit" className="text-[10px] font-black text-purple-600 bg-purple-600/10 px-4 py-2 rounded-full uppercase tracking-widest hover:bg-purple-600 hover:text-white transition-all italic">View History</Link>
