@@ -163,6 +163,3 @@ export async function DELETE(
     }, { status: 500 });
   }
 }
-    }, { status: 500 });
-  }
-}
