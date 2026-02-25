@@ -1,7 +1,8 @@
 "use client";
-import { Layers, Edit3, Plus, Power, Trash2, X, Loader2, CheckCircle2, Save, Zap, Trophy, Crown } from "lucide-react";
-import { useState, useEffect } from "react";
+import { Layers, Edit3, Plus, Power, Trash2, X, Loader2, CheckCircle2, Save, Zap, Trophy, Crown, Database } from "lucide-react";
+import { useState, useEffect, useCallback } from "react";
 import { toast } from "sonner";
+import { usePlanSync } from "@/hooks/usePlanSync";
 
 const icons = ["Zap", "Trophy", "Crown"];
 
@@ -12,6 +13,7 @@ export default function AdminPlans() {
   const [editingPlan, setEditingPlan] = useState<any>(null);
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [syncStatus, setSyncStatus] = useState<string>("Initializing...");
 
   // Form State
   const [formData, setFormData] = useState({
@@ -28,6 +30,26 @@ export default function AdminPlans() {
   useEffect(() => {
     fetchPlans();
   }, []);
+
+  // Handle real-time plan updates from other admins
+  const handlePlanChange = useCallback((event: any) => {
+    if (event.type === 'CONNECTED') {
+      setSyncStatus("Live");
+      console.log("✅ Connected to real-time plan updates");
+      return;
+    }
+
+    if (event.type === 'UPDATE' || event.type === 'CREATE' || event.type === 'DELETE') {
+      console.log("🔄 Plan change detected from admin:", event.adminEmail);
+      setSyncStatus("Syncing...");
+      fetchPlans();
+      toast.info(`Plan ${event.type.toLowerCase()} by ${event.adminEmail}`);
+      setTimeout(() => setSyncStatus("Live"), 1500);
+    }
+  }, []);
+
+  // Use plan sync hook
+  usePlanSync(handlePlanChange, true);
 
   const fetchPlans = async () => {
     try {
@@ -160,7 +182,7 @@ export default function AdminPlans() {
              Investment <span className="text-purple-600">Plans</span>
           </h1>
           <p className="text-slate-500 text-[10px] font-bold uppercase tracking-[0.3em] mt-2 ml-1">
-            Configure ROI rates and participation limits
+            Configure ROI rates and participation limits • Sync Status: <span className={`italic ${syncStatus === 'Live' ? 'text-emerald-600' : 'text-yellow-600'}`}>{syncStatus}</span>
           </p>
         </div>
         <button 
