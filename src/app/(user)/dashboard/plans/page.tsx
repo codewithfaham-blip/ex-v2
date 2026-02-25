@@ -107,7 +107,7 @@ export default function PlansPage() {
       <div className="space-y-6">
         <div className="flex items-center gap-3">
            <Cpu size={16} className="text-purple-600 animate-pulse" />
-           <h2 className="text-xs font-black uppercase tracking-[0.3em] text-slate-400 italic">Deployment Status: Live Nodes</h2>
+           <h2 className="text-xs font-black uppercase tracking-[0.3em] text-slate-400 italic">My Active Plans</h2>
         </div>
 
         {fetchingActive ? (
@@ -129,11 +129,11 @@ export default function PlansPage() {
                  </div>
                  <div className="flex items-center justify-between mt-auto pt-4 border-t border-slate-100">
                     <div className="flex flex-col">
-                       <span className="text-[8px] font-black text-slate-400 uppercase">Deployed On</span>
+                       <span className="text-[8px] font-black text-slate-400 uppercase">Started on</span>
                        <span className="text-[10px] font-bold text-slate-600">{new Date(node.createdAt).toLocaleDateString()}</span>
                     </div>
                     <div className="bg-emerald-50 px-3 py-1 rounded-full border border-emerald-100">
-                       <span className="text-[9px] font-black text-emerald-600 uppercase tracking-tighter">Harvesting...</span>
+                       <span className="text-[9px] font-black text-emerald-600 uppercase tracking-tighter">Active...</span>
                     </div>
                  </div>
               </div>
@@ -141,7 +141,7 @@ export default function PlansPage() {
           </div>
         ) : (
           <div className="bg-slate-50 border border-slate-200 p-10 rounded-[2.5rem] text-center">
-             <p className="text-slate-400 text-[10px] font-black uppercase tracking-[0.2em] italic">No active nodes detected. Deploy assets below to initiate yield.</p>
+             <p className="text-slate-400 text-[10px] font-black uppercase tracking-[0.2em] italic">No active plans found. Start a plan below to earn profit.</p>
           </div>
         )}
       </div>
@@ -150,7 +150,7 @@ export default function PlansPage() {
       <div className="space-y-6">
         <div className="flex items-center gap-3">
            <Zap size={16} className="text-yellow-500" />
-           <h2 className="text-xs font-black uppercase tracking-[0.3em] text-zinc-500 italic">Available Liquidity Pools</h2>
+           <h2 className="text-xs font-black uppercase tracking-[0.3em] text-zinc-500 italic">Choose a Plan</h2>
         </div>
         {fetchingPlans ? (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -189,7 +189,7 @@ export default function PlansPage() {
                   onClick={() => setSelectedPlan(plan)}
                   className={`w-full py-4 rounded-2xl font-black text-[11px] uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-2 text-white ${plan.popular ? 'bg-purple-600 hover:bg-purple-700 shadow-xl shadow-purple-600/20' : 'bg-slate-800 hover:bg-slate-900'}`}
                 >
-                  Initiate Node <ArrowRight size={14} />
+                  Start Investment <ArrowRight size={14} />
                 </button>
               </div>
             ))}
@@ -251,7 +251,7 @@ export default function PlansPage() {
                   className={`w-full py-5 rounded-2xl font-black uppercase tracking-[0.2em] text-[11px] transition-all flex items-center justify-center gap-3 ${success ? 'bg-emerald-600' : 'bg-purple-600 hover:bg-purple-700 shadow-xl shadow-purple-600/20'} disabled:opacity-50 text-white`}
                 >
                   {loading ? <Loader2 className="animate-spin" size={18} /> : success ? <CheckCircle2 size={18} /> : <Zap size={18} />}
-                  {loading ? "Activating..." : success ? "Node Active" : "Confirm Investment"}
+                  {loading ? "Activating..." : success ? "Plan Active" : "Confirm Investment"}
                 </button>
               </div>
             </div>

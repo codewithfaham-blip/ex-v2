@@ -31,7 +31,7 @@ export default async function ReferralsPage() {
         <div className="flex items-center gap-3 mb-2">
           <div className="bg-purple-600 h-8 w-1.5 rounded-full shadow-[0_0_15px_rgba(147,51,234,0.5)]" />
           <h1 className="text-3xl font-black uppercase tracking-tighter italic text-slate-900 leading-none">
-            Referral <span className="text-purple-600">Terminal</span>
+            Referral <span className="text-purple-600">Center</span>
           </h1>
         </div>
         <p className="text-slate-500 text-[10px] font-black uppercase tracking-[0.4em] ml-5">
@@ -57,7 +57,7 @@ export default async function ReferralsPage() {
                <div className="text-center sm:text-left">
                   <div className="flex items-center justify-center sm:justify-start gap-3 mb-1">
                     <span className="px-2 py-0.5 bg-purple-600 text-white text-[9px] font-black uppercase tracking-tighter rounded-md">Tier 1</span>
-                    <h2 className="text-xl md:text-3xl font-black text-white uppercase italic tracking-tighter">Private Node Link</h2>
+                    <h2 className="text-xl md:text-3xl font-black text-white uppercase italic tracking-tighter">Your Referral Link</h2>
                   </div>
                   <p className="text-slate-400 text-[10px] md:text-xs font-medium uppercase tracking-widest flex items-center justify-center sm:justify-start gap-2">
                     <Activity size={12} className="text-purple-500" />
@@ -87,14 +87,14 @@ export default async function ReferralsPage() {
                     <TrendingUp size={28} />
                  </div>
                  <div>
-                    <h3 className="text-xl font-black uppercase italic tracking-tighter text-white leading-tight">Expansion<br/><span className="text-purple-500">Yield</span></h3>
+                    <h3 className="text-xl font-black uppercase italic tracking-tighter text-white leading-tight">Referral<br/><span className="text-purple-500">Stats</span></h3>
                  </div>
               </div>
               
               <div className="space-y-6">
                 <div>
-                   <p className="text-slate-500 text-[9px] font-black uppercase tracking-widest mb-1">Total Active Nodes</p>
-                   <h4 className="text-3xl font-black text-white italic">{user.referredUsers?.length || 0} Partners</h4>
+                   <p className="text-slate-500 text-[9px] font-black uppercase tracking-widest mb-1">Total Active Referrals</p>
+                   <h4 className="text-3xl font-black text-white italic">{user.referredUsers?.length || 0} Users</h4>
                 </div>
                 
                 <div className="p-5 bg-white/5 rounded-3xl border border-white/10 backdrop-blur-sm">
@@ -115,11 +115,11 @@ export default async function ReferralsPage() {
       <div className="bg-white border border-slate-200 rounded-[2.5rem] overflow-hidden shadow-sm">
         <div className="p-8 border-b border-slate-100 flex items-center justify-between">
           <h3 className="font-black uppercase tracking-tighter italic text-slate-900">
-            Network <span className="text-purple-600">Ledger</span>
+            Referral <span className="text-purple-600">History</span>
           </h3>
           <div className="flex items-center gap-2 px-3 py-1 bg-purple-600/10 rounded-full border border-purple-600/20">
             <ShieldCheck size={12} className="text-purple-600" />
-            <span className="text-purple-600 text-[8px] font-black uppercase tracking-widest">Verified Nodes</span>
+            <span className="text-purple-600 text-[8px] font-black uppercase tracking-widest">Active Users</span>
           </div>
         </div>
         
@@ -134,7 +134,7 @@ export default async function ReferralsPage() {
               <table className="w-full">
                 <thead>
                   <tr className="text-left border-b border-slate-100">
-                    <th className="pb-4 px-4 text-[9px] font-black text-slate-400 uppercase tracking-widest">Partner Node</th>
+                    <th className="pb-4 px-4 text-[9px] font-black text-slate-400 uppercase tracking-widest">User Email</th>
                     <th className="pb-4 px-4 text-[9px] font-black text-slate-400 uppercase tracking-widest">Join Date</th>
                     <th className="pb-4 px-4 text-[9px] font-black text-slate-400 uppercase tracking-widest">Status</th>
                   </tr>

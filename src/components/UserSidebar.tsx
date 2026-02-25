@@ -31,7 +31,7 @@ export default function UserSidebar() {
         <div className="flex items-center gap-3">
             <div className="flex items-center gap-2 border-r border-white/10 pr-4">
               <div className="w-2 h-2 bg-purple-500 rounded-full animate-pulse shadow-[0_0_10px_#a855f7]" />
-              <span className="text-[10px] font-black uppercase tracking-widest text-slate-500">Node Active</span>
+              <span className="text-[10px] font-black uppercase tracking-widest text-slate-500">Status: Active</span>
             </div>
            <button 
              onClick={() => setIsOpen(!isOpen)}
@@ -67,7 +67,7 @@ export default function UserSidebar() {
 
         <nav className="mt-4 px-4 space-y-2 relative z-10">
           <div className="px-4 mb-4">
-             <p className="text-[8px] font-black text-slate-600 uppercase tracking-[0.4em] italic leading-none">Main Operations</p>
+             <p className="text-[8px] font-black text-slate-600 uppercase tracking-[0.4em] italic leading-none">Main Menu</p>
           </div>
           {menuItems.map((item) => {
             const isActive = pathname === item.href;
@@ -95,7 +95,7 @@ export default function UserSidebar() {
         <div className="mt-8 px-8 relative z-10">
             <div className="p-4 rounded-2xl bg-gradient-to-br from-purple-600/10 to-transparent border border-purple-500/10">
                <p className="text-[9px] font-black text-purple-400 uppercase tracking-widest mb-1">System Help</p>
-               <p className="text-[8px] text-slate-500 font-medium">Need assistance? Open a transmission to support.</p>
+               <p className="text-[8px] text-slate-500 font-medium">Need assistance? Contact our support team.</p>
             </div>
         </div>
 
@@ -104,7 +104,7 @@ export default function UserSidebar() {
             onClick={() => signOut({ callbackUrl: "/login" })}
             className="flex items-center justify-center gap-3 w-full px-4 py-4 rounded-2xl text-slate-400 bg-white/5 hover:bg-red-500/10 hover:text-red-500 transition-all font-black text-[11px] uppercase tracking-widest border border-white/5"
           >
-            <LogOut size={16} /> Termination Exit
+            <LogOut size={16} /> Logout
           </button>
         </div>
       </aside>

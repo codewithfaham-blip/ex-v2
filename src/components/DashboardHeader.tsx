@@ -8,21 +8,21 @@ export default function DashboardHeader({ type = "user" }: { type?: "user" | "ad
   const pathname = usePathname();
 
   const getPageTitle = () => {
-    if (pathname.includes("/plans")) return "Investment Terminals";
-    if (pathname.includes("/deposit")) return "Inbound Assets";
-    if (pathname.includes("/withdraw")) return "Asset Extraction";
-    if (pathname.includes("/affiliates") || pathname.includes("/investors")) return "Network Nodes";
-    if (pathname.includes("/settings")) return "System Config";
-    if (pathname.includes("/wallet") || pathname.includes("/railway")) return "Infrastructure";
-    return type === "admin" ? "Intelligence Terminal" : "Node Control";
+    if (pathname.includes("/plans")) return "Investment Plans";
+    if (pathname.includes("/deposit")) return "Add Deposits";
+    if (pathname.includes("/withdraw")) return "Withdraw Funds";
+    if (pathname.includes("/affiliates") || pathname.includes("/investors")) return "My Referrals";
+    if (pathname.includes("/settings")) return "Profile Settings";
+    if (pathname.includes("/wallet") || pathname.includes("/railway")) return "System Status";
+    return type === "admin" ? "Admin Panel" : "User Dashboard";
   };
 
   const getPageSubtitle = () => {
-     if (pathname.includes("/plans")) return "Deploy Assets to Liquidity Pools";
-     if (pathname.includes("/deposit")) return "Inbound Financial Stream";
-     if (pathname.includes("/withdraw")) return "External Wallet Transfer";
-     if (pathname.includes("/affiliates")) return "Referral Network Stats";
-     if (pathname.includes("/settings")) return "Administrative Node Access";
+     if (pathname.includes("/plans")) return "Choose your investment plan";
+     if (pathname.includes("/deposit")) return "Add money to your account";
+     if (pathname.includes("/withdraw")) return "Withdraw money to your wallet";
+     if (pathname.includes("/affiliates")) return "View your referral network";
+     if (pathname.includes("/settings")) return "Manage your account";
      return "System Operational • Status: Optimized";
     };
 

@@ -157,7 +157,7 @@ export default function AdminPlans() {
         <div>
           <h1 className="text-3xl font-black uppercase tracking-tighter italic text-slate-900 flex items-center gap-3">
              <Layers className="text-purple-600" size={32} />
-             Investment <span className="text-purple-600">Protocols</span>
+             Investment <span className="text-purple-600">Plans</span>
           </h1>
           <p className="text-slate-500 text-[10px] font-bold uppercase tracking-[0.3em] mt-2 ml-1">
             Configure ROI rates and participation limits
@@ -167,14 +167,14 @@ export default function AdminPlans() {
           onClick={() => { resetForm(); setIsModalOpen(true); }}
           className="bg-purple-600 text-white px-6 py-3 rounded-2xl flex items-center gap-2 font-black text-[11px] uppercase tracking-widest hover:shadow-lg hover:shadow-purple-600/20 transition-all active:scale-95 group"
         >
-          <Plus size={18} className="group-hover:rotate-90 transition-transform" /> New Protocol
+          <Plus size={18} className="group-hover:rotate-90 transition-transform" /> New Plan
         </button>
       </div>
 
       {plans.length === 0 ? (
         <div className="bg-slate-50 border border-slate-200 rounded-[2.5rem] p-20 text-center">
            <Database className="mx-auto text-slate-200 mb-6" size={60} />
-           <p className="text-slate-400 font-black uppercase tracking-widest italic text-sm">No protocols found in database</p>
+           <p className="text-slate-400 font-black uppercase tracking-widest italic text-sm">No plans found in database</p>
            <button onClick={fetchPlans} className="mt-6 text-purple-600 text-[10px] font-bold uppercase tracking-widest underline underline-offset-4">Force Refresh</button>
         </div>
       ) : (
@@ -251,7 +251,7 @@ export default function AdminPlans() {
             
             <div className="flex justify-between items-center mb-8 relative z-10">
               <h2 className="text-2xl font-black uppercase italic tracking-tighter text-white">
-                {editingPlan ? "Modify" : "Create"} <span className="text-blue-600">Protocol</span>
+                {editingPlan ? "Modify" : "Create"} <span className="text-blue-600">Plan</span>
               </h2>
               <button 
                 onClick={() => { setIsModalOpen(false); resetForm(); }}
@@ -264,7 +264,7 @@ export default function AdminPlans() {
             <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
               <div className="grid grid-cols-2 gap-4">
                 <div className="col-span-2">
-                  <label className="text-[10px] font-black uppercase text-zinc-500 ml-1 mb-2 block">Plan Full Identity</label>
+                  <label className="text-[10px] font-black uppercase text-zinc-500 ml-1 mb-2 block">Plan Name</label>
                   <input 
                     required
                     type="text" 
@@ -275,7 +275,7 @@ export default function AdminPlans() {
                   />
                 </div>
                 <div>
-                  <label className="text-[10px] font-black uppercase text-zinc-500 ml-1 mb-2 block">Min Liquidity (Rs.)</label>
+                  <label className="text-[10px] font-black uppercase text-zinc-500 ml-1 mb-2 block">Min Amount (Rs.)</label>
                   <input 
                     required
                     type="number" 
@@ -285,7 +285,7 @@ export default function AdminPlans() {
                   />
                 </div>
                 <div>
-                  <label className="text-[10px] font-black uppercase text-zinc-500 ml-1 mb-2 block">Max Liquidity (Rs.)</label>
+                  <label className="text-[10px] font-black uppercase text-zinc-500 ml-1 mb-2 block">Max Amount (Rs.)</label>
                   <input 
                     required
                     type="number" 
@@ -295,7 +295,7 @@ export default function AdminPlans() {
                   />
                 </div>
                 <div>
-                  <label className="text-[10px] font-black uppercase text-zinc-500 ml-1 mb-2 block">Daily Yield (%)</label>
+                  <label className="text-[10px] font-black uppercase text-zinc-500 ml-1 mb-2 block">Daily ROI (%)</label>
                   <input 
                     required
                     type="number" 
@@ -321,7 +321,7 @@ export default function AdminPlans() {
                   </select>
                 </div>
                 <div>
-                  <label className="text-[10px] font-black uppercase text-zinc-500 ml-1 mb-2 block">Network Icon</label>
+                  <label className="text-[10px] font-black uppercase text-zinc-500 ml-1 mb-2 block">Plan Icon</label>
                   <div className="flex gap-2">
                      {icons.map(icon => (
                        <button 
@@ -361,7 +361,7 @@ export default function AdminPlans() {
                 className={`w-full py-5 rounded-2xl font-black uppercase tracking-[0.2em] text-[11px] transition-all flex items-center justify-center gap-3 ${success ? 'bg-emerald-600' : 'bg-blue-600 hover:bg-blue-700 shadow-xl shadow-blue-600/20'} disabled:opacity-50 text-white mt-4 active:scale-95`}
               >
                 {submitting ? <Loader2 className="animate-spin" size={18} /> : success ? <CheckCircle2 size={18} /> : <Save size={18} />}
-                {submitting ? "Processing Node..." : success ? "Update Synchronized" : editingPlan ? "Commit Protocol Changes" : "Deploy Network Protocol"}
+                {submitting ? "Processing..." : success ? "Changes Saved" : editingPlan ? "Save Plan Changes" : "Create New Plan"}
               </button>
             </form>
           </div>

@@ -36,7 +36,7 @@ export default async function UserDashboard() {
             <div className="flex items-center gap-3 mb-3">
               <div className="bg-purple-600 h-10 w-1.5 rounded-full shadow-[0_0_20px_rgba(147,51,234,0.6)]" />
               <h1 className="text-3xl font-black uppercase tracking-tighter italic text-white leading-none">
-                Node <span className="text-purple-500">Access</span>
+                Simple <span className="text-purple-500">Access</span>
               </h1>
             </div>
             <p className="text-slate-400 text-[10px] font-black uppercase tracking-[0.4em] ml-5 flex items-center gap-2">
@@ -57,7 +57,7 @@ export default async function UserDashboard() {
           
           <div className="relative z-10">
             <div className="flex items-center justify-between mb-6 md:mb-8">
-              <p className="text-slate-400 text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] md:tracking-[0.3em] italic">Operational Liquidity</p>
+              <p className="text-slate-400 text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] md:tracking-[0.3em] italic">Total Balance</p>
               <div className="p-2 md:p-3 bg-purple-500 bg-opacity-20 rounded-xl md:rounded-2xl border border-purple-500/30 text-purple-400 shadow-[0_0_20px_rgba(147,51,234,0.2)]">
                 <Wallet size={20} className="md:size-6" />
               </div>
@@ -92,10 +92,10 @@ export default async function UserDashboard() {
               <div className="p-2 bg-white/20 rounded-xl text-white group-hover:scale-110 transition-transform">
                 <ArrowDownCircle size={18} className="md:size-[22px]" />
               </div>
-              <span className="text-white/40 text-[8px] md:text-[9px] font-black italic">INBOUND</span>
+              <span className="text-white/40 text-[8px] md:text-[9px] font-black italic">DEPOSITS</span>
             </div>
             <div>
-              <p className="text-white/60 text-[9px] md:text-[10px] font-black uppercase tracking-widest mb-1">Total Assets</p>
+              <p className="text-white/60 text-[9px] md:text-[10px] font-black uppercase tracking-widest mb-1">Total Deposits</p>
               <h3 className="text-xl md:text-3xl font-black text-white tracking-tight">Rs. {totalDeposits.toLocaleString()}</h3>
             </div>
           </div>
@@ -106,10 +106,10 @@ export default async function UserDashboard() {
               <div className="p-2 bg-white/20 rounded-xl text-white group-hover:scale-110 transition-transform">
                 <ArrowUpCircle size={18} className="md:size-[22px]" />
               </div>
-              <span className="text-white/40 text-[8px] md:text-[9px] font-black italic">OUTBOUND</span>
+              <span className="text-white/40 text-[8px] md:text-[9px] font-black italic">WITHDRAWALS</span>
             </div>
             <div>
-              <p className="text-white/60 text-[9px] md:text-[10px] font-black uppercase tracking-widest mb-1">Total Extracted</p>
+              <p className="text-white/60 text-[9px] md:text-[10px] font-black uppercase tracking-widest mb-1">Total Withdrawals</p>
               <h3 className="text-xl md:text-3xl font-black text-white tracking-tight">Rs. {totalWithdrawals.toLocaleString()}</h3>
             </div>
           </div>
@@ -122,7 +122,7 @@ export default async function UserDashboard() {
               </div>
             </div>
             <div className="mt-2 sm:mt-0">
-              <p className="text-white/60 text-[9px] md:text-[10px] font-black uppercase tracking-widest mb-1">Clusters</p>
+              <p className="text-white/60 text-[9px] md:text-[10px] font-black uppercase tracking-widest mb-1">Active Plans</p>
               <h3 className="text-xl md:text-3xl font-black text-white tracking-tight">{user.deposits.filter(d => d.status === 'ACTIVE' || d.status === 'APPROVED').length} U</h3>
             </div>
           </div>
@@ -149,7 +149,7 @@ export default async function UserDashboard() {
         <div className="space-y-6">
           <div className="flex items-center justify-between px-2">
             <h2 className="text-xl font-black uppercase italic tracking-tighter text-slate-900">
-              System <span className="text-purple-600">Ledger</span>
+              Activity <span className="text-purple-600">History</span>
             </h2>
             <Link href="/dashboard/deposit" className="text-[10px] font-black text-purple-600 bg-purple-600/10 px-4 py-2 rounded-full uppercase tracking-widest hover:bg-purple-600 hover:text-white transition-all italic">View History</Link>
           </div>
