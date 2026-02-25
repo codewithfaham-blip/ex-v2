@@ -1,5 +1,6 @@
 import { db } from "@/lib/db";
 import { authOptions } from "@/lib/auth";
+import { notifyPlanChange } from "@/lib/planSync";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
@@ -48,6 +49,16 @@ export async function POST(req: Request) {
     });
 
     console.log(`✅ Plan ${plan.id} created successfully`);
+    
+    // Broadcast plan creation to all subscribers
+    notifyPlanChange({
+      type: 'CREATE',
+      planId: plan.id,
+      planData: plan,
+      timestamp: Date.now(),
+      adminEmail: user?.email
+    });
+
     return NextResponse.json(plan);
   } catch (error: any) {
     console.error("❌ Create plan error:", error);

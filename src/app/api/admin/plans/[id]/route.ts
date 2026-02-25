@@ -1,5 +1,6 @@
 import { db } from "@/lib/db";
 import { authOptions } from "@/lib/auth";
+import { notifyPlanChange } from "@/lib/planSync";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
@@ -71,6 +72,16 @@ export async function PUT(
     }
 
     console.log(`✅ Plan ${id} updated successfully: ${plan.name}`);
+    
+    // Broadcast plan update to all subscribers
+    notifyPlanChange({
+      type: 'UPDATE',
+      planId: id,
+      planData: plan,
+      timestamp: Date.now(),
+      adminEmail: user?.email
+    });
+
     return NextResponse.json({
       success: true,
       plan,
@@ -131,6 +142,15 @@ export async function DELETE(
     });
 
     console.log(`✅ Plan ${id} deleted successfully with ${userCount} user associations removed`);
+    
+    // Broadcast plan deletion to all subscribers
+    notifyPlanChange({
+      type: 'DELETE',
+      planId: id,
+      timestamp: Date.now(),
+      adminEmail: user?.email
+    });
+
     return NextResponse.json({ 
       success: true,
       message: `Plan deleted. Removed from ${userCount} users' plans.`

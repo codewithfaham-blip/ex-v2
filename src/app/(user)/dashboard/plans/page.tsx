@@ -1,7 +1,8 @@
 "use client";
 
 import { Zap, ShieldCheck, Trophy, Crown, ArrowRight, X, Loader2, CheckCircle2, Cpu } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
+import { usePlanSync } from "@/hooks/usePlanSync";
 
 const iconMap: Record<string, any> = {
   Zap: <Zap className="text-purple-600" />,
@@ -18,11 +19,36 @@ export default function PlansPage() {
   const [activeTerminals, setActiveTerminals] = useState<any[]>([]);
   const [fetchingActive, setFetchingActive] = useState(true);
   const [fetchingPlans, setFetchingPlans] = useState(true);
+  const [syncStatus, setSyncStatus] = useState<string>("Initializing...");
 
   useEffect(() => {
     fetchPlans();
     fetchActivePlans();
   }, []);
+
+  // Handle real-time plan updates
+  const handlePlanChange = useCallback((event: any) => {
+    if (event.type === 'CONNECTED') {
+      setSyncStatus("Live");
+      console.log("✅ Connected to real-time plan updates");
+      return;
+    }
+
+    if (event.type === 'UPDATE' || event.type === 'CREATE') {
+      console.log("🔄 Plan update detected:", event);
+      setSyncStatus("Syncing...");
+      fetchPlans();
+      setTimeout(() => setSyncStatus("Live"), 1000);
+    } else if (event.type === 'DELETE') {
+      console.log("🗑️ Plan deleted:", event.planId);
+      setSyncStatus("Syncing...");
+      fetchPlans();
+      setTimeout(() => setSyncStatus("Live"), 1000);
+    }
+  }, []);
+
+  // Use plan sync hook
+  usePlanSync(handlePlanChange, true);
 
   const fetchPlans = async () => {
     try {
@@ -99,14 +125,14 @@ export default function PlansPage() {
           </h1>
         </div>
         <p className="text-slate-500 text-[10px] font-black uppercase tracking-[0.4em] ml-5">
-           Active Investment Plans • Platform Status: <span className="text-emerald-600 italic uppercase">Online</span>
+           Active Investment Plans • Status: <span className={`italic uppercase ${syncStatus === 'Live' ? 'text-emerald-600' : 'text-yellow-600'}`}>{syncStatus}</span>
         </p>
       </div>
 
       {/* 2. Active Deployments Section */}
       <div className="space-y-6">
         <div className="flex items-center gap-3">
-           <Cpu size={16} className="text-purple-600 animate-pulse" />
+           <Cpu size={16} className={`${syncStatus === 'Live' ? 'text-emerald-600' : 'text-yellow-600'} animate-pulse`} />
            <h2 className="text-xs font-black uppercase tracking-[0.3em] text-slate-400 italic">My Active Plans</h2>
         </div>
 
