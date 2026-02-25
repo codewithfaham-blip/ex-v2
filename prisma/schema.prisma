@@ -23,7 +23,6 @@ model User {
   referrerId    String?
   referrer      User?    @relation("UserReferrals", fields: [referrerId], references: [id])
   referredUsers User[]   @relation("UserReferrals")
-  userPlans     UserPlan[]   @relation("UserPlans")
 }
 
 model SystemSetting {
@@ -93,32 +92,4 @@ model Plan {
   active      Boolean  @default(true)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  userPlans   UserPlan[] @relation("UserPlans")
-}
-
-model UserPlan {
-  id          String   @id @default(cuid())
-  userId      String
-  planId      String
-  amount      Float
-  roi         Float
-  duration    String
-  status      PlanStatus @default(ACTIVE)
-  startDate   DateTime @default(now())
-  endDate     DateTime?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  
-  user        User     @relation("UserPlans", fields: [userId], references: [id], onDelete: Cascade)
-  plan        Plan     @relation("UserPlans", fields: [planId], references: [id], onDelete: Cascade)
-  
-  @@unique([userId, planId])
-  @@index([userId])
-  @@index([planId])
-}
-
-enum PlanStatus {
-  ACTIVE
-  COMPLETED
-  CANCELLED
 }

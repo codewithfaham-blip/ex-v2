@@ -52,25 +52,6 @@ export async function PUT(
       data: updateData,
     });
 
-    // Update all UserPlan records with this planId to reflect ROI changes
-    const usersWithThisPlan = await db.userPlan.findMany({
-      where: { planId: id, status: "ACTIVE" }
-    });
-
-    if (usersWithThisPlan.length > 0) {
-      // Update ROI for all active user plans with this plan
-      await db.userPlan.updateMany({
-        where: { planId: id, status: "ACTIVE" },
-        data: {
-          roi: parseFloat(body.roi) || existingPlan.roi,
-          duration: body.duration || existingPlan.duration,
-          updatedAt: new Date()
-        }
-      });
-
-      console.log(`✅ Updated ${usersWithThisPlan.length} user plans with new ROI and duration for plan ${id}`);
-    }
-
     console.log(`✅ Plan ${id} updated successfully: ${plan.name}`);
     
     // Broadcast plan update to all subscribers
@@ -85,8 +66,7 @@ export async function PUT(
     return NextResponse.json({
       success: true,
       plan,
-      affectedUserPlans: usersWithThisPlan.length,
-      message: `Plan updated and ${usersWithThisPlan.length} user plans affected`
+      message: `Plan updated successfully`
     });
   } catch (error: any) {
     console.error("❌ Update plan error:", error);
@@ -123,25 +103,12 @@ export async function DELETE(
         return NextResponse.json({ error: "Plan already removed or never existed" }, { status: 404 });
     }
 
-    // Count users with this plan
-    const userCount = await db.userPlan.count({
-      where: { planId: id }
-    });
-
-    // Delete all associated UserPlan records
-    if (userCount > 0) {
-      await db.userPlan.deleteMany({
-        where: { planId: id }
-      });
-      console.log(`✅ Deleted ${userCount} user plan associations for plan ${id}`);
-    }
-
     // Delete the plan
     await db.plan.delete({
       where: { id }
     });
 
-    console.log(`✅ Plan ${id} deleted successfully with ${userCount} user associations removed`);
+    console.log(`✅ Plan ${id} deleted successfully`);
     
     // Broadcast plan deletion to all subscribers
     notifyPlanChange({
@@ -153,7 +120,7 @@ export async function DELETE(
 
     return NextResponse.json({ 
       success: true,
-      message: `Plan deleted. Removed from ${userCount} users' plans.`
+      message: `Plan deleted successfully`
     });
   } catch (error: any) {
     console.error("❌ Delete plan error:", error);

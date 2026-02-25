@@ -38,7 +38,7 @@ export async function POST(req: Request) {
 
       const transactionId = `PLAN-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
 
-      const result = await db.$transaction([
+      await db.$transaction([
         db.user.update({
           where: { id: user.id, balance: { gte: amount } }, // Extra check for safety
           data: { balance: { decrement: amount } }
@@ -52,27 +52,13 @@ export async function POST(req: Request) {
             status: "ACTIVE",
             transactionId
           }
-        }),
-        // Track the plan for the user with plan ID
-        db.userPlan.create({
-          data: {
-            userId: user.id,
-            planId: plan.id,
-            amount: amount,
-            roi: plan.roi,
-            duration: plan.duration,
-            status: "ACTIVE",
-            startDate: new Date()
-          }
         })
       ]);
 
       console.log(`✅ Plan ${plan.id} (${planName}) purchased by user ${user.id}`);
       return NextResponse.json({ 
         success: true, 
-        message: "Plan activated successfully",
-        planId: plan.id,
-        userPlanId: (result as any)[2]?.id
+        message: "Plan activated successfully"
       });
     } catch (error) {
        return NextResponse.json({ error: "Transaction failed. Possible balance mismatch." }, { status: 400 });
