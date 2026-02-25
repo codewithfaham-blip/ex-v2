@@ -180,7 +180,7 @@ export default function PlansPage() {
                     <span>Rs. {plan.minAmount} - Rs. {plan.maxAmount}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-slate-400">Cycle:</span> 
+                    <span className="text-slate-400">Duration:</span> 
                     <span>{plan.duration}</span>
                   </div>
                 </div>

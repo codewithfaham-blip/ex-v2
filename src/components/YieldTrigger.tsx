@@ -27,7 +27,7 @@ export default function YieldTrigger() {
         router.refresh();
         return 'Global yields successfully synchronized across all active nodes';
       },
-      error: (err: any) => err.message || 'Cycle execution failed',
+      error: (err: any) => err.message || 'Processing execution failed',
     });
 
     try {
@@ -50,7 +50,7 @@ export default function YieldTrigger() {
         <Zap size={14} className="text-white group-hover:animate-pulse" />
       )}
       <span className="text-[10px] font-black uppercase tracking-widest text-white">
-        {loading ? "Processing Cycle..." : "Re-calculate Yields"}
+        {loading ? "Processing Yields..." : "Re-calculate Yields"}
       </span>
     </div>
   );

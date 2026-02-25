@@ -23,11 +23,11 @@ export default function BrandLogo({ type = "default", size = "md", className = "
       <Logo className={`${currentSize.logo} group-hover:rotate-12 transition-transform`} />
       {!hideText && (
         <div className="flex flex-col leading-none">
-          <span className={`${currentSize.title} font-black text-purple-600 tracking-tighter italic uppercase`}>
+          <span className={`${currentSize.title} font-black text-purple-600 tracking-tighter italic uppercase drop-shadow-[0_0_8px_rgba(147,51,234,0.3)]`}>
             Exotic
           </span>
           <div className="flex items-center gap-2">
-            <span className={`${currentSize.subtitle} font-bold text-slate-900 uppercase ml-0.5`}>
+            <span className={`${currentSize.subtitle} font-bold text-amber-500 uppercase ml-0.5 tracking-[0.4em] drop-shadow-[0_0_8px_rgba(245,158,11,0.3)]`}>
               Cash
             </span>
             {type === "admin" && (

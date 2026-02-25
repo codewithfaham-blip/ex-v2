@@ -1,11 +1,9 @@
 import { db } from "@/lib/db";
-import { Wallet, TrendingUp, ArrowDownCircle, ArrowUpCircle, Copy, Activity, ShieldCheck, Users } from "lucide-react";
+import { Wallet, ArrowDownCircle, ArrowUpCircle, Activity, ShieldCheck } from "lucide-react";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import TelegramWalletContainer from "@/components/TelegramWalletContainer";
-import CopyButton from "@/components/CopyButton";
 
 export default async function UserDashboard() {
   const session = await getServerSession(authOptions);
@@ -27,49 +25,9 @@ export default async function UserDashboard() {
   const totalDeposits = user.deposits.reduce((acc, curr) => acc + curr.amount, 0);
   const totalWithdrawals = user.withdrawals.reduce((acc, curr) => acc + curr.amount, 0);
 
-  const referralLink = `${process.env.NEXTAUTH_URL || 'https://exotic-cash.com'}/register?ref=${user.id}`;
-
   return (
     <div className="p-4 md:p-8 lg:p-10 pt-24 lg:pt-10 max-w-[1400px] mx-auto w-full animate-in fade-in slide-in-from-bottom-4 duration-700">
       
-      {/* 0. Level 01 Referral Terminal (TOP PRIORITY) */}
-      <div className="mb-8 p-[1px] bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-600 rounded-[2rem] md:rounded-[2.5rem] shadow-[0_0_30px_rgba(147,51,234,0.3)] group overflow-hidden">
-        <div className="bg-slate-900 rounded-[1.95rem] md:rounded-[2.4rem] p-4 sm:p-6 md:p-8 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-purple-600/10 blur-[80px] -z-10 group-hover:bg-purple-600/20 transition-all duration-700" />
-          
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-6 md:gap-8">
-            <div className="flex flex-col sm:flex-row items-center text-center sm:text-left gap-4 md:gap-6">
-               <div className="relative shrink-0">
-                  <div className="absolute inset-0 bg-purple-600 blur-xl opacity-40 animate-pulse" />
-                  <div className="relative w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-purple-500 to-indigo-700 rounded-xl md:rounded-2xl flex items-center justify-center text-white border border-white/20 shadow-2xl">
-                    <Users size={24} className="md:size-8 group-hover:scale-110 transition-transform" />
-                  </div>
-               </div>
-               <div>
-                  <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 md:gap-3 mb-1">
-                    <span className="px-1.5 py-0.5 bg-purple-600 text-white text-[8px] md:text-[9px] font-black uppercase tracking-tighter rounded-md">Tier 1</span>
-                    <h2 className="text-lg md:text-3xl font-black text-white uppercase italic tracking-tighter">Level <span className="text-purple-500">01</span> Referral</h2>
-                  </div>
-                  <p className="text-slate-400 text-[9px] md:text-xs font-medium uppercase tracking-widest flex items-center justify-center sm:justify-start gap-2">
-                    <Activity size={10} className="text-purple-500" />
-                    Expand network • 10% instant commission
-                  </p>
-               </div>
-            </div>
-
-            <div className="flex-1 w-full max-w-xl">
-               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 bg-white/5 border border-white/10 p-1.5 md:p-2 rounded-xl md:rounded-2xl backdrop-blur-sm group-hover:border-purple-500/30 transition-all">
-                  <div className="flex-1 px-3 md:px-4 py-2 sm:py-0 overflow-hidden text-center sm:text-left">
-                     <p className="text-slate-500 text-[8px] uppercase font-black mb-0.5 tracking-widest">Private Node Link</p>
-                     <p className="text-white text-[10px] md:text-sm font-bold truncate opacity-80">{referralLink}</p>
-                  </div>
-                  <CopyButton text={referralLink} className="w-full sm:w-auto py-3 px-4 text-[9px] md:text-[10px]" />
-               </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* 1. Header Section - Mobile Only (Integrated with Premium Feel) */}
       <div className="mb-10 lg:hidden flex flex-col gap-6">
         <div className="relative p-8 rounded-[2rem] bg-slate-900 overflow-hidden shadow-2xl">
@@ -86,10 +44,6 @@ export default async function UserDashboard() {
               {user.email?.split('@')[0]} • Active
             </p>
           </div>
-        </div>
-        
-        <div className="w-full">
-           <TelegramWalletContainer />
         </div>
       </div>
 
@@ -188,11 +142,11 @@ export default async function UserDashboard() {
         </div>
       </div>
 
-      {/* 3. Operational History & Network Expansion */}
-      <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
+      {/* 3. Operational History */}
+      <div className="grid grid-cols-1 gap-8">
         
         {/* Recent Ledger */}
-        <div className="xl:col-span-2 space-y-6">
+        <div className="space-y-6">
           <div className="flex items-center justify-between px-2">
             <h2 className="text-xl font-black uppercase italic tracking-tighter text-slate-900">
               System <span className="text-purple-600">Ledger</span>
@@ -236,14 +190,16 @@ export default async function UserDashboard() {
                        </div>
                     </div>
                     <div className="text-right">
-                      <p className="text-lg font-black text-slate-900 tracking-tighter">+Rs. {dep.amount.toLocaleString()}</p>
-                      <div className="flex flex-col items-end gap-1">
-                        <span className={`px-2 py-0.5 rounded-full text-[7px] font-black uppercase tracking-widest ${
-                          dep.status === 'APPROVED' || dep.status === 'ACTIVE' ? 'bg-emerald-500/10 text-emerald-600 border border-emerald-500/20' : 
-                          dep.status === 'REJECTED' ? 'bg-red-500/10 text-red-600 border border-red-500/20' : 
-                          'bg-amber-500/10 text-amber-600 border border-amber-500/20'
-                        }`}>{dep.status}</span>
-                      </div>
+                       <p className="text-lg font-black text-slate-900 tracking-tighter">
+                          +Rs. {dep.amount.toLocaleString()}
+                       </p>
+                       <div className="flex flex-col items-end gap-1">
+                          <span className={`px-2 py-0.5 rounded-full text-[7px] font-black uppercase tracking-widest ${
+                             dep.status === 'APPROVED' || dep.status === 'ACTIVE' ? 'bg-emerald-500/10 text-emerald-600 border border-emerald-500/20' : 
+                             dep.status === 'REJECTED' ? 'bg-red-500/10 text-red-600 border border-red-500/20' : 
+                             'bg-amber-500/10 text-amber-600 border border-amber-500/20'
+                          }`}>{dep.status}</span>
+                       </div>
                     </div>
                   </div>
                 ))}
@@ -251,43 +207,6 @@ export default async function UserDashboard() {
             )}
           </div>
         </div>
-
-        {/* Affiliate Expansion Terminal */}
-        <div className="bg-slate-900 p-8 rounded-[2.5rem] flex flex-col justify-between shadow-2xl relative overflow-hidden group border border-slate-800">
-           <div className="absolute top-0 right-0 w-48 h-48 bg-purple-600/20 blur-[60px] opacity-30 group-hover:opacity-60 transition-opacity" />
-           <div className="relative z-10">
-              <div className="flex items-center gap-4 mb-8">
-                 <div className="p-4 bg-purple-600/10 rounded-2xl border border-purple-600/30 text-purple-500 shadow-[0_0_20px_rgba(147,51,234,0.2)]">
-                    <TrendingUp size={28} />
-                 </div>
-                 <div>
-                    <h3 className="text-xl font-black uppercase italic tracking-tighter text-white leading-tight">Expansion<br/><span className="text-purple-500">Node</span></h3>
-                 </div>
-              </div>
-              
-              <p className="text-slate-400 text-[11px] leading-relaxed font-medium uppercase tracking-[0.1em] opacity-80 mb-8">
-                Broadcast your expansion link to scaling your liquidity by <span className="text-purple-400 font-bold">10%</span> on every verified inbound asset.
-              </p>
-
-              {/* Progress Aura */}
-              <div className="mb-10 p-5 bg-white/5 rounded-3xl border border-white/10 backdrop-blur-sm">
-                 <div className="flex justify-between items-center mb-3">
-                    <span className="text-[9px] font-black text-slate-400 uppercase tracking-[0.3em]">Network Yield</span>
-                    <span className="px-2 py-1 bg-emerald-500/20 text-emerald-400 text-[8px] font-black rounded-lg border border-emerald-500/30">+10.00%</span>
-                 </div>
-                 <div className="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
-                    <div className="h-full bg-gradient-to-r from-purple-600 to-indigo-500 w-[65%] shadow-[0_0_10px_rgba(147,51,234,0.5)]" />
-                 </div>
-              </div>
-           </div>
-           
-           <CopyButton 
-             text={referralLink} 
-             label="Generate Secure Link" 
-             className="w-full py-5 text-[12px] tracking-[0.25em]" 
-           />
-        </div>
-
       </div>
     </div>
   );

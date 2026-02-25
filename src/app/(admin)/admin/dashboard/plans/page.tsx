@@ -306,7 +306,7 @@ export default function AdminPlans() {
                   />
                 </div>
                 <div>
-                  <label className="text-[10px] font-black uppercase text-zinc-500 ml-1 mb-2 block">Cycle Duration</label>
+                  <label className="text-[10px] font-black uppercase text-zinc-500 ml-1 mb-2 block">Duration</label>
                   <select 
                     value={formData.duration}
                     onChange={(e) => setFormData({...formData, duration: e.target.value})}
