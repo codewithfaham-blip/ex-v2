@@ -21,7 +21,7 @@ export default function DashboardHeader({ type = "user" }: { type?: "user" | "ad
      if (pathname.includes("/plans")) return "Deploy Assets to Liquidity Pools";
      if (pathname.includes("/deposit")) return "Inbound Financial Stream";
      if (pathname.includes("/withdraw")) return "External Wallet Transfer";
-     if (pathname.includes("/affiliates")) return "Network Expansion Stats";
+     if (pathname.includes("/affiliates")) return "Referral Network Stats";
      if (pathname.includes("/settings")) return "Administrative Node Access";
      return "System Operational • Status: Optimized";
     };
