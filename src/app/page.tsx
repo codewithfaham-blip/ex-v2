@@ -5,6 +5,7 @@ import {
   CheckCircle2, HelpCircle, MessageSquare, TrendingUp
 } from "lucide-react";
 import { db } from "@/lib/db";
+import { InvestmentPlansSection } from "@/components/InvestmentPlansSection";
 
 // --- Helper Components ---
 
@@ -14,30 +15,6 @@ function StatItem({ icon, label, value }: { icon: React.ReactNode; label: string
       <div className="mb-2">{icon}</div>
       <p className="text-xl md:text-2xl font-black text-slate-900">{value}</p>
       <p className="text-[10px] md:text-xs text-slate-400 uppercase font-bold tracking-tighter">{label}</p>
-    </div>
-  );
-}
-
-function PlanCard({ title, percent, days, min, max, featured = false }: any) {
-  return (
-    <div className={`w-full p-6 md:p-8 rounded-[2rem] border ${featured ? 'border-purple-600 bg-white shadow-2xl shadow-purple-600/10' : 'border-slate-200 bg-white'} relative transition-all hover:scale-[1.02]`}>
-      {featured && <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-purple-600 px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest text-white">Popular</span>}
-      <h4 className="text-lg md:text-xl font-bold mb-1 text-slate-900">{title} Plan</h4>
-      <div className="text-3xl md:text-4xl font-black text-slate-900 mb-1">{percent} <span className="text-xs md:text-sm font-medium text-slate-400 italic">Daily</span></div>
-      <p className="text-xs text-slate-400 mb-6 underline decoration-purple-500/50">Period: {days}</p>
-      
-      <div className="space-y-3 mb-8">
-        <div className="flex justify-between text-xs md:text-sm text-slate-500">
-          <span>Min:</span> <span className="font-bold text-slate-900">Rs. {min}</span>
-        </div>
-        <div className="flex justify-between text-xs md:text-sm text-slate-500">
-          <span>Max:</span> <span className="font-bold text-slate-900">Rs. {max}</span>
-        </div>
-      </div>
-      
-      <Link href="/register" className={`block w-full text-center py-4 rounded-2xl font-black text-sm uppercase tracking-widest transition ${featured ? 'bg-purple-600 text-white shadow-lg' : 'bg-slate-900 text-white hover:bg-black'}`}>
-        Invest Now
-      </Link>
     </div>
   );
 }
@@ -207,24 +184,7 @@ export default async function HomePage() {
       </section>
 
       {/* Investment Plans */}
-      <section id="plans" className="px-4 py-24 bg-slate-50 border-y border-slate-100">
-        <div className="max-w-7xl mx-auto">
-          <h3 className="text-3xl md:text-6xl font-black text-center mb-16 uppercase tracking-tighter italic text-slate-900">Investment <span className="text-purple-600">Tiers</span></h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {plans.map((plan: any) => (
-              <PlanCard 
-                key={plan.id}
-                title={plan.name} 
-                percent={`${plan.roi}%`} 
-                days={plan.duration} 
-                min={plan.minAmount} 
-                max={plan.maxAmount} 
-                featured={plan.popular} 
-              />
-            ))}
-          </div>
-        </div>
-      </section>
+      <InvestmentPlansSection initialPlans={plans} />
 
       {/* FAQ */}
       <section id="faq" className="px-4 py-24 max-w-4xl mx-auto">
