@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 
 export async function PUT(
   req: Request,
-  { params }: { params: Promise<{ id: string }> }
+  context: { params: Promise<{ id: string }> }
 ) {
   const session = await getServerSession(authOptions);
   const user = session?.user as any;
@@ -17,7 +17,7 @@ export async function PUT(
     return NextResponse.json({ error: "Unauthorized: Admin privileges required" }, { status: 401 });
   }
 
-  const { id } = await params;
+  const { id } = await context.params;
 
   if (!id || id === 'undefined') {
     return NextResponse.json({ error: "Missing or invalid plan ID" }, { status: 400 });
@@ -79,7 +79,7 @@ export async function PUT(
 
 export async function DELETE(
   req: Request,
-  { params }: { params: Promise<{ id: string }> }
+  context: { params: Promise<{ id: string }> }
 ) {
   const session = await getServerSession(authOptions);
   const user = session?.user as any;
@@ -90,7 +90,7 @@ export async function DELETE(
     return NextResponse.json({ error: "Unauthorized: Admin privileges required" }, { status: 401 });
   }
 
-  const { id } = await params;
+  const { id } = await context.params;
 
   if (!id || id === 'undefined') {
     return NextResponse.json({ error: "Missing or invalid plan ID" }, { status: 400 });
