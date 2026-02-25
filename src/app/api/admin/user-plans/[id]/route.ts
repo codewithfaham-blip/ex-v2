@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 // Get a specific user plan with plan ID details
 export async function GET(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -16,7 +16,7 @@ export async function GET(
       return NextResponse.json({ error: "Unauthorized: Admin privileges required" }, { status: 401 });
     }
 
-    const { id } = params;
+    const { id } = await params;
 
     const userPlan = await db.userPlan.findUnique({
       where: { id },
@@ -48,7 +48,7 @@ export async function GET(
 // Update a specific user plan (admin only)
 export async function PUT(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -58,7 +58,7 @@ export async function PUT(
       return NextResponse.json({ error: "Unauthorized: Admin privileges required" }, { status: 401 });
     }
 
-    const { id } = params;
+    const { id } = await params;
     const body = await req.json();
 
     // Verify the user plan exists
@@ -116,7 +116,7 @@ export async function PUT(
 // Delete/Cancel a specific user plan (admin only)
 export async function DELETE(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -126,7 +126,7 @@ export async function DELETE(
       return NextResponse.json({ error: "Unauthorized: Admin privileges required" }, { status: 401 });
     }
 
-    const { id } = params;
+    const { id } = await params;
 
     // Verify the user plan exists
     const userPlan = await db.userPlan.findUnique({
