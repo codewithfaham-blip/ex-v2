@@ -14,7 +14,7 @@ export default async function UserLayout({ children }: { children: React.ReactNo
   }
 
   return (
-    <div className="bg-zinc-950 min-h-screen text-white flex overflow-x-hidden">
+    <div className="bg-slate-50 min-h-screen text-slate-900 flex overflow-x-hidden">
       {/* Sidebar fixed position par hai */}
       <UserSidebar />
       

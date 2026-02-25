@@ -14,7 +14,7 @@ export default function MobileBottomNav() {
     { icon: <ArrowDownRight size={20} />, label: "Deposit", href: "/dashboard/deposit" },
     { icon: <LayoutDashboard size={20} />, label: "Home", href: "/dashboard" },
     { icon: <ArrowUpLeft size={20} />, label: "Withdraw", href: "/dashboard/withdraw" },
-    { icon: <Settings size={20} />, label: "Settings", href: "/dashboard/settings" },
+    { icon: <Users2 size={20} />, label: "Referrals", href: "/dashboard/affiliates" },
   ];
 
   return (

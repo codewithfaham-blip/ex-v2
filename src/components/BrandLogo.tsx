@@ -36,7 +36,7 @@ export default function BrandLogo({ type = "default", size = "md", className = "
               </span>
             )}
             {type === "user" && (
-              <span className="text-[7px] bg-emerald-600 text-white px-1.5 py-0.5 rounded-full font-black uppercase tracking-tighter shadow-sm">
+              <span className="text-[7px] bg-purple-600 text-white px-1.5 py-0.5 rounded-full font-black uppercase tracking-tighter shadow-sm">
                 User
               </span>
             )}

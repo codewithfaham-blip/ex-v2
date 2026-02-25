@@ -33,13 +33,13 @@ export default function DashboardHeader({ type = "user" }: { type?: "user" | "ad
         <div className="flex items-center gap-6">
           <div>
             <div className="flex items-center gap-3 mb-1">
-              <div className={`h-6 w-1 rounded-full shadow-[0_0_10px_rgba(147,51,234,0.3)] ${type === 'admin' ? 'bg-purple-600' : 'bg-emerald-500'}`} />
+              <div className="h-6 w-1 rounded-full shadow-[0_0_10px_rgba(147,51,234,0.3)] bg-purple-600" />
               <h1 className="text-xl font-black uppercase tracking-tighter italic text-slate-900 leading-none">
                 {getPageTitle()}
               </h1>
             </div>
             <p className="text-slate-500 text-[8px] font-black uppercase tracking-[0.3em] ml-4 flex items-center gap-2">
-              <span className={`w-1 h-1 rounded-full animate-pulse ${type === 'admin' ? 'bg-purple-600' : 'bg-emerald-500'}`} />
+              <span className="w-1 h-1 rounded-full animate-pulse bg-purple-600" />
               {getPageSubtitle()}
             </p>
           </div>

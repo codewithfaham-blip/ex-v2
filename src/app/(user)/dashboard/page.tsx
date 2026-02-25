@@ -1,9 +1,11 @@
 import { db } from "@/lib/db";
-import { Wallet, TrendingUp, ArrowDownCircle, ArrowUpCircle, Copy, Activity } from "lucide-react";
+import { Wallet, TrendingUp, ArrowDownCircle, ArrowUpCircle, Copy, Activity, ShieldCheck, Users } from "lucide-react";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
+import Link from "next/link";
 import TelegramWalletContainer from "@/components/TelegramWalletContainer";
+import CopyButton from "@/components/CopyButton";
 
 export default async function UserDashboard() {
   const session = await getServerSession(authOptions);
@@ -25,131 +27,222 @@ export default async function UserDashboard() {
   const totalDeposits = user.deposits.reduce((acc, curr) => acc + curr.amount, 0);
   const totalWithdrawals = user.withdrawals.reduce((acc, curr) => acc + curr.amount, 0);
 
+  const referralLink = `${process.env.NEXTAUTH_URL || 'https://exotic-cash.com'}/register?ref=${user.id}`;
+
   return (
-    // Padding-top (pt-24) mobile ke liye hai, lg:pt-10 desktop ke liye
-    <div className="p-4 md:p-8 lg:p-10 pt-24 lg:pt-10 max-w-[1400px] mx-auto w-full">
+    <div className="p-4 md:p-8 lg:p-10 pt-24 lg:pt-10 max-w-[1400px] mx-auto w-full animate-in fade-in slide-in-from-bottom-4 duration-700">
       
-      {/* 1. Header Section - Hidden on LG as we have DashboardHeader */}
-      <div className="mb-8 lg:hidden flex flex-col justify-between items-stretch gap-6">
-        <div>
-          <div className="flex items-center gap-3 mb-2">
-            <div className="bg-purple-600 h-8 w-1.5 rounded-full shadow-[0_0_15px_rgba(147,51,234,0.3)]" />
-            <h1 className="text-3xl font-black uppercase tracking-tighter italic text-slate-900 leading-none">
-              System <span className="text-purple-600">Access:</span> {user.email?.split('@')[0]}
-            </h1>
+      {/* 0. Level 01 Referral Terminal (TOP PRIORITY) */}
+      <div className="mb-8 p-[1px] bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-600 rounded-[2rem] md:rounded-[2.5rem] shadow-[0_0_30px_rgba(147,51,234,0.3)] group overflow-hidden">
+        <div className="bg-slate-900 rounded-[1.95rem] md:rounded-[2.4rem] p-4 sm:p-6 md:p-8 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-purple-600/10 blur-[80px] -z-10 group-hover:bg-purple-600/20 transition-all duration-700" />
+          
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-6 md:gap-8">
+            <div className="flex flex-col sm:flex-row items-center text-center sm:text-left gap-4 md:gap-6">
+               <div className="relative shrink-0">
+                  <div className="absolute inset-0 bg-purple-600 blur-xl opacity-40 animate-pulse" />
+                  <div className="relative w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-purple-500 to-indigo-700 rounded-xl md:rounded-2xl flex items-center justify-center text-white border border-white/20 shadow-2xl">
+                    <Users size={24} className="md:size-8 group-hover:scale-110 transition-transform" />
+                  </div>
+               </div>
+               <div>
+                  <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 md:gap-3 mb-1">
+                    <span className="px-1.5 py-0.5 bg-purple-600 text-white text-[8px] md:text-[9px] font-black uppercase tracking-tighter rounded-md">Tier 1</span>
+                    <h2 className="text-lg md:text-3xl font-black text-white uppercase italic tracking-tighter">Level <span className="text-purple-500">01</span> Referral</h2>
+                  </div>
+                  <p className="text-slate-400 text-[9px] md:text-xs font-medium uppercase tracking-widest flex items-center justify-center sm:justify-start gap-2">
+                    <Activity size={10} className="text-purple-500" />
+                    Expand network • 10% instant commission
+                  </p>
+               </div>
+            </div>
+
+            <div className="flex-1 w-full max-w-xl">
+               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 bg-white/5 border border-white/10 p-1.5 md:p-2 rounded-xl md:rounded-2xl backdrop-blur-sm group-hover:border-purple-500/30 transition-all">
+                  <div className="flex-1 px-3 md:px-4 py-2 sm:py-0 overflow-hidden text-center sm:text-left">
+                     <p className="text-slate-500 text-[8px] uppercase font-black mb-0.5 tracking-widest">Private Node Link</p>
+                     <p className="text-white text-[10px] md:text-sm font-bold truncate opacity-80">{referralLink}</p>
+                  </div>
+                  <CopyButton text={referralLink} className="w-full sm:w-auto py-3 px-4 text-[9px] md:text-[10px]" />
+               </div>
+            </div>
           </div>
-          <p className="text-slate-500 text-[10px] font-black uppercase tracking-[0.4em] ml-5 flex items-center gap-2">
-            <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
-            Node Status: Operational ✓
-          </p>
+        </div>
+      </div>
+
+      {/* 1. Header Section - Mobile Only (Integrated with Premium Feel) */}
+      <div className="mb-10 lg:hidden flex flex-col gap-6">
+        <div className="relative p-8 rounded-[2rem] bg-slate-900 overflow-hidden shadow-2xl">
+          <div className="absolute top-0 right-0 w-32 h-32 bg-purple-600/20 blur-3xl rounded-full" />
+          <div className="relative z-10">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="bg-purple-600 h-10 w-1.5 rounded-full shadow-[0_0_20px_rgba(147,51,234,0.6)]" />
+              <h1 className="text-3xl font-black uppercase tracking-tighter italic text-white leading-none">
+                Node <span className="text-purple-500">Access</span>
+              </h1>
+            </div>
+            <p className="text-slate-400 text-[10px] font-black uppercase tracking-[0.4em] ml-5 flex items-center gap-2">
+              <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_8px_#10b981]" />
+              {user.email?.split('@')[0]} • Active
+            </p>
+          </div>
         </div>
         
-        {/* Telegram Wallet Container integrated into header area */}
         <div className="w-full">
            <TelegramWalletContainer />
         </div>
       </div>
 
-      {/* 2. Financial Grid */}
-      <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6 mb-10">
+      {/* 2. Primary Financial Controls */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-12">
         
-        {/* Balance Card */}
-        <div className="bg-white border border-slate-200 p-4 md:p-6 rounded-[1.5rem] md:rounded-[2.5rem] relative overflow-hidden group shadow-sm col-span-2 md:col-span-1">
-          <div className="absolute -top-24 -right-24 w-64 h-64 bg-purple-600/5 rounded-full blur-[80px]" />
-          <p className="text-slate-500 text-[8px] md:text-[9px] font-black uppercase tracking-widest mb-2 md:mb-3 italic">Liquidity Balance</p>
-          <h3 className="text-2xl md:text-4xl font-black text-slate-900 tracking-tighter">Rs. {user.balance.toFixed(2)}</h3>
-          <div className="mt-4 md:mt-6 flex items-center gap-2">
-             <Activity size={10} className="text-emerald-500" />
-             <span className="text-emerald-500 text-[7px] md:text-[8px] font-black uppercase tracking-widest">Live Portfolio</span>
+        {/* Main Balance Terminal */}
+        <div className="bg-slate-900 border border-slate-800 p-5 sm:p-8 rounded-[2rem] md:rounded-[2.5rem] relative overflow-hidden group shadow-2xl col-span-1 md:col-span-2">
+          <div className="absolute -top-24 -right-24 w-80 h-80 bg-purple-600/20 rounded-full blur-[100px] group-hover:bg-purple-600/30 transition-all duration-700" />
+          <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-purple-600 to-transparent opacity-30" />
+          
+          <div className="relative z-10">
+            <div className="flex items-center justify-between mb-6 md:mb-8">
+              <p className="text-slate-400 text-[9px] md:text-[10px] font-black uppercase tracking-[0.2em] md:tracking-[0.3em] italic">Operational Liquidity</p>
+              <div className="p-2 md:p-3 bg-purple-500 bg-opacity-20 rounded-xl md:rounded-2xl border border-purple-500/30 text-purple-400 shadow-[0_0_20px_rgba(147,51,234,0.2)]">
+                <Wallet size={20} className="md:size-6" />
+              </div>
+            </div>
+            
+            <div className="flex flex-col gap-1">
+              <span className="text-[9px] md:text-[10px] font-bold text-slate-500 uppercase tracking-widest text-center sm:text-left">Available Balance</span>
+              <h3 className="text-3xl sm:text-5xl md:text-7xl font-black text-white tracking-tighter flex items-center justify-center sm:justify-start gap-2 md:gap-3">
+                <span className="text-purple-500 italic opacity-80 text-xl sm:text-3xl md:text-4xl">Rs.</span>
+                {user.balance.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+              </h3>
+            </div>
+            
+            <div className="mt-8 md:mt-10 flex flex-wrap items-center justify-center sm:justify-start gap-3 md:gap-4">
+               <div className="flex items-center gap-2 px-3 md:px-4 py-1.5 md:py-2 bg-emerald-500/10 rounded-full border border-emerald-500/20 backdrop-blur-xl shrink-0">
+                  <div className="w-1.5 md:w-2 h-1.5 md:h-2 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_10px_#10b981]" />
+                  <span className="text-emerald-500 text-[8px] md:text-[9px] font-black uppercase tracking-widest">Online</span>
+               </div>
+               <div className="flex items-center gap-2 px-3 md:px-4 py-1.5 md:py-2 bg-purple-500/10 rounded-full border border-purple-500/20 backdrop-blur-xl shrink-0">
+                  <Activity size={10} className="md:size-[12px] text-purple-500" />
+                  <span className="text-purple-500 text-[8px] md:text-[9px] font-black uppercase tracking-widest">Compound 100%</span>
+               </div>
+            </div>
           </div>
         </div>
 
-        {/* Deposits Card */}
-        <div className="bg-white border border-slate-200 p-4 md:p-6 rounded-[1.5rem] md:rounded-[2.5rem] flex flex-col justify-between group hover:border-purple-600/30 transition-all min-h-[120px] md:min-h-[160px] shadow-sm">
-          <div className="flex justify-between items-start">
-            <p className="text-slate-500 text-[8px] md:text-[9px] font-black uppercase tracking-widest italic">Injected</p>
-            <ArrowDownCircle className="text-purple-600 group-hover:rotate-12 transition-transform" size={16} />
+        {/* Global Statistics */}
+        <div className="grid grid-cols-2 gap-3 md:gap-4 col-span-1 md:col-span-2">
+          {/* Total Inbound */}
+          <div className="bg-gradient-to-br from-purple-500 to-indigo-700 p-4 sm:p-6 rounded-[1.5rem] md:rounded-[2rem] flex flex-col justify-between group hover:shadow-xl hover:shadow-purple-500/20 transition-all border border-white/10">
+            <div className="flex justify-between items-start">
+              <div className="p-2 bg-white/20 rounded-xl text-white group-hover:scale-110 transition-transform">
+                <ArrowDownCircle size={18} className="md:size-[22px]" />
+              </div>
+              <span className="text-white/40 text-[8px] md:text-[9px] font-black italic">INBOUND</span>
+            </div>
+            <div>
+              <p className="text-white/60 text-[9px] md:text-[10px] font-black uppercase tracking-widest mb-1">Total Assets</p>
+              <h3 className="text-xl md:text-3xl font-black text-white tracking-tight">Rs. {totalDeposits.toLocaleString()}</h3>
+            </div>
           </div>
-          <h3 className="text-lg md:text-2xl font-black text-slate-900">Rs. {totalDeposits.toFixed(2)}</h3>
-        </div>
 
-        {/* Withdrawals Card */}
-        <div className="bg-white border border-slate-200 p-4 md:p-6 rounded-[1.5rem] md:rounded-[2.5rem] flex flex-col justify-between group hover:border-emerald-600/30 transition-all min-h-[120px] md:min-h-[160px] shadow-sm">
-          <div className="flex justify-between items-start">
-            <p className="text-slate-500 text-[8px] md:text-[9px] font-black uppercase tracking-widest italic">Extractions</p>
-            <ArrowUpCircle className="text-emerald-600 group-hover:-rotate-12 transition-transform" size={16} />
+          {/* Total Outbound */}
+          <div className="bg-gradient-to-br from-emerald-500 to-teal-700 p-4 sm:p-6 rounded-[1.5rem] md:rounded-[2rem] flex flex-col justify-between group hover:shadow-xl hover:shadow-emerald-500/20 transition-all border border-white/10">
+            <div className="flex justify-between items-start">
+              <div className="p-2 bg-white/20 rounded-xl text-white group-hover:scale-110 transition-transform">
+                <ArrowUpCircle size={18} className="md:size-[22px]" />
+              </div>
+              <span className="text-white/40 text-[8px] md:text-[9px] font-black italic">OUTBOUND</span>
+            </div>
+            <div>
+              <p className="text-white/60 text-[9px] md:text-[10px] font-black uppercase tracking-widest mb-1">Total Extracted</p>
+              <h3 className="text-xl md:text-3xl font-black text-white tracking-tight">Rs. {totalWithdrawals.toLocaleString()}</h3>
+            </div>
           </div>
-          <h3 className="text-lg md:text-2xl font-black text-emerald-600">Rs. {totalWithdrawals.toFixed(2)}</h3>
-        </div>
 
-        {/* Live Nodes Card (Mobile Only replacement or 4th card) */}
-        <div className="bg-white border border-slate-200 p-4 md:p-6 rounded-[1.5rem] md:rounded-[2.5rem] flex flex-col justify-between group hover:border-purple-600/30 transition-all min-h-[120px] md:min-h-[160px] md:hidden shadow-sm">
-          <div className="flex justify-between items-start">
-            <p className="text-slate-500 text-[8px] font-black uppercase tracking-widest italic">Live Nodes</p>
-            <Activity className="text-purple-600" size={16} />
+          {/* Active Nodes */}
+          <div className="bg-gradient-to-br from-indigo-500 to-blue-700 p-4 sm:p-6 rounded-[1.5rem] md:rounded-[2rem] flex flex-col justify-between group hover:shadow-xl hover:shadow-indigo-500/20 transition-all border border-white/10">
+            <div className="flex justify-between items-start">
+              <div className="p-2 bg-white/20 rounded-xl text-white group-hover:animate-pulse">
+                <Activity size={18} className="md:size-[22px]" />
+              </div>
+            </div>
+            <div className="mt-2 sm:mt-0">
+              <p className="text-white/60 text-[9px] md:text-[10px] font-black uppercase tracking-widest mb-1">Clusters</p>
+              <h3 className="text-xl md:text-3xl font-black text-white tracking-tight">{user.deposits.filter(d => d.status === 'ACTIVE' || d.status === 'APPROVED').length} U</h3>
+            </div>
           </div>
-          <h3 className="text-lg font-black text-slate-900">{user.deposits.filter(d => d.status === 'ACTIVE').length} Active</h3>
+
+          {/* Verification Status */}
+          <div className="bg-gradient-to-br from-blue-500 to-cyan-600 p-4 sm:p-6 rounded-[1.5rem] md:rounded-[2rem] flex flex-col justify-between group shadow-lg border border-white/10 hover:shadow-xl hover:shadow-blue-500/20 transition-all">
+            <div className="flex justify-between items-start">
+              <div className="p-2 bg-white/20 rounded-xl text-white">
+                <ShieldCheck size={18} className="md:size-[22px]" />
+              </div>
+            </div>
+            <div className="mt-2 sm:mt-0">
+              <p className="text-white/60 text-[9px] md:text-[10px] font-black uppercase tracking-widest mb-1">Security</p>
+              <h3 className="text-xl md:text-3xl font-black text-white tracking-tight">Tier 1</h3>
+            </div>
+          </div>
         </div>
       </div>
 
-      {/* 3. Bottom Section: Movement & Passive Income */}
+      {/* 3. Operational History & Network Expansion */}
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
         
-        {/* Recent Movement */}
+        {/* Recent Ledger */}
         <div className="xl:col-span-2 space-y-6">
           <div className="flex items-center justify-between px-2">
             <h2 className="text-xl font-black uppercase italic tracking-tighter text-slate-900">
-              Recent <span className="text-purple-600">Movement</span>
+              System <span className="text-purple-600">Ledger</span>
             </h2>
-            <button className="text-[10px] font-black text-slate-400 uppercase tracking-widest hover:text-slate-900 transition italic">View All History</button>
+            <Link href="/dashboard/deposit" className="text-[10px] font-black text-purple-600 bg-purple-600/10 px-4 py-2 rounded-full uppercase tracking-widest hover:bg-purple-600 hover:text-white transition-all italic">View History</Link>
           </div>
           
-          <div className="bg-white border border-slate-200 rounded-[2.5rem] p-6 relative overflow-hidden shadow-sm">
-            <div className="absolute top-0 right-0 p-8 opacity-[0.02] pointer-events-none">
-               <Activity size={200} className="text-purple-600" />
-            </div>
+          <div className="bg-white border border-slate-200 rounded-[2.5rem] p-6 md:p-8 relative overflow-hidden shadow-sm">
             {user.deposits.length === 0 ? (
-              <div className="text-center py-24 bg-slate-50 rounded-[2rem] border-2 border-dashed border-slate-100 flex flex-col items-center">
-                <p className="text-slate-300 text-[10px] font-black uppercase tracking-[0.4em]">Empty Terminal Trace</p>
+              <div className="text-center py-24 bg-slate-50 rounded-[2rem] border-2 border-dashed border-slate-100 flex flex-col items-center gap-4">
+                <div className="p-4 bg-slate-200/50 rounded-full text-slate-300">
+                   <Activity size={32} />
+                </div>
+                <p className="text-slate-300 text-[10px] font-black uppercase tracking-[0.4em]">Zero Activity Traces Found</p>
               </div>
             ) : (
               <div className="space-y-4 relative z-10">
                 {user.deposits.slice(0, 5).map((dep) => (
-                  <div key={dep.id} className="flex items-center justify-between p-4 bg-slate-50 border border-slate-100 rounded-[1.2rem] hover:border-slate-300 transition-all group">
-                    <div className="flex items-center gap-4">
-                       {dep.gateway === 'JazzCash' && (
-                         <div className="w-7 h-7 flex items-center justify-center overflow-hidden rounded-lg bg-white p-1 shrink-0 border border-slate-200">
-                           <img src="https://crystalpng.com/wp-content/uploads/2024/12/new-Jazzcash-logo.png" alt="JazzCash" className="w-full h-full object-contain" />
-                         </div>
-                       )}
-                       {dep.gateway === 'EasyPaisa' && (
-                         <div className="w-7 h-7 flex items-center justify-center overflow-hidden rounded-lg bg-white p-1 shrink-0 border border-slate-200">
-                           <img src="https://crystalpng.com/wp-content/uploads/2024/10/Easypaisa-logo.png" alt="EasyPaisa" className="w-full h-full object-contain" />
-                         </div>
-                       )}
-                       {dep.gateway?.includes('USDT') && (
-                         <div className="w-7 h-7 flex items-center justify-center overflow-hidden rounded-lg bg-white p-1 shrink-0 border border-slate-200">
-                           <img src="https://cdn.worldvectorlogo.com/logos/tether.svg" alt="USDT" className="w-full h-full object-contain" />
-                         </div>
-                       )}
-                       {!['JazzCash', 'EasyPaisa'].includes(dep.gateway || '') && !dep.gateway?.includes('USDT') && (
-                         <div className="bg-purple-600/10 p-2.5 rounded-xl text-purple-600 group-hover:bg-purple-600 group-hover:text-white transition-all shrink-0">
-                           <Wallet size={16} />
-                         </div>
-                       )}
+                  <div key={dep.id} className="flex items-center justify-between p-5 bg-slate-50 border border-slate-100 rounded-[1.5rem] hover:border-purple-200 hover:bg-white hover:shadow-md transition-all group">
+                    <div className="flex items-center gap-5">
+                       <div className="relative">
+                          {dep.gateway === 'JazzCash' && (
+                            <div className="w-10 h-10 flex items-center justify-center overflow-hidden rounded-xl bg-white p-1.5 shrink-0 border border-slate-100 group-hover:border-purple-200 transition-colors shadow-sm">
+                              <img src="https://crystalpng.com/wp-content/uploads/2024/12/new-Jazzcash-logo.png" alt="JazzCash" className="w-full h-full object-contain" />
+                            </div>
+                          )}
+                          {dep.gateway === 'EasyPaisa' && (
+                            <div className="w-10 h-10 flex items-center justify-center overflow-hidden rounded-xl bg-white p-1.5 shrink-0 border border-slate-100 group-hover:border-purple-200 transition-colors shadow-sm">
+                              <img src="https://crystalpng.com/wp-content/uploads/2024/10/Easypaisa-logo.png" alt="EasyPaisa" className="w-full h-full object-contain" />
+                            </div>
+                          )}
+                          {!['JazzCash', 'EasyPaisa'].includes(dep.gateway || '') && (
+                            <div className="w-10 h-10 bg-purple-600/10 border border-purple-600/20 text-purple-600 flex items-center justify-center rounded-xl group-hover:bg-purple-600 group-hover:text-white transition-all shadow-sm">
+                              <Wallet size={20} />
+                            </div>
+                          )}
+                       </div>
                        <div>
-                          <p className="text-[10px] font-black uppercase tracking-tight text-slate-900">{dep.gateway || 'Manual Deposit'}</p>
-                          <p className="text-[8px] text-slate-400 font-bold uppercase tracking-widest mt-0.5 italic">TID: {dep.transactionId}</p>
+                          <p className="text-xs font-black uppercase tracking-tight text-slate-900">{dep.gateway || 'External Deposit'}</p>
+                          <p className="text-[9px] text-slate-400 font-bold uppercase tracking-[0.2em] mt-0.5">TRX: {dep.transactionId?.substring(0, 12) || 'N/A'}...</p>
                        </div>
                     </div>
                     <div className="text-right">
-                      <p className="text-base font-black text-slate-900">+Rs. {dep.amount.toFixed(2)}</p>
-                      <div className="flex flex-col items-end">
-                        <p className={`text-[7px] font-black uppercase tracking-tighter ${
-                          dep.status === 'APPROVED' || dep.status === 'ACTIVE' ? 'text-emerald-600' : 
-                          dep.status === 'REJECTED' ? 'text-red-600' : 'text-amber-600'
-                        }`}>{dep.status}</p>
-                        <p className="text-[7px] text-slate-400 font-black uppercase tracking-tighter">{new Date(dep.createdAt).toDateString()}</p>
+                      <p className="text-lg font-black text-slate-900 tracking-tighter">+Rs. {dep.amount.toLocaleString()}</p>
+                      <div className="flex flex-col items-end gap-1">
+                        <span className={`px-2 py-0.5 rounded-full text-[7px] font-black uppercase tracking-widest ${
+                          dep.status === 'APPROVED' || dep.status === 'ACTIVE' ? 'bg-emerald-500/10 text-emerald-600 border border-emerald-500/20' : 
+                          dep.status === 'REJECTED' ? 'bg-red-500/10 text-red-600 border border-red-500/20' : 
+                          'bg-amber-500/10 text-amber-600 border border-amber-500/20'
+                        }`}>{dep.status}</span>
                       </div>
                     </div>
                   </div>
@@ -159,34 +252,40 @@ export default async function UserDashboard() {
           </div>
         </div>
 
-        {/* Affiliate Terminal Card */}
-        <div className="bg-white border border-slate-200 p-8 rounded-[2.5rem] flex flex-col justify-between shadow-sm relative overflow-hidden group">
-           <div className="absolute inset-0 bg-purple-600/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
+        {/* Affiliate Expansion Terminal */}
+        <div className="bg-slate-900 p-8 rounded-[2.5rem] flex flex-col justify-between shadow-2xl relative overflow-hidden group border border-slate-800">
+           <div className="absolute top-0 right-0 w-48 h-48 bg-purple-600/20 blur-[60px] opacity-30 group-hover:opacity-60 transition-opacity" />
            <div className="relative z-10">
-              <div className="flex items-center gap-3 mb-6">
-                 <div className="p-3 bg-purple-600/10 rounded-2xl border border-purple-600/20 text-purple-600">
-                    <TrendingUp size={24} />
+              <div className="flex items-center gap-4 mb-8">
+                 <div className="p-4 bg-purple-600/10 rounded-2xl border border-purple-600/30 text-purple-500 shadow-[0_0_20px_rgba(147,51,234,0.2)]">
+                    <TrendingUp size={28} />
                  </div>
-                 <h3 className="text-xl font-black uppercase italic tracking-tighter text-slate-900 leading-tight">Passive Income<br/>Terminal</h3>
+                 <div>
+                    <h3 className="text-xl font-black uppercase italic tracking-tighter text-white leading-tight">Expansion<br/><span className="text-purple-500">Node</span></h3>
+                 </div>
               </div>
-              <p className="text-slate-500 text-[10px] leading-relaxed font-bold uppercase tracking-widest opacity-80 mb-6">
-                Scale your earnings by 10% on every asset deposit verified through your network link.
+              
+              <p className="text-slate-400 text-[11px] leading-relaxed font-medium uppercase tracking-[0.1em] opacity-80 mb-8">
+                Broadcast your expansion link to scaling your liquidity by <span className="text-purple-400 font-bold">10%</span> on every verified inbound asset.
               </p>
 
-              {/* Mini Stats Card inside */}
-              <div className="bg-slate-50 border border-slate-100 rounded-2xl p-4 mb-6">
-                 <div className="flex justify-between items-center mb-2">
-                    <span className="text-[8px] font-black text-slate-400 uppercase italic">Yield Rate</span>
-                    <span className="text-[10px] font-black text-emerald-600">+10.00%</span>
+              {/* Progress Aura */}
+              <div className="mb-10 p-5 bg-white/5 rounded-3xl border border-white/10 backdrop-blur-sm">
+                 <div className="flex justify-between items-center mb-3">
+                    <span className="text-[9px] font-black text-slate-400 uppercase tracking-[0.3em]">Network Yield</span>
+                    <span className="px-2 py-1 bg-emerald-500/20 text-emerald-400 text-[8px] font-black rounded-lg border border-emerald-500/30">+10.00%</span>
                  </div>
-                 <div className="w-full h-1 bg-slate-200 rounded-full overflow-hidden">
-                    <div className="h-full bg-purple-600 w-[40%]" />
+                 <div className="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                    <div className="h-full bg-gradient-to-r from-purple-600 to-indigo-500 w-[65%] shadow-[0_0_10px_rgba(147,51,234,0.5)]" />
                  </div>
               </div>
            </div>
-           <button className="bg-purple-600 text-white w-full py-4 rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] hover:bg-purple-700 transition shadow-xl relative z-10 active:scale-95">
-             Generate Access Link
-           </button>
+           
+           <CopyButton 
+             text={referralLink} 
+             label="Generate Secure Link" 
+             className="w-full py-5 text-[12px] tracking-[0.25em]" 
+           />
         </div>
 
       </div>
